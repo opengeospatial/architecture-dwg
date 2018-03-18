@@ -1,0 +1,9 @@
+[appendix]
+= Revision History
+
+.Revision History
+[width="90%",options="header"]
+|====================
+|Date |Release |Editor | Primary clauses modified |Descriptions 
+|Sep 20, 2016 |Joan Maso | .1 |all |the versionis created as a mixture of the two ER in Testbed 12 about JSON
+|====================

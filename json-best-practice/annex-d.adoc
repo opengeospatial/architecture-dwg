@@ -1,0 +1,296 @@
+[appendix]
+= JSON in web services (informative)
+
+The previous sections of this document have concentrated in JSON general principles and how them can be applied to data models and data encodings. This section focuses on how to use the same techniques in OGC web services. Traditionally, the OGC web services have used XML, the _lingua franca_ for services. Currently, OGC web services are able to expose their capabilities and are able to send requests that cannot be easily encoded in KVP as XML documents that are posted to servers. Actually, in OWS Common, all versions up to 2.0 (the last currently available at the moment of writing this section), the only described encoding is XML. In principle, nothing prevents OGC web services to use other encodings that can be more convenient for modern clients and servers. This section describes how OGC web services can adopt JSON encoding. 
+
+HTML5 integrated web clients are the ideal platform to work with JSON encoded documents. They are able to automatically interpret a JSON serialized string and convert it to a JavaScript object only invoking JSON.parse(). The server side technologies were apparently not related with JSON and JavaScript, but this has changed with the introduction of Node.js. Node.js allows for the creation of web servers and networking tools using JavaScript and a collection of "modules" that handle various core functionality. Modules are provided for file system I/O, networking (DNS, HTTP, TCP, TLS/SSL, or UDP), binary data (buffers), cryptography functions, data streams, etc. In Node.js, developers can create highly scalable servers without using threading, by using a simplified model of event-driven programming that uses callbacks to signal the completion of a task. Since the Node.js can  be defined as JavaScript for services it can easily work with JSON. But this is not the only language supporting JSON; actually there are libraries to use JSON in many modern programming languages, including C. The authors of this document use cjson to include JSON support to CGI server applications developed in C code.
+
+=== Sequence of steps to use JSON in services
+This subsection describes the sequence of steps that client and server have to execute to use JSON in both a KVP HTTP GET and HTTP POST with JSON in the body of the request.
+
+==== A KVP HTTP GET request
+
+This subsection discusses how to use a KVP HTTP GET request to invoke a simple operation to an OGC service that can be transmitted in a KVP encoded URL. The example retrieves a WMS GetCapabilities document in JSON format.
+
+[NOTE]
+Currently, OWS Common 2.0 does not provide any official JSON encoding. In addition, there is no draft version of WMS 1.4 that describes the support to JSON yet. You can find a complete tentative encoding for OWS Common 2.0 and how to apply it to WMS 1.4 GetCapabilities in the "OGC 16-051 Testbed 12 JavaScript JSON JSON-LD Engineering Report". The following example uses materials produced and validated in OGC 16-051.
+
+[[KVP_GET_client_request]]
+===== KVP GET client request
+One of the things that surprises about JSON is that there is no _easy_ way to _include_ a JSON file to an HTML page on-the-fly. To include a JSON file in a JavaScript based client you should use a method designed for asynchronous XML retrieval but can be used to transfer other file formats too.
+
+The following code was obtained and adapted from  http://stackoverflow.com/questions/9838812/how-can-i-open-a-json-file-in-javascript-without-jquery[Stack Overflow] and has been incorporated in MiraMon WMS-WMTS client.
+
+.JavaScript function to get a JSON file and incorporate its content in the variables available to JavaScript
+[source,javascript]
+----
+function loadJSON(path, success, error)
+{
+var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function()
+    {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                if (success)
+                {
+        		    var data;
+        		    try {
+        		    	data = JSON.parse(xhr.responseText);
+        		    } catch (e) {
+                        if (error)
+            		        return error("JSON file: \""+ path + "\". " + e);
+        		    }
+        		    success(data);
+        		}
+            } else {
+                if (error)
+		            error("JSON file: \""+ path + "\". " + xhr.statusText);
+            }
+        }
+    };
+    xhr.open("GET", path, true);
+    xhr.send();
+}
+----
+
+In the following example, a JavaScript client retrieves a GetCapabilities request in JSON format using loadJSON(). The first parameter is the URL of the GetCapabilities request. The second and third parameter are functions that will be executed in a "callback" style. Indeed, loadJSON() function will return as soon as the GetCapabilities request has been send without waiting for the communication to be completed. In other words, the client program flow continues without waiting for the server to respond. When the response is received correctly, the JSON text of the body of the response message will be converted to a JavaScript data structure in a process that is called _parse_. If the conversion is correct, the the success function will be then invoked and execute in another thread as described in the next subsection.
+
+.JavaScript call to the function to get a JSON file
+[source,javascript]
+----
+loadJSON("http://www.opengis.uab.cat/miramon.cgi?request=GetCapabilities&service=WMS&acceptFormats=application/json",
+		ShowCapabilities,
+		function(xhr) { alert(xhr); });
+----
+
+Please, note that loadJSON() is sending a request to the following server application: http://www.opengis.uab.cat/miramon.cgi. The request contains a KVP encoding for a WMS GetCapabilities that includes a format key with the value application/json. The server expects a response in JSON.
+
+[[HTTP_Server_response]]
+===== KVP GET server response in JSON
+While the client is performing other tasks, the server receives the request and extracts the information it needs to recognize the right task to perform from the KVP URL string. It recognizes the request for a GetCapabilities document in the JSON format. To generate it, it has two options: use a library to build a JSON object or to write a text string in memory. Generally, the server will opt for the second option since is easier to do. This approach has its risks, because the server will not validate that the string is actually well formed and contains a valid JSON. Sending the HTTP response back to the client with the 200 status, in a CGI server style is as simple as writing it in the stdout port preceded by the mandatory HTTP header that at least has to include to the MIME type. Nevertheless, it could be useful to structure the header at least with this three informations:
+
+* Content-Type: indicates the MIME type of the response and it is needed by the web server (e.g. Internet Information Server, Apache Web Server, ...) to know how to handle the response.
+* Content-Length: indicates the length of the body of the message in bytes (in our case the length of the JSON string). It is not mandatory but it is useful for the client to show the percentage of download to the user before the transmission has been complete.
+* Access-Control-Allow-Origin: This header has been introduced in HTML5 to better handle the Cross Origin Resource Sharing (CORS). For security reasons, by default, the client will only accept content that comes from the same server than the original JavaScript code. This prevents to create an JavaScript integrated clients that access and visualize different servers and shows the content together (preventing any interoperability demonstrations). Now, the server can list in this entry the URLs of the servers it trust. If the server declares that trusts the JavaScript client, then the JSON file will be accessible for the client to read. In practice, it is difficult for the server to anticipate the clients we will trust, and, in practice, many clients declare that they trust anybody by using '*'.
+
+.Server response of a JSON file containing the description of the capabilities document (fragment)
+[source,JSON]
+----
+Content-Type: application/json
+Content-Length: 1456
+Access-Control-Allow-Origin: *
+
+{
+ 	"type": "WMSServiceMetadata",
+	"version": "1.4",
+	"updateSequence": "a",
+	"serviceIdentification": {
+		"type": "ServiceIdentification",
+		"serviceType": {
+			"type": "Code",
+			"code": "WMS"
+		},
+		"serviceTypeVersion": ["1.4"],
+		"title": [{"type": "LanguageString", "value": "WMS service", "lang": "en-en"}],
+		"keywords": [{"type": "Keywords", "keyword": [{"type": "LanguageString", "value": "service", "lang": "en-en"}]}]
+	},
+	"serviceProvider": {
+		"type": "ServiceProvider",
+		"providerName": "CREAF",
+    [...]
+}
+----
+
+When the response is received by the client, either the function in the second parameter or the function in the third parameter will be executed depending on the success or failure of the request.
+
+In the following example we demonstrate how the _capabilities_ variable already has the same structure as the JSON document received.
+
+.JavaScript callback function that will process a successfully received and parsed JSON file
+[source,javascript]
+----
+function ShowCapabilities(capabilities)
+{
+	if (capabilities.version!="1.4" ||
+	    capabilities.serviceIdentification.serviceType.code!="WMS")
+	    alert("This is not a compatible WMS JSON server");
+	alert("The provider name is: " +
+	    capabilities.serviceProvider.providerName);
+}
+----
+
+==== KVP GET server exception in JSON
+OWS Common defines the exception messages and HTTP status codes for a response to a request that cannot be processed by a server. The content of the message exception is also defined in XML but it can be easily translated to an equivalent JSON encoding. In the following example, the server will return a HTTP status 400 (Bad request) and in the body will include a more precise description of the reason for not succeeding in providing a response (actually, there are two reasons in the example).
+
+.Example of an exception report encoded in JSON (equivalent to the one in section 8.5 of OWS Common 2.0)
+[source,JSON]
+----
+{
+    "type": "ExceptionReport",
+    "version": "1.0.0",
+    "lang": "en",
+    "exception": [{
+        "type": "Exception",
+        "exceptionCode": "MissingParameterValue",
+        "exceptionText": "Service parameter missing",
+        "locator": "service"
+    },{
+        "type": "Exception",
+        "exceptionCode": "InvalidParameterValue",
+        "exceptionText": "Version number not supported",
+        "locator": "version"
+    }]
+}
+----
+
+[NOTE]
+====
+Modifications on the error handling part of the function loadJSON() could be required to better inform the user with the content of the exception report.
+====
+
+==== A JSON HTTP POST request
+
+This subsection discusses how to use a HTTP POST request to invoke an operation to an OGC service. This is particularly useful when the content to be sent to the server is too long to embed it in a KVP URL. The example sends a WMS GetFeatureInfo request as a JSON file an expects also a JSON document as a response.
+
+[NOTE]
+====
+GetFeatureInfo is normally sent to the server as KVP URL. In this example we use the POST version for illustration purposes.
+====
+
+===== HTTP POST client request
+The following code was obtained and adapted from  http://stackoverflow.com/questions/24468459/sending-a-json-to-server-and-retrieving-a-json-in-return-without-jquery[Stack Overflow] but have not been tested in the MiraMon WMS-WMTS client yet.
+
+.JavaScript callback function that will send a JSON document in a POST operation
+[source,javascript]
+----
+function POSTandLoadJSON(path, body, success, error)
+{
+var xhr = new XMLHttpRequest();
+var body_string;
+    xhr.onreadystatechange = function()
+    {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                if (success)
+		{
+		    var data;
+		    try {
+		    	data = JSON.parse(xhr.responseText);
+		    } catch (e) {
+                if (error)
+    		        return error("JSON file: \""+ path + "\". " + e);
+		    }
+		    success(data);
+		}
+            } else {
+                if (error)
+		            error("JSON file: \""+ path + "\". " + xhr.statusText);
+            }
+        }
+    };
+    xhr.open("POST", path, true);
+    xhr.setRequestHeader("Content-type", "application/json");
+    body_string=JSON.stringify(body);
+    xhr.send(body_string);
+}
+----
+
+The first thing that is needed is to create a JavaScript data structure that can be converted to a JSON string (a process called _stringify_). We are going exemplify this by proposing a data structure for a WMS GetFeatureInfo request. 
+
+[NOTE]
+====
+The data structure in the example shows how a GetFeatureInfo could look like in JSON and POST. The proposed syntax is not based on any data model resulting from a standardization discussion but from a reasonable guess on how it could look like.
+====
+
+.GetFeatureInfo request data structure in JSON
+[source,javascript]
+----
+getFeatureInfoRequest={
+    "StyledLayerList": [{
+        "NamedLayer": {
+            "Identifier": "Rivers"
+        }
+    }],
+    "Output": {
+        "Size": {
+            "Width": 1024,
+            "Height": 512
+        },
+        "Format": "image/jpeg",
+        "Transparent": false
+    },
+    "BoundingBox": {
+        "crs": "http://www.opengis.net/gml/srs/epsg.xml#4326",
+        "LowerCorner": [-180.0, -90.0],
+        "UpperCorner": [180.0, 90.0]
+    },
+    "QueryLayerList": [{
+        "QueryLayer": {
+            "Identifier": "Rivers"
+        }
+    }],
+    "InfoFormat": "text/html",
+    "PointInMap": {
+        "I": 30,
+        "J": 20
+    },
+    "Exceptions": "text/xml"
+};
+----
+
+Having both the server URL and the JavaScript data structure we can now send the POST request to the server using the POSTandLoadJSON() function presented before.
+
+.GetFeatureInfo request data structure in JSON
+[source,javascript]
+----
+POSTandLoadJSON("www.opengis.uab.cat/miramon.cgi",
+		getFeatureInfoRequest, 
+		ShowGetFeatureInfo,
+		function(xhr) { alert(xhr); });
+		
+function ShowGetFeatureInfo(getFeatureInfo)
+{
+    //Put here the code to show the data in the 
+    //same way as the ShowCapabilities does.
+    //Normally you will interprete the getFeatureInfo 
+    //data structure and create a string that will be send to
+    //a division with innerHTML
+}
+
+----
+
+The server receives the JSON file and extracts the information it needs and continues with the sequence explained in  <<HTTP_Server_response>>.
+
+==== Cross Origin Resource Sharing security issue
+
+The Cross Origin Resource Sharing (CORS) is a security issue that appears when a JavaScript code coming from a server requests information to another service that is in another domain. In this case, the default behavior is to deny access, except if the requested server (the server that is going to respond) specifically authorizes reading the data to the server that generated the code for the client that is making the request.
+
+In <<HTTP_Server_response>>, we already have described the issue of CORS in HTTP GET requests and the need for the server that is responding with a JSON string to include "Access-Control-Allow-Origin" in the headers, allowing the origin server to merge data with the requested server. In practice the server is granting the client the right to access the JSON responded data.
+
+In implementing POST requests and responses that require CORS, we have discovered that the situation is not so simple. The a https://www.html5rocks.com/en/tutorials/cors/[HTMP5Rocks CORS tutorial (Handling a not-so-simple request)] page describes the issue quite well.
+
+To prevent the client to send unnecessary or sensible information to a server that will not grant access to the JSON data to the client, a "preflight" request is going to be formulated. This is invisible to the JavaScript client code but the server side (the OGC web server) needs to know it and needs to deal with it.
+
+[[CORS_flow_in_POST_request]]
+.CORS flow in case of a POST request
+image::images/cors_flow.png[]
+
+The browser (not the JavaScript code) will issue a _preflight_ request, that is normally an OPTIONS request. The server needs to be prepared for a request like this:
+
+[source.text]
+----
+OPTIONS HTTP/1.1
+Origin: http://client.bob.com
+Access-Control-Request-Method: PUT
+...
+----
+
+Then, the server need to respond a message that will contain only headers (no body) saying that it will support the requested method (and some others) to the requested server origin (and my be some others).
+
+[source.text]
+----
+Access-Control-Allow-Origin: http://client.bob.com
+Access-Control-Allow-Methods: GET, POST, PUT
+...
+----
+
+Now that the web browser is convinced that the POST request will be accepted, it will issue it. Note that if the server does not respond correctly the OPTIONS request, the POST request will not be formulated and the POSTandLoadJSON() will receive and error and will trigger the error function.

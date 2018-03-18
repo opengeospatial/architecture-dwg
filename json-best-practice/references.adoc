@@ -1,0 +1,23 @@
+[[references]]
+== References
+
+The following documents are referenced in this document. For dated references, subsequent amendments to, or revisions of, any of these publications do not apply. For undated references, the latest edition of the normative document referred to applies.
+
+* ISO 19118:2010 Geographic information — Encoding.
+
+* IETF RFC7159, The JavaScript Object Notation (JSON) Data Interchange Format. https://www.ietf.org/rfc/rfc7159.txt
+
+* IETF RFC4627, The application/json Media Type for JavaScript Object Notation (JSON). https://www.ietf.org/rfc/rfc4627.txt
+
+* W3C JSON-LD 1.0, A JSON-based Serialization for Linked Data. http://www.w3.org/TR/json-ld/ 
+
+* IETF draft draft-zyp-json-schema-04, A JSON Media Type for Describing the Structure and Meaning of JSON. https://tools.ietf.org/html/draft-zyp-json-schema-04
+
+.NOTE: 	This ER demonstrates the usefulness of JSON Schema. Unfortunately, there has been no progress in the draft schema towards standardizing it since 2013 All work in this document about JSON schema is based on the last IETF draft (v4) expired "August 4, 2013". At the time to finalize this document we realized that a new version has been recently released (https://tools.ietf.org/html/draft-wright-json-schema-00) that is not considered a normative reference on this document but will be included in the bibliography.
+
+* OGC 06-103r4 OpenGIS implementation Standard for Geografic Information -- Simple feature access -- Part 1: Common Architecture.
+
+* OGC 06-121r9, OGC® Web Services Common Standard
+
+.NOTE: 	This OWS Common Standard contains a list of normative references that are also applicable to this document.
+.

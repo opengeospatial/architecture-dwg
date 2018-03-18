@@ -1,0 +1,7 @@
+[appendix]
+= Example JSON documents (informative)
+== Introduction
+This annex provides more example JSON documents than given in the body of this document. 
+== $$$ example
+This is a complete example of JSON for...
+

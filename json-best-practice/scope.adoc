@@ -1,0 +1,10 @@
+== Scope
+
+This OGC® document provides a set of best practices on how to use JSON as an encoding for OGC standards.
+
+In addition, this OGC® document provides a set of rules on how to transform a UML model describing the encoding of a format or a service description into a JSON and JSON-LD encoding and their corresponding JSON schemas. The rules have been applied and validated in a service metadata document based on OWS Common.
+
+This OGC® document is applicable to OGC data and metadata encodings and OGC services willing to provide a JSON encoding for fast adoption in web browsers.
+
+This OGC® document is complemented by OGC 16-122 (Geo)JSON User Guide that includes guidelines and recommendations for the use of JSON and JSON-LD in OGC data encodings and in OGC services.
+

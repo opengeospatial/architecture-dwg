@@ -1,0 +1,158 @@
+== JSON Encoding 
+
+=== Links in JSON
+
+==== Introduction
+Following the https://tools.ietf.org/html/rfc5988[RFC5988] description, a link is a typed connection between two resources that are identified by internationalized Resource Identifiers (IRIs) [https://tools.ietf.org/html/rfc3987[RFC3987]], and is comprised of:
+
+* a context IRI,
+* a link relation type (an initial list of types is in Section-6.2.2 of RFC5988. E.g.: describedBy),
+* a target IRI, and
+* optionally, target attributes.
+
+This schema was adopted both by Xlink and Atom in a similar way. The question that is discussed in this section is what is the status of links in JSON and what is the recommendation for the OGC.
+
+[[JSON-LD_links_subsection]]
+==== JSON-LD
+In the next section we will explain JSON-LD in detail (please see <<Apply_JSONLD_to_JSON_objects_subsection>>) but, in this subsection, we can anticipate what is essential in JSON-LD that allow it to work with links. In JSON-LD, objects have an _id_ that identifies the context IRI. To do that, JSON objects include a property called _@id_. As we know, a JSON object has properties, and JSON-LD defines how to use a key-value property in a particular way that allows expressing a link from this object to other objects.
+
+.Relation between a river and its description expressed in JSON
+[source,json]
+----
+{
+	"@id": "http://dbpedia.org/page/Mississippi_River",
+	"describedBy": "http://en.wikipedia.org/wiki/Mississippi_River",
+	"name": "Mississippi river"
+}
+----
+
+Adding JSON-LD to a JSON file introduces the possibility to define links as a property name that has a semantics defined by IANA (such as "describedBy") and the value of the property that has an @id type and shall contain a URI. This is done in a special @context property.
+
+.Context complex property added to a JSON file that defines describedBy as a relation type IANA describedBy.
+[source,json]
+----
+{
+	"@context": {
+		"describedBy": {
+			"@id": "http://www.iana.org/assignments/relation/describedby",
+			"@type": "@id"
+		}
+	}
+}
+----
+
+Both JSON fragments can be combined in a single JSON-LD document
+
+.Direct combination of the JSON example and the JSON-LD context semantic definition.
+[source,json]
+----
+{
+	"@context": {
+		"name": "http://schema.org/name",
+		"describedBy": {
+			"@id": "http://www.iana.org/assignments/relation/describedby",
+			"@type": "@id"
+		}
+	},
+	"@id": "http://dbpedia.org/page/Mississippi_River",
+	"describedBy": "http://en.wikipedia.org/wiki/Mississippi_River",
+	"name": "Mississippi river"
+}
+----
+
+JSON-LD allows for a more elegant notation that defines abbreviated namespaces that can be reused later.
+
+.A more elegant version of the JSON example and the JSON-LD context semantic definition using namespaces.
+[source,json]
+----
+{
+	"@context": {
+		"iana_rel": "http://www.iana.org/assignments/relation/",
+		"dbpedia": "http://dbpedia.org/page/",
+		"wiki": "http://en.wikipedia.org/wiki/",
+		"schema": "http://schema.org/",
+		
+		"name": "schema:name",
+		"describedBy": {
+			"@id": "iana_rel:describedby",
+			"@type": "@id"
+		}
+	},
+	"@id": "dbpedia:Mississippi_River",
+	"describedBy": "wiki:Mississippi_River",
+	"name": "Mississippi river"
+}
+----
+
+JSON-LD can be automatically converted to RDF triples. In the conversion, done using the JSON-LD playground, the second triple expresses that the _dbpedia_ id (the context IRI) is _describedBy_ (the link relation type) a _wikipedia_ URL (the target IRI).
+
+[source,RDF]
+----
+<http://dbpedia.org/page/Mississippi_River> <http://schema.org/name> "Mississippi river" .
+<http://dbpedia.org/page/Mississippi_River> <http://www.iana.org/assignments/relation/describedby> <http://en.wikipedia.org/wiki/Mississippi_River> .
+----
+
+==== Hypertext Application Language
+
+Hypertext Application Language (HAL) is a simple format that tries to give a consistent and easy way to express hyperlinks between resources. It was defined by Mike Kelly, that is a software engineer from the UK that runs an http://stateless.co/[API consultancy] helping companies design and build APIs.
+
+.HAL notation for JSON links
+[source,json]
+----
+{
+	"@id": "http://dbpedia.org/page/Mississippi_River",
+	"name": "Mississippi river",
+	"_links": {
+		"describedBy": { "href": "http://en.wikipedia.org/wiki/Mississippi_River" }
+	}
+}
+----
+
+==== Atom link direct JSON encoding 
+The book http://shop.oreilly.com/product/9780596801694.do["RESTful Web Services Cookbook; Solutions for Improving Scalability and Simplicity"] By Subbu Allamaraju, in its chapter "How to Use Links in JSON Representations" proposes a direct translation of the Atom xlink notation in two forms:
+
+.Atom translation to JSON. Alternative 1.
+[source,json]
+----
+{
+	"@id": "http://dbpedia.org/page/Mississippi_River",
+	"name": "Mississippi river",
+	"links": [{
+		"rel": "describedBy",
+		"href": "http://en.wikipedia.org/wiki/Mississippi_River"
+	}]
+}
+----
+
+This approach is consistent with what is proposed and generalized for applying it in JSON Schema:  http://json-schema.org/latest/json-schema-hypermedia.html[JSON Hyper-Schema: A Vocabulary for Hypermedia Annotation of JSON].
+
+There is also a more compact format alternative.
+
+.Atom translation to JSON. Alternative 2.
+[source,json]
+----
+{
+	"@id": "http://dbpedia.org/page/Mississippi_River",
+	"name": "Mississippi river",
+	"links": [{
+		"describedBy": { "href": "http://en.wikipedia.org/wiki/Mississippi_River" }
+	}
+	]
+}
+----
+
+The later alternative has the advantage that checking for a the presence of a "describedBy" linking is easier in JavaScript and at the same time looks almost identical to the HAL proposal.
+
+.Accessing a link in the alternative 2.
+[source,JavaScript]
+----
+river=JSON.parse("...");
+river.links.describedBy[0]
+----
+
+To do the same with the first alternative a JavaScript loop checking all links until finding one of the _describedBy_ type will be needed.
+
+If we remove the _grouping_ property "links", then we almost converge to the JSON-LD alternative.
+
+==== Recommendation 
+Even if it is difficult to formulate a recommendation, the authors of this guide consider that the JSON-LD alternative has the advantage of simplicity and, at the same time, is the only alternative ratified and approved by an standard body. It has also the advantage to connect with the RDF world.

@@ -1,0 +1,539 @@
+== JSON Best Practices
+
+[[Basic_JSON_considerations]]
+=== Basic JSON considerations
+The basics of JSON encoding are defined initially in the https://tools.ietf.org/html/rfc4627[RFC4627] (2006) and more recently in the https://tools.ietf.org/html/rfc7159[RFC7159] (2013).
+
+The following aspects have been extracted from the RFC7159 and, in the opinion of the authors of this document, should be considered requirements to JSON in OGC implementations of JSON encodings. These aspects go a bit beyond the immediate description of a simple JSON format but are needed to improve JSON interoperability. In the following text, the use of _quotation marks_ indicates that the text comes directly from RFC7159 (sometimes with minimal editorial changes).
+
+* An object has "an _unordered_ collection of zero or more name/value pairs". "Implementations whose behavior does not depend on member ordering will be interoperable". This means that the order of the properties can change and the object should be considered exactly the same. This is not what happens by default in the case of XML encodings, where any variation in the order of properties generates a validation error. (Note that in most of the classes in OGC UML models, the order of properties is not important, even if, after XML conversion, order becomes an extra imposed restriction).
+* "The property names within an object SHOULD be unique". This means that if you need multiplicity _more than one_ in a property, it should be defined as a single property of _array_ type.
+* "There is no requirement that values in an array have to be of the same type.". This means that, e.g. an array presenting an string (quotation marks), a number (no quotation marks), an object (curly brackets) and an array (square brackets) is a perfectly valid array (Note that you can limit this behavior in your application by applying a JSON Schema type restriction to a property).
+* "An array is an _ordered_ sequence of zero or more values". Note that this means that multiplicity _more than one_ is ordered. This is not what happens by default in the case of XML, where multiplicity is unsorted by default (as, it is also the case in most of the OGC UML diagrams too).
+* For numbers, "_Infinity_, _NaN_, etc are not permitted".
+* For floating point numbers "since software that implements IEEE 754-2008 binary64 (double precision) numbers is generally available and widely used, good interoperability can be achieved by implementations that expect no more precision or range than these provide, in the sense that implementations will approximate JSON numbers within the expected precision. A JSON number such as 1E400 or 3.141592653589793238462643383279 may indicate potential interoperability problems, since it suggests that the software that created it expects receiving software to have greater capabilities for numeric magnitude and precision than is widely available."
+* "JSON text SHALL be encoded in UTF-8, UTF-16, or UTF-32. The default encoding is UTF-8, and JSON texts that are encoded in UTF-8 are interoperable". In practice this affects both _names_ of properties and _string values_. This is particularly important for non English languages that require to encode characters beyond the _common English_ first 128 characters that are shared by most of the encodings.
+* In property _names_ and _string values_ the characters "_quotation mark_, _reverse solidus_, and the _control characters_ (U+0000 through U+001F) " "must be escaped".
+* Any other character in a property _names_ and _string values_ "may be escaped". There are two main escaping strategies. "It may be escaped by a six-character sequence: a _reverse solidus_, a lowercase letter _u_, and four hexadecimal digits that encodes the character's code point.". "For example, a _reverse solidus_ character may be represented as _\u005C_". "Alternatively, there are two-character sequence escape representations of some popular characters" allowed: \" (_quotation mark_), \\ (_reverse solidus_), \/  (_solidus_), \b (_backspace_), \f (_form feed_), \n (_line feed_), \r (_carriage return_) and \t (_tab_). In addition there is the less used "UTF-16 surrogate pair" (e.g. "G clef" character may be represented as "\uD834\uDD1E". 
+*  "Implementations MUST NOT add a byte order mark to the beginning of a JSON text. In the interests of interoperability, implementations that parse JSON texts MAY ignore the presence of a byte order mark rather than treating it as an error.". In UTF8, the _byte order mark_ is the byte sequence: 0xEF,0xBB,0xBF. 
+* "The MIME media type for JSON text is application/json"
+* "Security Consideration": Even if "JSON is a subset of JavaScript but excludes assignment and invocation", so that it can not contain code, "to use the "eval()" function to parse JSON texts constitutes an unacceptable security risk, since the text could contain executable code along with data declarations" (text that is not JSON but contains other elements of JavaScript). "The same consideration applies to the use of eval()-like functions in any other programming language".
+
+In addition to these requirements, the authors consider that adding an extra requirement to normal behavior for JSON parsers is interesting:
+* A parser that finds an object property that it is not able to recognize, should ignore it rather than treating it as an error. (This is not what happens by default in the case of XML validation). In special circumstances JSON can limit this inherent behavior, if conveniently justified, but not in general. 
+
+To increase interoperability the authors of this document would like to add considerations for including more simple data types as restrictions of the "string" type. They were taken directly from the "format" parameter of the JSON Schema standard candidate:
+
+* "date-time": Date representation, as defined by http://tools.ietf.org/html/rfc3339[RFC 3339, section 5.6].
+* "email": Internet email address, as defined by http://tools.ietf.org/html/rfc5322[RFC 5322, section 3.4.1].
+* "hostname": Internet host name, as defined by http://tools.ietf.org/html/rfc1034[RFC 1034, section 3.1].
+* "uri": A universal resource identifier (URI), according to http://tools.ietf.org/html/rfc3986[RFC3986].
+
+See more detail of these four simple data types below. 
+
+[NOTE]
+_format_ in JSON Schemas also defines _ipv4_ and _ipv6_ but these types are not commonly needed in OGC standards.
+
+In addition to these simple types, complex geometrical types are fundamental for OGC and will be discussed in <<Geospatial_dimension_in_JSON>>.
+
+[[DateTime_Format]]
+==== Date-Time format
+It follows RFC 3339, section 5.6. This format follows the profile of ISO 8601 for dates used on the Internet. This is specified using the following syntax description, in Augmented  Backus-Naur Form (ABNF, RFC2234) notation.
+
+.Description of date-time format (including range for each sub-element)
+[source,text]
+----
+   date-fullyear   = 4DIGIT
+   date-month      = 2DIGIT  ; 01-12
+   date-mday       = 2DIGIT  ; 01-28, 01-29, 01-30, 01-31 based on
+                             ; month/year
+   time-hour       = 2DIGIT  ; 00-23
+   time-minute     = 2DIGIT  ; 00-59
+   time-second     = 2DIGIT  ; 00-58, 00-59, 00-60 based on leap second
+                             ; rules
+   time-secfrac    = "." 1*DIGIT
+   time-numoffset  = ("+" / "-") time-hour ":" time-minute
+   time-offset     = "Z" / time-numoffset
+
+   partial-time    = time-hour ":" time-minute ":" time-second
+                     [time-secfrac]
+   full-date       = date-fullyear "-" date-month "-" date-mday
+   full-time       = partial-time time-offset
+
+   date-time       = full-date "T" full-time
+----
+
+.Example of date-time format
+[source,json]
+----
+{
+    "date": "1985-04-12T23:20:50.52Z"
+}
+----
+
+This subtype is fundamental for OGC and the <<Time_instants_as_strings>> of this document is devoted to it, in the context of the time dimension described in the <<The_time_dimension>>.
+
+==== Email format
+It follows RFC 5322, section 3.4.1. It specifies Internet identifier that contains a locally interpreted string followed by the at-sign character ("@", ASCII value 64) followed by an Internet domain. The locally interpreted string is either a quoted-string or a dot-atom. If the string can be represented as a dot-atom (that is, it contains no characters other than atext characters or "." surrounded by atext characters), then the dot-atom form SHOULD be used and the quoted-string form SHOULD NOT be used. 
+
+.Example of email format
+[source,json]
+----
+{
+    "email": "mr.bob@opengeospatial.org"
+}
+----
+
+==== URI format
+It follows RFC3986 and supports both a URI and a URN. The following text represents the common structure of the two previously mentioned types.
+
+.URI component parts
+[source,text]
+----
+     foo://example.com:8042/over/there?name=ferret#nose
+     \_/   \______________/\_________/ \_________/ \__/
+      |           |            |            |        |
+   scheme     authority       path        query   fragment
+      |   _____________________|__
+     / \ /                        \
+     urn:example:animal:ferret:nose
+----
+
+.Example of URI format
+[source,json]
+----
+{
+    "url": "http://www.opengeospatial.org/standards"
+}
+----
+
+[[JSON_Schema]]
+=== JSON Schema
+==== Why OGC needs JSON validation
+OGC is transitioning from standards that were written in plain English to a robust way of written standards based on requirements classes that are linked to conformance test classes. Conformance tests are designed to determine if implementations follow the standard. When an XML encoding is involved, standards that provide XML Schema files defining each data type, provide a straightforward way to check if a document follows the standard: _validating_ the XML document with XSD, RelaxNG or Schematron (or a combination of them).
+
+If OGC is going to adopt JSON as an alternative encoding for data models, some automatic way of validating if objects in the JSON file follow the data models proposed by the corresponding standard could be also convenient.
+
+==== JSON Schema standard candidate
+JSON Schema is intended for validation and documentation of data models. It acts in a similar way to XSD for an XML file.
+Indeed, some applications (such us XML Validator Buddy) are able to combine a JSON file with its corresponding JSON schema to test and validate if the content of the JSON file corresponds to the expected data model. Several implementations of JSON schema validation are available to be used also on-line. An example is the one available in this URL http://json-schema-validator.herokuapp.com/ and the corresponding opensource code available in github https://github.com/daveclayton/json-schema-validator.
+
+The number of aspects that JSON Schema can validate is lower than the ones that XML Schema can control. Some factors contribute to that:
+
+* JSON objects are considered extendable by default. This means that adding properties not specified in the schema does not give an error as result of validating, by default. This prevents detecting object or attribute names with typos (because they will be confused with _extended_ elements) except if they are declared as mandatory (and the will be found _missing_ in the validation process). Please note that JSON schema provides a keyword _additionalProperties_ that if it is defined as _false_, then JSON object is declared as not extensible (and only the property names enumerated in _properties_ are considered valid). Even if this will allow for a more strict validation, we are not recommending it because we will be loosing one of the _advantages_ of JSON (this topic has been already discussed in the <<Basic_JSON_considerations>>).
+* Objects have no associated data types (or classes). This forces the schema validation to be based in object _patterns_ and not in class definitions.
+* Another difference is that JSON properties are not supposed to have order so the order of the properties of an object cannot be validated. In many cases this is not a problem, since most of the data models used in OGC do not depend on the order of the properties, even if the XML “tradition�_ has imposed this unnecessary restriction (this topic has been already discussed in the <<Basic_JSON_considerations>>).
+
+Unfortunately, JSON schema is a IETF draft that expired in August 2013 and the future of the specification was uncertain. One of the authors blogged that he is forced to abandon the project due to lack of time. The project has been reactivated in September 2016 and a new version of the IETF documents has been released with minim changes. New releases with descend compatibility have been promised.
+
+Note that the Internet media type is "application/schema+json". According to the last available draft of JSON Schema (v4), there is not a new file extension proposed for files storing JSON Schemas. The file extension ".json" is used profusely. To make the situation a bit more complex, there is no documented mechanism to associate a JSON instance to its schema (even if it seems that some applications use "$schema" to do this; as discussed in https://groups.google.com/forum/#!topic/json-schema/VBRZE3_GvbQ). In preparing these examples, we found the need to be able prepare json instances and json schemas with similar file names to make the relation between them more explicit and it was practical to name the schema files ending with "_schema.json".
+
+==== JSON Schema simple example
+Lets use a simple feature example encoded in JSON to later illustrate how JSON Schema is useful for documentation and validation.
+
+.Example of a river feature in JSON
+[source,json]
+----
+{
+	"river":
+	{
+		"name": "mississippi",
+        "length": 3734,
+		"discharge": 16790,
+		"source": "Lake Itasca",
+		"mouth": "Gulf of Mexico",
+		"country": "United States of America",
+		"bridges": ["Eads Bridge", "Chain of Rocks Bridge"]
+	}
+}
+----
+
+Now let's define a JSON Schema for validating it. The first thing we need is to start a JSON file with an indication telling everybody that this is a JSON Schema by adding a "$schema" property in the root object of the schema. The value used in this examples reflects the last draft version available some months ago (i.e. v4).
+
+.Indication that this file is a JSON Schema that follows the specification draft version 4.
+[source,json]
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#"
+}
+----
+
+Title and description are useful properties to describe the schema purpose and the objects and properties it will validate.
+
+.Title and description to describe the schema (or the root element).
+[source,json]
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "JSON minimal example",
+	"description": "Schema for the minimal example of a river description"
+}
+----
+
+The root element can be an object or an array. In this case we are validating an _object_.
+
+.The root object is an object.
+[source,json]
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "JSON minimal example",
+	"description": "Schema for the minimal example that is a river",	
+	"type": "object"
+}
+----
+
+Now it is time to enumerate the properties. The properties array allows to enumerate the property names and to list their attributes. In the next example, there is only one property that is called "river". This property is an object and is declared as required.
+
+.The root object has a single property called "river"
+[source,json]
+----
+{
+    [...]
+    "type": "object",
+	"required": ["river"],
+	"properties": {
+		"river": {
+			"type": "object"
+		}
+	}
+}
+----
+
+Since _river_ is an _object_, we can repeat the previous pattern for it. In particular, a river object has a _name_ and this name is an "string".
+
+.The river object has also some properties 
+[source,json]
+----
+{
+    [...]
+		"river":
+		{
+			"type": "object",
+			"title": "Minimal River",
+			"required": [ "name" ],
+			"properties":
+			{
+				"name": {"type": "string" },
+                [...]
+			}
+		}
+    [...]
+}
+----
+
+A _river_ has additional properties and some of them are numeric. Please note that in the case of numeric properties, the numeric allowed range can be indicated using _minimum_ and _maximum_. In this case, we are forcing numbers to be non-negative since they represent characteristics that cannot be negative.
+
+.The river properties list
+[source,json]
+----
+{
+    [...]
+			{
+				"name": {"type": "string" },
+				"length": { "type": "number", "minimum": 0 },
+				"discharge": { "type": "number", "minimum": 0 },
+				"source": { "type": "string" },
+				"mouth": { "type": "string" },
+				"country": { "type": "string" },
+				[...]
+			}
+    [...]
+}
+----
+
+Now we add a river property that is called _bridges_ and that can contain a list of bridge names. It is encoded as an array of strings.
+
+.One river property is an array
+[source,json]
+----
+{
+    [...]
+			{
+				[...]
+				"country": { "type": "string" },
+				"bridges": { 
+				    "type": "array", 
+				    "items": { "type": "string" }
+				}
+			}
+    [...]
+}
+----
+
+Finally, we could use one of the JSON online schema validator tools to check the validity of the previous JSON file. There are many online validators and the initial JSON example has been validated with the proposed JSON Schema with the following validators:
+
+* https://json-schema-validator.herokuapp.com/
+* http://jsonschemalint.com/#/version/draft-04/markup/json
+* http://www.jsonschemavalidator.net/
+
+If we simply change the length of the river to a negative number (e.g. -1) we will get an error report that varies in the text from one implementation to the other but all give us an indication of the problem:
+
+.Response of the http://www.jsonschemavalidator.net/
+[source,text]
+----
+Message: Integer -1 is less than minimum value of 0.
+Schema path:#/properties/river/properties/length/minimum
+----
+
+.Response of the https://json-schema-validator.herokuapp.com/
+[source,json]
+----
+[ {
+  "level" : "error",
+  "schema" : {
+    "loadingURI" : "#",
+    "pointer" : "/properties/river/properties/length"
+  },
+  "instance" : {
+    "pointer" : "/river/length"
+  },
+  "domain" : "validation",
+  "keyword" : "minimum",
+  "message" : "numeric instance is lower than the required minimum (minimum: 0, found: -1)",
+  "minimum" : 0,
+  "found" : -1
+} ]
+----
+
+.Response of the http://jsonschemalint.com/#/version/draft-04/markup/json
+image::images/jsonschemalint_com.png[]
+
+==== JSON Schema for an object that can represent two things
+Lets consider now that I need to encode rivers and lakes. In this case, we will need an object that can present itself either as a river or as a lake. We have already seen an example for a river, and we now present an instance for a lake.
+
+.Example of a lake feature in JSON
+[source,json]
+----
+{
+	"lake":
+	{
+		"name": "Tunica Lake",
+        "area": 1000,
+		"country": "United States of America"
+	}
+}
+----
+
+Obviously, rivers and lakes will have different properties. There is a _oneOf_ property in JSON Schema that allows a thing to present more than one alternative definition. This way both, the previous JSON instance for the river and the one in this subsection, will be validated with the same JSON Schema. 
+
+.Example of a JSON schema to validate a river or a lake
+[source,json]
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"oneOf": [
+		{
+			"title": "JSON minimal river example",
+			"description": "Schema for the minimal example that is a river",
+			"type": "object",
+			"required": ["river"],
+			"properties": {
+				"river":
+				{
+					"type": "object",
+					"title": "Minimal river",
+					"required": [ "name", "length" ],
+					"properties":
+					{
+						"name": {"type": "string" },
+						"length": { "type": "number", "minimum": 0 },
+						"discharge": { "type": "number", "minimum": 0 },
+						"source": { "type": "string" },
+						"mouth": { "type": "string" },
+						"country": { "type": "string" },
+						"bridges": { 
+						    "type": "array", 
+						    "items": { "type": "string" }
+						}
+					}
+				}
+			}
+		},{
+			"title": "JSON minimal lake example",
+			"description": "Schema for the minimal example that is a lake",
+			"type": "object",
+			"required": ["lake"],
+			"properties": {
+				"lake":
+				{
+					"type": "object",
+					"title": "Minimal lake",
+					"required": [ "name", "area" ],
+					"properties":
+					{
+						"name": {"type": "string" },
+						"area": { "type": "number", "minimum": 0 },
+						"country": { "type": "string" }
+					}
+				}
+			}
+		}
+	]
+}
+----
+
+==== JSON Schema for an array of features
+After showing how to do a single feature (i.e. rivers and lakes, each one in an independent JSON document that can be validated with the same JSON Schema) to show how to represent a feature collections as arrays can be useful. Following this approach, we are able to include rivers and lakes as array items in the same JSON file:
+
+.Example of a river and a lake feature in JSON. Variant A.
+[source,json]
+----
+[
+	{
+		"river":
+		{
+			"name": "mississippi",
+			"length": 3734,
+			"discharge": 16790,
+			"source": "Lake Itasca",
+			"mouth": "Gulf of Mexico",
+			"country": "United States of America",
+			"bridges": ["Eads Bridge", "Chain of Rocks Bridge"]
+		}
+	},{
+		"lake":
+		{
+			"name": "Tunica Lake",
+			"area": 1000,
+			"country": "United States of America"
+		}
+	}
+]
+----
+
+This can be validated by the following JSON Schema, that is very similar to the last one, but defines the root element as an array of items.
+
+.Example of a JSON Schema to validate a river or a lake. Variant A.
+[source,json]
+----
+{
+
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "JSON feture array example",
+	"description": "Schema for a feature array",
+	"type": "array",
+	"items": {
+		"oneOf":[
+		{
+			"title": "JSON minimal river example",
+			"description": "Schema for the minimal example that is a river",
+			"type": "object",
+			"required": ["river"],
+			"properties": {
+				"river":
+				{
+					"type": "object",
+					"title": "Minimal river",
+					"required": [ "name", "length" ],
+					"properties":
+					{
+						"name": {"type": "string" },
+						"length": { "type": "number", "minimum": 0 },
+						"discharge": { "type": "number", "minimum": 0 },
+						"source": { "type": "string" },
+						"mouth": { "type": "string" },
+						"country": { "type": "string" },
+						"bridges": { 
+						    "type": "array", 
+						    "items": { "type": "string" }
+						}
+					}
+				}
+			}
+		},{
+			"title": "JSON minimal lake example",
+			"description": "Schema for the minimal example that is a lake",
+			"type": "object",
+			"required": ["lake"],
+			"properties": {
+				"lake":
+				{
+					"type": "object",
+					"title": "Minimal lake",
+					"required": [ "name", "area" ],
+					"properties":
+					{
+						"name": {"type": "string" },
+						"area": { "type": "number", "minimum": 0 },
+						"country": { "type": "string" }
+					}
+				}
+			}
+		}]
+	}
+}
+----
+
+JSON is one of these cases where simplicity is highly appreciated. It could be useful to consider a second alternative, where there is not need to use an object name. Instead we will use a "type" property to differentiate among object types and this will result in a notation with less indentations. A part from being more elegant (what is a matter of opinion) it will result in a much more nice conversion to RDF when JSON-LD @context is introduced later (see <<Apply_JSONLD_to_JSON_objects_subsection>>).
+
+.Example of a river and a lake feature in JSON. Variant B.
+[source,json]
+----
+[
+	{
+		"type": "river",
+		"name": "mississippi",
+		"length": 3734,
+		"discharge": 16790,
+		"source": "Lake Itasca",
+		"mouth": "Gulf of Mexico",
+		"country": "United States of America",
+		"bridges": ["Eads Bridge", "Chain of Rocks Bridge"]
+	},{
+		"type": "lake",
+		"name": "Tunica Lake",
+		"area": 1000,
+		"country": "United States of America"
+	}
+]
+----
+
+This is the corresponding JSON Schema that can be used to validate the array. Note that only "river" and "lake" values are allowed in the "type" key, and any other value will generate a validation error.
+
+.Example of a JSON Schema to validate a river or a lake. Variant B.
+[source,json]
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "JSON feture array example",
+	"description": "Schema for a feature array",
+	"type": "array",
+	"items": {
+		"oneOf":[
+		{
+			"title": "JSON minimal river example",
+			"description": "Schema for the minimal example that is a river",
+			"type": "object",
+			"required": [ "type", "name", "length" ],
+			"properties": {
+				"type": {"enum": ["river"] },
+				"name": {"type": "string" },
+				"length": { "type": "number", "minimum": 0 },
+				"discharge": { "type": "number", "minimum": 0 },
+				"source": { "type": "string" },
+				"mouth": { "type": "string" },
+				"country": { "type": "string" },
+				"bridges": { 
+				    "type": "array", 
+				    "items": { "type": "string" }
+				}
+			}
+		},{
+			"title": "JSON minimal lake example",
+			"description": "Schema for the minimal example that is a lake",
+			"type": "object",
+			"required": [ "type", "name", "area" ],
+			"properties":
+			{
+				"type": {"enum": ["lake"] },
+				"name": {"type": "string" },
+				"area": { "type": "number", "minimum": 0 },
+				"country": { "type": "string" }
+			}
+		}]
+	}
+}
+----
+
+In JSON Schema, one can do much more than what has been explained here. Most of the needed characteristics of UML class diagram usually included in OGC and ISO standards, such as, generalization, association, composition, etc can be implemented by JSON Schemas as comprehensively discussed in the OGC 16-051 Testbed 12 A005-2 Javascript JSON JSON-LD ER.

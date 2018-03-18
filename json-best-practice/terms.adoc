@@ -1,0 +1,8 @@
+== Terms and definitions
+
+For the purposes of this report, the following terms and definitions apply.
+
+===	schema
+ TBD
+ [TBD]
+

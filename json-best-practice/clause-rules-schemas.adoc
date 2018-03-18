@@ -1,0 +1,805 @@
+[[Clause_Rules_Schemas]]
+== Rules for encoding JSON Schema and JSON-LD context documents from UML class diagrams
+
+The rules provided in this clause and in the following one <<Clause_Rules_Instances>> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an _encoding service_. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non normative) justifications, clarifications and examples can follow.
+
+Rules have been classified in subsections for clarification purposes only. All rules form a single corpus and need to be applied together.
+
+Also note that we target _JSON Schemas_ and have @context documents to guide the JSON-LD to RDF conversions and give semantics of objects and attribute names. This JSON Schemas and @context documents are generic and will be applied to several JSON instances. Actually, next clause <<Clause_Rules_Instances>> targets the JSON instances.
+
+In practice, these rules inform UML application schema conversion implementors. In other words, it can be applied in a future automatic UML application schema conversion tool (e.g. ShapeChange).
+
+=== Root element
+
+*Rule 1.1*: The JSON schema SHALL declare the first type as "object"
+
+[source,JSON]
+.Example of the start of a JSON Schema file that defines the root property as an object.
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "Coverage objects",
+	"description": "Schema for Coverage objects",
+	"type": "object"
+}
+----
+
+Even if a JSON-LD could also be of the array type (or a simple type) in encoding a root class coming from UML, this UML class is represented by a single the root element.
+
+=== Namespaces
+
+*Rule 2.1*: The _root @context document_ SHALL contain a list of properties with the names of the abbreviated namespaces and value of the full namespace URI for the properties of the root element of the JSON document. 
+
+[source,JSON]
+.Example of a fragment of the root "@context" document (coverage-context.json) containing definition of the abbreviated and full namespace.
+----
+{
+	"@context":
+	{
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"cis": "http://www.opengis.net/cis/1.1/",
+		[...]
+	}
+}
+----
+
+
+*Rule 2.2*: The _root "@context" document_ SHALL define a property "id" as  "@id" and a property "type" as "@type".
+
+[source,JSON]
+.Example of a fragment of the root "@context" document where id and type are defined.
+----
+{
+	"@context":
+	{
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"cis": "http://www.opengis.net/cis/1.1/",
+
+	    "id": "@id",
+		"type": "@type"
+		[...]
+	}
+}
+----
+
+The properties that starts with "@" are a bit more difficult to access in JavaScript that the others because they can NOT be called using "coverage.@id" but using the array notation that is less _natural_ "coverage[@id]". The existance of this rule allows for using  "context.id" and "context.type" instead for "@id" and "@type" in JavaScript. 
+
+*Rule 2.3*: For all abbreviated namespaces, the correspondence to full namespace URI SHALL be listed in a @context document. If the document has more than one "@context", and the abbreviated namespace will be used only inside a particular JSON object that has a "@context" property, the definition SHALL be done in this "@context" (instead of using the root "@context"). 
+
+
+=== Objects
+
+*Rule 3.1*: In the JSON schema, each JSON object (including the root) SHALL define "id" property with _type_ "string" and _format_ "uri". This property SHALL be defined as mandatory (_required_).
+
+[source,JSON]
+.Example of the addition of the necessary id's
+----
+{
+	[...]
+	"type": "object",
+	"required": [ "id", ... ],
+	"properties": {
+		"id": { "type": "string", "format": "uri"},
+		[...]
+	},
+}
+----
+
+*Rule 3.2*: In a JSON schema, each JSON object (including the root) SHALL define a “type” property with _type_ _enum_. The _enum_ will enumerated the UML class type name. The value of the _type_ property of each JSON object in a JSON instance SHALL not contain an abbreviated namespace prefix. UML class type names are usually in UpperCammelCase and the values of the _enum_ will be too.
+
+[source,JSON]
+.Example of the addition of the necessary type's
+----
+{
+	"seviceIdentification": {
+		"title": "Sevice identification",
+        "type": "object",
+		"required": [ "id", "type", ... ],
+		"properties": {
+			"type": { "enum": ["SeviceIdentification"] },
+
+}
+----
+
+*Rule 3.3*: The possible values of the _type_ property SHALL be listed as a property name of a @context document with a value of the abbreviated namespace, a ":" character and the name again.
+
+[source,JSON]
+.Example of the definition of types in JSON-LD.
+----
+{
+	"@context":
+	{
+		"md": "http://www.opengis.net/md",
+		"examples": "http://www.opengis.net/cis/1.1/examples/"
+
+		"id": "@id",
+		"type": "@type",
+		"MD_LegalConstraints": "md:MD_LegalConstraints"
+	},
+	"type": "MD_LegalConstraints",
+	"id": "examples:CIS_05_2D",
+	...
+}
+----
+
+Using the types values without namespace in the JSON object definitions allows for creating a JSON schema that is able to correctly enumerate the possible values of a type property without the abbreviated namespace. This way the abbreviated namespace may vary from one instance without affecting the common JSON schema. In contrast, "id" values are expected to be different in each instance (and their values are not verified by the JSON schema) so they should contain the abbreviated namespace.
+
+If an object can present more that one type (e.g. there is a one or more generalized classes of a more generic class) the all the alternative types are listed in the appropriate @context section. 
+
+[source,JSON]
+.Example of more that one type definition for a class.
+----
+{
+    "@context":
+    {
+        "MD_Constraints": "md:MD_Constraints",
+        "MD_LegalConstraints": "md:MD_LegalConstraints",
+        "MD_SecurityConstraints": "md:MD_SecurityConstraints"
+    }
+}
+----
+
+Again, there is no need to list the Abstract types due to they cannot be instanciated in JSON-LD instances.
+
+In a JSON-LD instance, when UML generalization is used to derive more specific classes from a generic class, the value of the property "type" will be the specialized class type name, instead of the generic class name. This behavior will favor both old and the new implementations. Old implementations will be able to ignore the "type" value, identify the object name and read the common properties from the generic class. New implementation will recognize the "type" value and be prepared to find the specialized properties.
+
+*Rule 3.4*: A UML _Union_ SHALL be expressed as a JSON object defined as an _anyOf_ array. Each anyOf item SHALL be defined as one property (plus the _type_ and _id_ properties) that are defined as required. All _type_ properties SHALL be identically defined.
+
+[[r_sch_image_possible_values]]
+.UML model for a generalized class ServiceIdentification.
+image::includes/images/PossibleValues.png[]
+
+[source,JSON]
+.JSON Schema fragment example of a UML Union encoded in JSON.
+----
+"possibleValues": {
+	"title": "Possible Values list",
+	"type": "object",
+	"anyOf": [ 
+		{
+			"required": [ "type", "allowedValues"],
+			"properties": {
+				"type": { "enum": ["PossibleValues"] },
+				"allowedValues": { "$ref": "#/definitions/AllowedValues" }
+			}
+		},{
+			"required": [ "type", "anyValue"],
+			"properties": {
+				"type": { "enum": ["PossibleValues"] },
+				"anyValue": { "$ref": "#/definitions/AnyValue" }
+			}
+		},{
+			"required": [ "type", "noValues"],
+			"properties": {
+				"type": { "enum": ["PossibleValues"] },
+				"noValues": { "$ref": "#/definitions/NoValues" }
+			}
+		},{
+			"required": [ "type", "valuesListReference"],
+			"properties": {
+				"type": { "enum": ["PossibleValues"] },
+				"valuesListReference": { "$ref": "#/definitions/ValuesReference" }
+			}
+		}
+	]
+}
+----
+
+*Rule 3.5*: A UML class that is a _aggregation_ or a _composition_ of a parent class, SHALL be considered equivalent to a JSON complex property of the parent object (considering it as the same as a UML complex attribute). The name of the source extreme of the relation (the tip of the arrow) will be considered the name of the complex _attribute_ and the _class name_ will be considered the _type_ of the property.
+
+[[r_sch_image_md_format]]
+.UML model showing a class that is defined as an aggregation of MD_Distribution and also as a complex data type MD_DigitalTransferOptinos
+image::includes/images/MD_format.png[]
+
+[source,JSON]
+.JSON Schema fragment example of a class used as an aggregation and as a data type (the example ignores the tranferOption multiplicity for simplicity)
+----
+{
+    ...
+    "distributionInfo": {
+        "description": {"type": "string"},
+        "distributionFormat": {"$ref": "#/definitions/MD_format"},
+        "transferOptions": {
+            ...
+            "distributionFormat": {"$ref": "#/definitions/MD_format"}        
+        }
+    }
+}
+----
+
+Please consider the rules for complex attributes and properties below.
+
+=== Object attributes; names
+
+*Rule 4.1*: All UML class attributes SHALL be listed in a @context object. If the document has more than one "@context", the property SHALL be defined in the "@context" that is closer to it (with the exception of "id" and "type" that are defined in the root "@context" document and always have global scope). The value of the listed properties has to be the abbreviated namespace, the ":" character and the name of the property again.
+
+Defining the properties in the "@context" that is closer to it makes the definition local to the object where the "@context" belongs.
+
+[source,JSON]
+.Example of the addition of the abbreviate namespace to properties 
+----
+{
+	"domainSet":{
+		"@context":
+		{
+			"generalGrid": "cis:generalGrid",
+			"axis": "cis:axis",
+			"axisLabel": "cis:axisLabel",
+			"lowerBound": "cis:lowerBound",
+			"upperBound": "cis:upperBound"
+		},
+		"generalGrid":{
+			"axis": [{ 
+			    "type": "IndexAxisType",
+				"axisLabel": "i",
+				"lowerBound": 0,
+				"upperBound": 2
+			},{
+			    "type": "IndexAxisType",
+				"axisLabel": "j",
+				"lowerBound": 0,
+				"upperBound": 2
+			}]
+		}
+	}
+}
+----
+
+*Rule 4.2*: All UML class attributes (as well as composition and aggregations) SHALL be listed as _properties_ of the object in the JSON Schema. 
+
+[source,JSON]
+.Example of axisLabel, lowerBound and upperBound properties definition.
+----
+{ 
+	"type": "object",
+	"properties": {
+		"type": { "enum": [ "IndexAxisType"] },
+        "axisLabel":  { "type": "string" },
+		"lowerBound":  { "type": "number" },
+		"upperBound": { "type": "number" }
+	},
+----
+
+=== Object attributes; multiplicity
+
+*Rule 5.1*: Attributes, aggregations and compositions of an object with multiplicity 0 or 1 in the UML will be listed as JSON properties in the JSON schema.
+
+[source,JSON]
+.Example of axisLabel, lowerBound and upperBound properties definition.
+----
+	"axis": {
+		"type": "object",
+		"properties": {
+			"type": { "enum": [ "IndexAxisType"] },
+			"axisLabel":  { "type": "string" },
+			"lowerBound":  { "type": "number" },
+			"upperBound": { "type": "number" }
+		}
+	},
+----
+
+*Rule 5.2*: Attributes, aggregations and compositions of an object with multiplicity more than 0 in the UML will have their names listed in the array of "required" properties in the JSON schema
+
+[source,JSON]
+.Example of the "required" list of property.
+----
+	"axis": {
+		"type": "object",
+		"required": [ "type", "axisLabel", "lowerBound", "upperBound" ],
+		"properties": {
+			"type": { "enum": [ "IndexAxisType"] },
+			"axisLabel":  { "type": "string" },
+			"lowerBound":  { "type": "number" },
+			"upperBound": { "type": "number" }
+		}
+	},
+----
+
+*Rule 5.3*: Attributes, aggregations and compositions with multiplicity more that 1 in the UML will be encoded as JSON properties of the _type_ "array" in the JSON schema
+
+In JSON instances the arrays of JSON objects will defined the type for each member of the array. The "type" can be different from the other members of the array (JavaScript allows arrays that are heterogenous in types) but all "type" values will be an generalization of the same generic UML class.
+
+[source,JSON]
+.Example of JSON schema for numeric properties with multiplicity more than 1.
+----
+{
+	"coordinates": {
+		"type": "array",
+		"items": { "type": "number" }
+	},											
+}
+----
+
+*Rule 5.4*: A property defined in the UML as _ordered_ and with multiplicity more than 1, SHALL be defined as "@container": "@list" in a @context document.
+
+There is an important singularity in JSON-LD about this. When a JSON document is converted into JavaScript all JSON arrays becomes automatically with order. However in JSON-LD the situation is the opposite, and by default arrays are NOT considered as ordered when converting JSON-LD arrays to RDF. There is technical reason behind this: ordered arrays require much more RDF code and the conversion does _not_ result in a _nice_ RDF code. For that reason if the a property is maked as _ordered_ in the UML, we have to explicitly indicate this in a @context. Please limit the use this parameter only when order is really important.
+
+=== Object attributes; data types
+
+*Rule 6.1*: Numeric attributes in the UML SHALL have "type": "number" in the JSON Schema.
+
+[source,JSON]
+.Example of JSON schema for anyURL properties with multiplicity 0 or 1.
+----
+{
+	"lowerBound":  { "type": "number" },
+	"upperBound": { "type": "number" }
+}
+----
+
+In JSON there is no able to distinction between diferent numeric data types: E.g. Integer, Float, Double etc and they all became _number_.
+
+Numeric attributes with multiplicity more than 1 will have "type": "array" and "items": {"type": "number"} in the JSON Schema.
+
+[source,JSON]
+.Example of JSON schema for numeric properties with multiplicity more than 1.
+----
+{
+	"coordinates": {
+		"type": "array",
+		"items": { "type": "number" }
+	},											
+}
+----
+
+*Rule 6.2*: Boolean attributes SHALL have "type": "boolean" in the JSON Schema.
+
+Boolean attributes with multiplicity more than 1 will have "type": "array" and "items": {"type": "boolean"} in the JSON Schema.
+
+*Rule 6.3*: String attributes SHALL have "type": "string" in the JSON Schema.
+
+[source,JSON]
+.Example of JSON schema for anyURL properties with multiplicity 0 or 1.
+----
+{
+	"axisLabel":  { "type": "string" }
+}
+----
+
+If there is a reason to believe that the attribute has been defined as UML string to allow both numbers or strings (depending of the case), define the type as an array of "number" and "string" is recommended.
+
+[source,JSON]
+.Example of JSON schema for an string that can be also instanciated as a number.
+----
+{
+	"value":  { "type": ["number", "string"] },
+}
+----
+
+String attributes with multiplicity more than 1 will have "type": "array" and "items": {"type": "string"} in the JSON Schema.
+
+[source,JSON]
+.Example of JSON schema for string properties with multiplicity more than 1.
+----
+{
+	"axisLabels": 
+	{
+		"type": "array",
+		"items": { "type": "string" }
+	}
+}
+----
+
+*Rule 6.4*: anyURL attributes with multiplicity 0 or 1 SHALL have "type": "string" and "format": "uri" in the JSON Schema.
+
+[source,JSON]
+.Example of JSON schema for anyURL properties with multiplicity 0 or 1.
+----
+{
+    "srsName": { "type": "string", "format": "uri"}
+}
+----
+
+anyURL attributes with multiplicity more that 1 will have "type": "array" and "items": {"type": "string", "format": "uri"} in the JSON Schema.
+
+[source,JSON]
+.Example of JSON schema for anyURL properties with multiplicity more than 1.
+----
+{
+	"srsNames": 
+	{
+		"type": "array",
+		"items": { "type": "string", "format": "uri"}
+	}
+}
+----
+
+*Rule 6.5*: A property that has the value anyURI SHALL be described as "@type": "@id" in a JSON @context document
+
+[source,JSON]
+.Example of the definition of a value anyURI in JSON-LD
+----
+{
+    "@context":
+    {
+        "srsName": {"@id":"swe:srsName", "@type": "@id"}
+    }
+}
+----
+
+The reasoning behind this is that property values defined without "@type": "@id" are considered literals when converted to RDF. Property values defined with "@type": "@id" considered as URIs when converted to RDF.
+
+*Rule 6.6*: Complex type attributes SHALL have "type": "object" in the JSON Schema.
+
+[source,JSON]
+.Example of JSON schema for complex properties with multiplicity 0 or 1.
+----
+{
+	"generalGrid":{ 
+		"title": "General Grid",
+		"description": "General Grid",
+		"type": "object"
+	}
+}
+----
+
+Complex type attributes with multiplicity more than 1 will have "type": "array" and "items": {"type": "object"} in the JSON Schema
+
+[source,JSON]
+.Example of JSON schema for complex properties with multiplicity more than 1.
+----
+{
+	"axis": {
+		"type": "array",
+		"items": { 
+			"type": "object"
+		}
+	}
+}
+----
+
+*Rule 6.7*: A UML complex type attribute SHALL be encoded as JSON Object properties or as an Array of JSON Object type properties in a JSON-LD instance.
+
+=== Object attributes; null values
+
+*Rule 7.1*: For a attribute that can have null values, an array of types combining the variable data type and "null" SHALL be used. 
+
+[source,JSON]
+.Example of a nullable value.
+----
+{
+	"lowerBound":  { "type": ["number", "null"] },
+}
+----
+
+
+=== Object attributes; enumerations and code-lists
+
+*Rule 8.1*: A UML "enumeration" SHALL be encoded as an "enum" in a JSON schema. Enumerations SHALL be listed in the "definitions" section of the JSON schema to be able to reuse them as needed.
+
+[[r_sch_image_range_closure]]
+.UML model for a enumeration.
+image::includes/images/RangeClosure.png[]
+
+[source,JSON]
+.Example of enumerations
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"rangeClosure": {"$ref": "#/definitions/RangeClosure"},
+		...
+	}
+	"definitions": {
+		"RangeClosure": {
+			"title": "Values of RangeClosure enumeration",	
+			"enum": ["closed", "open", "open-closed", "closed-open"]
+		}
+	}
+}
+----
+
+*Rule 8.2*: A UML "codelist" SHALL be encoded as an oneOf "enum" or "string" in a JSON schema. Codelists SHALL be listed in the _definitions_ section of the JSON schema to be able to reuse them as needed.
+
+[source,JSON]
+.Example of the addition of the necessary id's
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"required": [ "codelist_a"],
+	"properties": {
+		"codelist_a": { "$ref": "#/definitions/codelist1" },
+		...
+	},
+	"definitions": {
+		"codelist": {
+			"oneOf": [
+				{
+					"enum": [ "a2", "b2", "c2" ]
+				},{
+					"type": "string"
+				}
+			]
+		}
+	}
+}
+----
+
+The reason for this is that codelist are considered extendable and in practice they should support any value. See a good discussion on how to encode  enumeration an codelist in JSON Schema here: http://grokbase.com/t/gg/json-schema/14b79eqgqq/code-list-enum-extension
+
+=== Objects: Data types and inheritance
+
+*Rule 9.1*: If a UML class is defined as _DataType_ (and potentially used in more that one place in the UML model) it SHALL be defined in the _definitions_ section of the JSON schema and referenced by each attribute that is declared of this _DataType_
+
+Actually, it is highly recommended that all UML classes are defined in the _definitions_ sections. Only the objects defined in the _definitions_ and the root object can be referenced from another JSON schema.
+
+[source,JSON]
+.JSON Schema fragment example of the use of definitions section.
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+	"properties": {
+		"seviceIdentification": { "$ref": "#/definitions/SeviceIdentification" },
+		...
+	},
+	"definitions": {
+		"ServiceIdentification": {
+			"title": "Service identification",
+            "type": "object",
+			"required": [ "type", "serviceType", "serviceTypeVersion" ],
+        	"properties": {
+				"type": { "enum": ["ServiceIdentification"] },
+				"serviceType": { "$ref": "#/definitions/Code"},
+				"serviceTypeVersion":  {
+					"type": "array",
+					"items": {"type": "string" }
+				},
+				"profile":  {
+					"type": "array",
+					"items": {"type": "string"}
+				},
+				"fees": {"type": "string"},
+				"accessConstraints": {"type": "string"}
+			}
+		}
+    }
+}
+
+----
+
+[source,JSON]
+.Example of using "definitions" section to define an object that can be used in more that one place emulating the UML data type behaviour.
+----
+{
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {      
+		"profile" : { "$ref": "#/definitions/links" },
+		"links" : {
+			"type": "array",
+			"items": { "$ref": "#/definitions/links" }
+		}
+	}
+    "definitions": {
+    	"links": {
+		    "title": "links",
+		    "description": "Properties that all types of links have. It mimics the Atom link",
+		    "required": [ "href" ],
+		    "properties": {
+			"href": {"type": "string", "format": "uri" },
+			"type" : { "type": "string" },
+			"title" : { "type": "string" },
+			"lang" : { "type": "string" }
+		    }
+		}
+	}
+----
+
+*Rule 9.2*: If an class is generalized into other classes in the UML, the JSON schema SHALL define the main class properties in the definitions section with the UML class name and the word "Properties" (not including the "type"). If the main class is not abstract, it SHALL then be defined with the UML call name by combining the previous "properties" and the "type" property with _allOf_. The generalized class will do the same and combine the main properties, the "type" and its own properties with _allOf_
+
+If the main class is empty (it has no attributes) this rule does not apply.
+
+Unnecessary duplication of the definition do the common elements coming from the abstract class is avoided by using _$ref_ and pointing to a _definitions_ element in the JSON Schema. There is no mechanism to inhered properties from a previous object in JSON schema but the suggested mechanism achieves an equivalent results.
+
+[[r_sch_image_service_identification]]
+.UML model for a generalized class ServiceIdentification.
+image::includes/images/ServiceIdentification.png[]
+
+[source,JSON]
+.JSON Schema fragment example of generalization of ServiceIdentification inheriting a group of properties DescriptionProperties. Note that "Description" is defined for completeness but it is not used.
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"serviceIdentification": { "$ref": "#/definitions/ServiceIdentification" }
+	},
+	"definitions": {
+		"ServiceIdentification": {
+			"required": ["type"],
+			"allOf": [
+				{ "$ref": "#/definitions/DescriptionProperties" },
+				{	
+					"properties":{				
+						"type": {"enum": ["ServiceIdentification"]},	
+						"serviceTypeVersion": {"type": "string"},
+						"profile": {"type": "string"},
+						"fees": {"type": "string"},
+						"accessConstraints": {"type": "string"}
+					}
+				}
+			]
+		},
+		"Description": {
+			"required": ["type"],
+			"allOf": [
+				{ "$ref": "#/definitions/DescriptionProperties" },
+				{	
+					"properties":{				
+						"type": {"enum": ["Description"]}
+					}
+				}
+			]
+		},
+		"DescriptionProperties": {
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"title": {"type": "string"},
+				"abstract": {"type": "string"}
+			}
+		}
+	}
+}
+----
+
+[source,JSON]
+.JSON fragment that validates with he previous example
+----
+{
+	"serviceIdentification": {
+		"type": "ServiceIdentification",
+		"title": "My WMS server",
+		"abstract": "This WMS server is mine",
+		"serviceTypeVersion": "1.1.1",
+		"profile": "http://www.opengis.net/profiles/nga"
+	}
+}
+----
+
+*Rule 9.3*: If a class is generalized into more than one classes in the UML (which forces the instance to choose one among of them), the JSON Schema SHALL define an object that offers the different options using the _oneOf_ property.
+
+When the main class is _abstract_, there is no need to define it as a data type due to it cannot be instanciated in JSON-LD instances.
+
+In the following example, the class MD_Constraints is generalized into 2 different classes: MD_LegalConstraints and MD_SecurityConstraints. The pattern used in the example is a bit diffent for the one in the example of he Rule 3.4. Testing the us of _oneOf_ to select between object definitions that contains _allOf_ including the same $ref fails to work. To solve this, we define _MD_LegalConstraintsAdditions_ and _MD_SecurityConstraintsAdditions_ that only defines the non common properties. Then A new object _Alternatives_MD_Constraints_ offers all the alternatives available with _oneOf_  and add the common properties _MD_ConstraintsProperties_ at the end with _allOf_.
+
+[[r_sch_image_constraints]]
+.UML model for a generalized class from MD_Constraints.
+image::includes/images/MD_Constraints.png[]
+
+[source,JSON]
+.Example of multiple generalization
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties":
+	{
+		"resourceConstraints": {
+			"$ref": "#/definitions/Alterantives_MD_Constraints"
+		}
+	},
+	"definitions": {
+		"Alterantives_MD_Constraints": {
+			"type": "object",
+			"allOf": [
+				{ "$ref": "#/definitions/MD_ConstraintsProperties" },
+				{ "oneOf": [
+						{"$ref": "#/definitions/MD_SecurityConstraintsAdditions"},
+						{"$ref": "#/definitions/MD_LegalConstraintsAdditions"},
+						{"$ref": "#/definitions/MD_ConstraintsAdditions"}
+					]
+				}
+			]
+		},
+		"MD_LegalConstraintsAdditions": {
+			"required": ["type"],
+			"properties":{				
+				"type": {"enum": ["MD_LegalConstraints"]},
+				"accessConstraints": {"type": "object"},
+				"otherConstraints": {"type": "string"}
+			}
+		},
+		"MD_SecurityConstraintsAdditions": {
+			"required": ["type"],
+			"properties":{				
+				"type": {"enum": ["MD_SecurityConstraints"]},	
+				"useNote": {"type": "string"},
+				"classificationSystem": {"type": "string"},
+				"handlingDescription": {"type": "string"}
+			}
+		},
+		"MD_ConstraintsAdditions": {
+			"required": ["type"],
+			"properties":{				
+				"type": {"enum": ["MD_Constraints"]}
+			}
+		},
+		"MD_ConstraintsProperties": {
+			"properties": {
+				"id": {"type": "string", "format": "uri"},
+				"useLimitation": {"type": "string"},
+				"constraintApplicationScope": {"type": "object"}
+			}
+		}
+	}
+}
+----
+
+=== Object libraries and multiple schemas
+
+UML classes can be structured in a modular way in packages. In this case there is a need to use more than one schema file. The core schema offers a set of _datatypes_ in the _definitions_ section. This core schemas can be reused by other schemas pointing the definition of the right objects in the core schemas using a full path to them.
+
+*Rule 10.1*: Each UML class packages SHALL be described in the _definitions_ in a JSON schema. Schemas that reuse other UML classes in other packages SHALL point to them using a full path.
+
+[source,JSON]
+.Example of a core JSON schema (called ServiceMetadata_schema.json) for a common class in OWS common package
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"definitions": {
+		"ServiceIdentification": {
+			"title": "Service identification",
+			"description": "Metadata about this specific server. The contents and organization of this section should be the same for all OWSs. ",
+			"type": "object",
+			"properties": {
+				"type": { "enum": ["ServiceIdentification"] },
+				"serviceType": { "$ref": "#/definitions/Code"},
+				"serviceTypeVersion":  {
+					"type": "array",
+					"items": {"type": "string" }
+				},
+				"profile":  {
+					"type": "array",
+					"items": {"type": "string"}
+				},
+				"fees": {"type": "string"},
+				"accessConstraints": {"type": "string"}
+			}
+		}
+	}
+}
+----
+
+[source,JSON]
+.Example of a another JSON schema (called WMSServiceMetadata_schema.json) for a common class in OWS common package
+----
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"title": "WMS Service Metadata root object",
+    "required": [ "type", "version"],
+	"properties": {
+		"type": { "enum": [ "WMSServiceMetadata"] },
+		"id":  { "type": "string" },
+		"version": { "type": "string"},
+		"serviceIdentification": { "$ref": "ServiceMetadata_schema.json/#/definitions/ServiceIdentification" },
+	}
+}
+----
+
+[source,JSON]
+.Example of a JSON instance (called WMSServiceMetadata.json) validated with the WMSServiceMetadata_schema.json file.
+----
+{
+ 	"type": "WMSServiceMetadata",
+	"version": "1.4",
+	"serviceIdentification": {
+		"type": "ServiceIdentification",
+		"serviceType": {
+			"type": "Code",
+			"code": "WMS"
+		},
+		"serviceTypeVersion": ["1.4"],
+        ...
+	}
+}
+----
+
+=== Other considerations
+==== Large arrays
+
+A property containing a large array of values (or coordinates), where the order is important, should not be defined in @context objects if an alternative representation of the same information can be provided by other means. Not defining the long ordered arrays properties in @context avoids them to be converted into RDF. Ordered arrays an nasty and very verbose, double ordered arrays cannot even be converted. _Alternative representations_ can be "string literals" (encoding the arrays in a text that is more compact; e.g. coordinates encoded as WKT) or links to URLs in a non RDF format containing this information (such as NetCDF or GeoTIFF files). This is further discussed in the section <<Clause_Data_Formats_Encoding>> with specific focus on coordinate arrays but not only.
+

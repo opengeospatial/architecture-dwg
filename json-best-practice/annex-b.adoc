@@ -1,0 +1,5 @@
+[appendix]
+= Annex B: JSON Schema Documents (informative)
+
+In addition to this document, this standard includes several normative JSON Schema Documents.
+
