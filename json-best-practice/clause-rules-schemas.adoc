@@ -147,7 +147,7 @@ In a JSON-LD instance, when UML generalization is used to derive more specific c
 
 [[r_sch_image_possible_values]]
 .UML model for a generalized class ServiceIdentification.
-image::includes/images/PossibleValues.png[]
+image::images/PossibleValues.png[]
 
 [source,JSON]
 .JSON Schema fragment example of a UML Union encoded in JSON.
@@ -189,7 +189,7 @@ image::includes/images/PossibleValues.png[]
 
 [[r_sch_image_md_format]]
 .UML model showing a class that is defined as an aggregation of MD_Distribution and also as a complex data type MD_DigitalTransferOptinos
-image::includes/images/MD_format.png[]
+image::images/MD_format.png[]
 
 [source,JSON]
 .JSON Schema fragment example of a class used as an aggregation and as a data type (the example ignores the tranferOption multiplicity for simplicity)
@@ -469,7 +469,7 @@ Complex type attributes with multiplicity more than 1 will have "type": "array" 
 
 [[r_sch_image_range_closure]]
 .UML model for a enumeration.
-image::includes/images/RangeClosure.png[]
+image::images/RangeClosure.png[]
 
 [source,JSON]
 .Example of enumerations
@@ -597,7 +597,7 @@ Unnecessary duplication of the definition do the common elements coming from the
 
 [[r_sch_image_service_identification]]
 .UML model for a generalized class ServiceIdentification.
-image::includes/images/ServiceIdentification.png[]
+image::images/ServiceIdentification.png[]
 
 [source,JSON]
 .JSON Schema fragment example of generalization of ServiceIdentification inheriting a group of properties DescriptionProperties. Note that "Description" is defined for completeness but it is not used.
@@ -668,7 +668,7 @@ In the following example, the class MD_Constraints is generalized into 2 differe
 
 [[r_sch_image_constraints]]
 .UML model for a generalized class from MD_Constraints.
-image::includes/images/MD_Constraints.png[]
+image::images/MD_Constraints.png[]
 
 [source,JSON]
 .Example of multiple generalization
