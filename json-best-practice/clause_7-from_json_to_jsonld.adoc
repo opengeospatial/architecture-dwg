@@ -1,76 +1,3 @@
-[[overview]]
-== Overview
-
-=== Introduction to JSON
-
-This section presents the JavaScript Object Notation (JSON). Afterwards, it discusses important questions such as what JSON offers, when a JSON encoding offers an advantage (e.g. in simplicity and flexibility) in comparison to an Extensible Markup Language (XML) encoding, and when XML encodings can provide a better solution (e.g. adding more expressivity and robustness). Finally it presents some suggestions of what OGC can add on top of the basic JSON definition to ensure better geospatial interoperability of applications using JSON.
-
-[[The_JSON_format]]
-=== The JSON format
-
-JSON is a very simple data model that can represent four primitives (strings, numbers, booleans (_true_ or _false_) and _null_) and includes two structured types (objects and arrays). Strings are enclosed in _quotation marks_, numbers do not have quotation marks, objects are enclosed in curly brackets "{}" and arrays are enclosed in square brackets "[]". An object is an unordered collection of zero or more parameters (name and value pairs, separated by a colon), where a name is a string and a value is a primitive or a structured type. Parameters are separated by commas and usually each of them is written on a different line. An array is an ordered sequence of zero or more values (primitives or structured types, separated by commas).
-
-The fact that the names of properties are enclosed in _quotation marks_ and the use of ":" are marks of identity that help to visually identify that text documents are actually instances written in JSON (instead of e.g. C++ or Java data structures).
-
-.Example of JSON document providing some metadata about a picture.
-[source,json]
-----
-{
-    "width":  800,
-    "height": 600,
-    "title":  "View from 15th Floor",
-    "thumbnail": {
-        "url":    "http://www.example.com/image/481989943",
-        "height": 125,
-        "width":  100
-    },
-    "animated" : false,
-    "ids": [116, 943, 234, 38793]
-}
-----
-
-In the example above, a _picture_ is represented as an object with two numerical properties ("width" and "height"), a string property ("title"), an object property ("thumbnail"), a boolean property ("animated") and an array of numbers property ("ids"). Nothing in the document indicates that it is describing a _picture_. The reason is that we are supposed to assign the data structure to a variable the name of which will tell us what the variable is about. This is shown in the example below.
-
-.Assigning a JSON structure to a variable in JavaScript
-[source,javascript]
-----
-picture={
-    "width":  800,
-    "height": 600,
-    "title":  "View from 15th Floor",
-    "thumbnail": {
-        "url":    "http://www.example.com/image/481989943",
-        "height": 125,
-        "width":  100
-    },
-    "animated" : false,
-    "ids": [116, 943, 234, 38793]
-}
-----
-
-See the Section <<KVP_GET_client_request>> for the way to incorporate a JSON document into JavaScript code on the fly.
-
-=== If we had XML, why do we need JSON?
-In the web, we find several comparisons between XML and JSON, some of them trying to do statistical analysis on some criteria, such as verbosity or performance. Some others (many, actually) are more based on opinions than in facts. This document will try to escape this debate and focus on practical facts.
-
-XML was designed by a consensus process in several Internet groups and became a W3C recommendation on February 10th, 1998 as a document standard completely independent from any programming language. Since then, hundreds of document formats based on XML syntax have been proposed, including Really Simple Syndication (RSS), Atom, Simple Object Access Protocol (SOAP), and Extensible Hypertext Markup Language(XHTML), Office Open XML, OpenOffice.org, Microsoft .NET Framework and many others. OGC has adopted XML for many of its web service messages and for several data formats, including Geography Markup Language(GML), WaterML, Sensor Model Language (SensorML), Geospatial User Feedback (GUF), etc. XML has some interesting additional components: XML Schema/RelaxNG/Schematron provide ways to restrict the classes and data types to a controlled set of them. Actually, all document formats cited before provide a some form of schema document that accompanies the standard document. By providing schema files, standards incorporate a very simple way to check if a document follows the standard data model: a process executed by automatic tools that is called "XML validation". Other components of XML family are XPath (a query language), Extensible Stylesheet Language Transformations (XSLT), etc. With time, these components have been implemented in many programming languages and tools.
-
-JSON history is completely different. JSON was introduced in 1999 as a subset of the JavaScript language that extracted the essentials for defining data structures. This original idea is stated in the RFC7159: "JSON's design goals were to be minimal, portable, textual, and a subset of JavaScript". After 2005, JSON became popular and is used in the Application Programing Interfaces (APIs) of many web services, including those of well-known companies such as Yahoo or Google. Currently, JSON is no longer restricted to web browsers, because JavaScript can now be used in web services and in standalone applications (e.g. using node.js) and also because there are libraries that can read and write JSON for almost every programming language (see a long list of programming languages that have some sort of JSON libraries at http://json.org).
-
-==== The secret of JSON success in the web
-
-Even if this is a matter of opinion, there are some practical reasons that have helped to make JSON the favorite data encoding for many people.
-
-* XML is not easy to learn. JSON format is so simple that it can be explained in a few lines (as has been done in <<The_JSON_format>>). XML requires some knowledge about namespaces and namespace combinations. It also requires some knowledge about classes, complex data types, class generalizations, etc. None of this is currently present in JSON in its basic form.
-* XML is defined to be extensible, but XSD Schema validation is very restrictive in extensibility (at least in the way it is used in the OGC standards). In practice, extension points need to be "prepared" by the designer of the original standard to be extended. For example, adding an element to a class in a non-initially foreseen place results in an error during validation. In many occasions the only solution is changing the class name by generalization, giving up descend compatibility. In that sense, RelaxNG validation was designed with extensibility in mind but is not commonly used yet (it is now the recommended validation language for Atom feeds and OWS Context Atom encoding). JSON is used in a way that it can be extended (e.g. adding properties to objects is allowed without breaking compatibility). By default, JSON schema (see <<JSON_Schema>>) respects this extensibility.
-* JSON relies on the simplicity of JavaScript in three important ways:
-** JSON (and JavaScript) have a very limited set of data types. All numbers are "Number" (there is no distinction between float, integer, long, byte,...) and all strings are "String". Arrays and Objects are almost identical; actually Arrays are Objects with numerical consecutive property names.
-** In JavaScript, a JSON document can be converted in an JavaScript data structure (e.g. an object tree) with a single function, instead of a complicated chain of XML DOM data access function calls for each property needed to extract from an XML document. Unfortunately, this has nothing to do with XML or JSON, but in the way the XML DOM was initially implemented. Nevertheless, it has influenced the view that "JSON is simple; XML is complicated".
-** JSON objects do not rely on explicit classes and data types. Even the concept of "data constructor" that was present in early versions of JavaScript it is not recommended anymore. Objects are created on-the-fly and potentially all objects in JSON (and in JavaScript) have a different data structure. However, in practical implementations, many objects and object arrays will mimic the same common pattern.
-** JSON objects can be direct inputs of JavaScript API functions simplifying extensibility of APIs. All JavaScript functions can potentially have a very limited number of parameters, if some of them are JSON objects. New optional parameters can be introduced to these objects without changing the API.
-
-As you will discover in the next sections of this document, a rigorous application of JSON in OGC services will require adoption of new additions to JSON, such as JSON validation and JSON-LD resulting in a not-so-simple JSON utilization.
-
 == From JSON to JSON-LD
 
 === What is JSON-LD
@@ -96,10 +23,10 @@ First of all, JSON-LD defines two specific properties for each object: @id and @
 }
 ----
 
-The conversion to RDF results in a single triple stating that the Mississippi river is of a river type. Within the context of RDF, a triple is a construct built from a subject, predicate and an object.
+Within the context of RDF, a triple is a construct built from a subject, predicate and an object. The conversion to RDF results in a single triple stating that the Mississippi river is of a river type.
 
 .Conversion to the minimum example of a river object to RDF triples
-[source,xml]
+[source,turtle]
 ----
 <http://dbpedia.org/page/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
 ----
@@ -131,7 +58,7 @@ In this example we are adding a _name_ to a river resulting on a second triple a
 ----
 
 .Conversion to a named river object encoded as RDF triples
-[source,xml]
+[source,turtle]
 ----
 <http://dbpedia.org/page/Mississippi_River> <http://schema.org/name> "Mississippi river" .
 <http://dbpedia.org/page/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
@@ -169,7 +96,7 @@ It is also possible to combine two vocabularies, one pre-existing and another em
 ----
 
 .Conversion to a named river object encoded as RDF triples
-[source,xml]
+[source,turtle]
 ----
 <http://dbpedia.org/page/Mississippi_River> <http://schema.org/name> "Mississippi river" .
 <http://dbpedia.org/page/Mississippi_River> <http://www.opengis.net/def/ows-common/river/bridge> "Chain of Rocks Bridge" .
@@ -225,7 +152,7 @@ By default, JSON-LD considers properties as strings. JSON-LD also permits defini
 ----
 
 .Conversion of the length of a river object to RDF triples
-[source,xml]
+[source,turtle]
 ----
 <http://dbpedia.org/page/Mississippi_River> <http://schema.org/distance> "3734"^^<http://www.w3.org/2001/XMLSchema#float> .
 [...]
@@ -233,7 +160,7 @@ By default, JSON-LD considers properties as strings. JSON-LD also permits defini
 
 === Ordered and unordered arrays in JSON-LD
 
-An interesting aspect of JSON-LD is that it overwrites the behavior of JSON arrays. In JSON, arrays of values are sorted _lists_ but in JSON-LD arrays are _sets_ with no order. This way, in the previous examples, _bridges_ is an array but the conversion to RDF is done in a way that "Eads Bridge" and "Chain of Rocks Bridge" are associated with the Mississippi river with no order. In general, this is not a problem because most arrays are only _sets_ of values. Nevertheless, sometimes order is important for example in list of coordinates representing a line or a polygon border (imagine what could happen if only one coordinate is out or order!!). Fortunately, there is a way to declare that the array values order is important: using "@container": "@list".
+An interesting aspect of JSON-LD is that it overwrites the behavior of JSON arrays. In JSON, arrays of values are sorted _lists_ but in JSON-LD arrays are _sets_ with no order. This way, in the previous examples, _bridges_ is an array but the conversion to RDF is done in a way that "Eads Bridge" and "Chain of Rocks Bridge" are associated with the Mississippi river with no order. In general, this is not a problem because most arrays are only _sets_ of values. Nevertheless, sometimes order is important for example in a list of coordinates representing a line or a polygon border (imagine what could happen if only one coordinate is out or order!!). Fortunately, there is a way to declare that the array values order is important: using "@container": "@list".
 
 .Example where the order of the list of bridges is important
 [source,json]
@@ -255,7 +182,7 @@ An interesting aspect of JSON-LD is that it overwrites the behavior of JSON arra
 }
 ----
 
-.Transformation to RDF of a list of bridges where order is important triples
+.Transformation, to RDF triples, of a list of bridges where order is important
 [source,json]
 ----
 <http://dbpedia.org/page/Mississippi_River> <http://schema.org/name> "Mississippi river" .
@@ -292,7 +219,7 @@ A special kind of data type is "@id". This indicates that a property points to a
 ----
 
 .Conversion to a river object related to another object encoded as RDF triples
-[source,xml]
+[source,turtle]
 ----
 <http://dbpedia.org/page/Mississippi_River> <http://schema.org/name> "Mississippi river" .
 <http://dbpedia.org/page/Mississippi_River> <http://www.iana.org/assignments/relation/describedby> <http://en.wikipedia.org/wiki/Mississippi_RiverMississippi_River> .
@@ -590,7 +517,7 @@ The previous example has been defined in a way that is compatible with JSON-LD a
 ====== JSON for coverages
 Since the first versions of the HTML and web browsers, it was possible to send a JPEG or a PNG to the browser and show it. With addition of HTML DIV tags, it was possible to overlay them in a layer stack and show them. WMS took advantage of it to create map browsers on the web. The main problem with this approach was that the "map" could not be manipulated in the client, so symbolization of the map had to be done in the server (and the interaction with the data became slow and limited. Modern web browsers implementing HTML5 allow for controlling pixel values on the screen representation in what is called the _canvas_. This capability allows sending an array of values from a coverage server to web browser that can be converted into a RGBA array and then represented in the canvas. This represents an evolution of what was possible in the past. By implementing this strategy it is possible to control the coloring of "maps" directly in the browser and to make queries on the actual image values in the client. The map becomes a true coverage.
 
-A good coverage need to be defined by an small set of metadata that defines the domain (the grid) the range values (the data) and the range meaning (the data semantics). This is exactly what the Coverage Implementation Schema (CIS) is doing (formerly known as GMLCov).
+A good coverage needs to be described through a small set of metadata that defines the domain (the grid), the range values (the data) and the range meaning (the data semantics). This is exactly what the Coverage Implementation Schema (CIS) does (formerly known as GMLCov).
 
 The idea of creating a JSON GMLCov associated to a JSON coverage appears for the first time in the section 9 of the OGC 15-053r1 Testbed-11 Implementing JSON/GeoJSON in an OGC Standard Engineering Report. This idea was taken by the MELODIES FP7 project (http://www.melodiesproject.eu/), and described as a full specification, as well as implemented as an extension of the popular map browser _Leaflet_. The description of the approach can be found here https://github.com/covjson/specification. A complete demostration on how it works can be found here: https://covjson.org/playground/ (tested with Chrome).
 
@@ -600,9 +527,10 @@ image::images/coveragesJSONplayground.png[]
 
 CoverageJSON is a demonstration of what can be done with coverages in the browsers. On our opinion, this approach will improve the user experience working with imagery and other types of coverages in web browsers. Unfortunately, the CoverageJSON defined by MELODIES deviates significantly from the OGC CIS. Actually CoverageJSON redesigns CIS to replicate most of the concepts in a different way and adds some interesting new concepts and functionalities of its own.
 
-To better align with OGC coverages representation, a new JSON encoding is introduced in the OGC CIS 1.1. In this case, the JSON encoding strictly follows the new CIS 1.1 UML model. This encoding is presented in section 13 on CIS 1.1 and includes a set of JSON schemas. In addition, section 14 adds requirements for JSON-LD that are complemented by JSON-LD context files. Several examples are also informative material accompanying the CIS 1.1 document. More details can be found also in this ER: OGC 16-051 JavaScript JSON JSON-LD ER
+To better align with OGC coverages representation, a new JSON encoding is introduced in the OGC CIS 1.1. In this case, the JSON encoding strictly follows the new CIS 1.1 UML model. This encoding is presented in section 13 on CIS 1.1 and includes a set of JSON schemas. In addition, section 14 adds requirements for JSON-LD that are complemented by JSON-LD context files. Several examples are also informative material accompanying the CIS 1.1 document. More details can be found also in this ER: OGC 16-051 JavaScript JSON JSON-LD ER.
 
-.Example of a regular grid represented as a CIS JSON file [source,json]
+.Example of a regular grid represented as a CIS JSON file
+[source,json]
 ----
 {
 	"@context": ["http://localhost/json-ld/coverage-context.json", {"examples": "http://www.opengis.net/cis/1.1/examples/"}],

@@ -1,0 +1,35 @@
+[big]*i.     Abstract*
+
+This OGC® document provides a set of best practices on how to use the JavaScript Object Notation (JSON) as an encoding for OGC standards. The document provides a set of rules on how to transform a Unified Modeling Language (UML) model describing the encoding of a format or a service description into a JSON and JSON for Linked Data (JSON-LD) encoding and their corresponding JSON schemas. The document is applicable to OGC data, metadata encodings and OGC services willing to provide a JSON encoding.
+
+[big]*ii.    Keywords*
+
+The following are keywords to be used by search engines and document catalogues.
+
+ogcdoc, OGC document, best practice, JSON, JSON-LD
+
+[big]*iii.   Preface*
+
+Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. The Open Geospatial Consortium shall not be held responsible for identifying any or all such patent rights.
+
+Recipients of this document are requested to submit, with their comments, notification of any relevant patent claims or other intellectual property rights of which they may be aware that might be infringed by any implementation of the standard set forth in this document, and to provide supporting documentation.
+
+[big]*iv.    Submitting organizations*
+
+The following organizations submitted this Document to the Open Geospatial Consortium (OGC):
+
+Organization name(s)
+
+* UAB-CREAF
+
+[big]*v.     Submitters*
+
+All questions regarding this submission should be directed to the editor or the submitters:
+
+.Contacts
+[width="80%",options="header"]
+|====================
+| Name | Affiliation
+| Joan Masó | UAB-CREAF
+| Gobe Hobona | OGC
+|====================

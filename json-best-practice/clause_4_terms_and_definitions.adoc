@@ -1,0 +1,32 @@
+== Terms and Definitions
+This document uses the terms defined in Sub-clause 5.3 of [OGC 06-121r8], which is based on the ISO/IEC Directives, Part 2, Rules for the structure and drafting of International Standards. In particular, the word “shall” (not “must”) is the verb form used to indicate a requirement to be strictly followed to conform to this Best Practice.
+
+For the purposes of this document, the following additional terms and definitions apply.
+
+=== *Linked Data*
+
+a set of best practices for publishing structured data on the Web (source: https://www.w3.org/wiki/LinkedData)
+
+
+
+===	Abbreviated terms
+
+
+[cols="1,4",grid="none",frame="none"]
+|====
+
+| CIS | Coverage Implementation Schema
+| GML | Geography Markup Language
+| IRI | Internationalized Resource Identifier
+| ISO | International Organization for Standardization
+| JSON | JavaScript Object Notation
+| JSON-LD | JSON for Linked Data
+| OWL | Web Ontology Language
+| RDF | Resource Description Framework
+| RDFS | RDF Schema
+| SPARQL | SPARQL Protocol and RDF Query Language
+| UML | Unified Modeling Language
+| URI | Uniform Resource Identifier
+| W3C | World Wide Web Consortium
+| XML | Extensible Markup Language
+|====

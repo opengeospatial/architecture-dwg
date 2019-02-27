@@ -1,0 +1,60 @@
+:doctype: book
+:encoding: utf-8
+:lang: en
+:toc: macro
+:toclevels: 3
+:numbered:
+
+= JSON Best Practice
+
+Publication Date: 2016-mm-dd
+
+Approval Date: 2016-mm-dd
+
+Posted Date: 2018-03-18
+
+Reference number of this document: OGC 18-0XX
+
+Reference URL for this document: http://www.opengis.net/doc/PER/t12-((xxx))
+
+Category: Best Practice
+
+Editor: Joan Masó
+
+Title: [big]#JSON Best Practice#
+
+''''
+
+include::preface.adoc[]
+
+include::scope.adoc[]
+
+include::conformance.adoc[]
+
+include::references.adoc[]
+
+include::terms.adoc[]
+
+include::conventions.adoc[]
+
+include::clause-overview.adoc[]
+
+include::clause-best-practices.adoc[]
+
+include::clause-json-encoding.adoc[]
+
+include::clause-rules-schemas.adoc[]
+
+include::clause-rules-instances.adoc[]
+
+include::annex-a.adoc[]
+
+include::annex-b.adoc[]
+
+include::annex-c.adoc[]
+
+include::annex-d.adoc[]
+
+include::history.adoc[]
+
+include::bibliography.adoc[]
