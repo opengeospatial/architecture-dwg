@@ -3,11 +3,14 @@
 :doctype: book
 :encoding: utf-8
 :lang: en
-:toc: macro
+:toc:
+:toc-placement!:
 :toclevels: 3
 :numbered:
 :sectanchors:
 :source-highlighter: pygments
+
+= {title}
 
 <<<
 [cols = ">",frame = "none",grid = "none"]
