@@ -3,12 +3,12 @@
 
 === Introduction to JSON
 
-This section presents the JavaScript Object Notation (JSON). Afterwards, it discusses important questions such as what JSON offers, when a JSON encoding offers an advantage (e.g. in simplicity and flexibility) in comparison to an Extensible Markup Language (XML) encoding, and when XML encodings can provide a better solution (e.g. adding more expressivity and robustness). Finally it presents some suggestions of what OGC can add on top of the basic JSON definition to ensure better geospatial interoperability of applications using JSON.
+This section presents the JavaScript Object Notation (JSON). Afterwards, it discusses important questions such as what JSON offers, when a JSON encoding offers an advantage (e.g. in simplicity and perfomance) in comparison to an Extensible Markup Language (XML) encoding, and when XML encodings can provide a better solution (e.g. adding more expressivity and robustness). Finally it presents some suggestions of what OGC can add on top of the basic JSON definition to ensure better geospatial interoperability of applications using JSON.
 
 [[The_JSON_format]]
 === The JSON format
 
-JSON is a very simple data model that can represent four primitives (strings, numbers, booleans (_true_ or _false_) and _null_) and includes two structured types (objects and arrays). Strings are enclosed in _quotation marks_, numbers do not have quotation marks, objects are enclosed in curly brackets "{}" and arrays are enclosed in square brackets "[]". An object is an unordered collection of zero or more parameters (name and value pairs, separated by a colon), where a name is a string and a value is a primitive or a structured type. Parameters are separated by commas and usually each of them is written on a different line. An array is an ordered sequence of zero or more values (primitives or structured types, separated by commas).
+JSON is a very simple data model that can represent four primitives (strings, numbers, booleans (_true_ or _false_) and _null_) and includes two structured types (objects and arrays). Strings are enclosed in _quotation marks_, numbers do not have quotation marks, objects are enclosed in curly brackets "{}" and arrays are enclosed in square brackets "[]". An object is an unordered collection of zero or more parameters (name and value pairs, separated by a colon), where a name is a string and a value is a primitive or a structured type. Parameters are separated by commas and usually each of them is written on a different line. An array is an ordered sequence of zero or more values (primitives or structured types, separated by commas) with no explicit indication of the sequence number.
 
 The fact that the names of properties are enclosed in _quotation marks_ and the use of ":" are marks of identity that help to visually identify that text documents are actually instances written in JSON (instead of e.g. C++ or Java data structures).
 
@@ -70,3 +70,41 @@ Even if this is a matter of opinion, there are some practical reasons that have 
 ** JSON objects can be direct inputs of JavaScript API functions simplifying extensibility of APIs. All JavaScript functions can potentially have a very limited number of parameters, if some of them are JSON objects. New optional parameters can be introduced to these objects without changing the API.
 
 As you will discover in the next sections of this document, a rigorous application of JSON in OGC services will require adoption of new additions to JSON, such as JSON validation and JSON-LD resulting in a not-so-simple JSON utilization.
+
+=== JSON or JAML
+Any text notations needs to make a decision on how to encode strings, sentences, blocks and inclusion. There are two main approaches:
+* Introduction of some markup that defines blocks and end-of-sentences.
+* The mandatory use of indentation and new lines toe define blocs and end-of-sentences.
+
+For example, C requires curly brackets "{}" to mark blocks "" to enclose strings and ";"" to end sentences. JavaScript (that was deeply inspired by the C notation uses {} for blocks, "" for strings and considers ; an optional end-of-sentence mask. This decisions has the advantage that makes spaces, tabs and new-line marks completely unnecessary to understand the code. Nevertheless, any book on structured programing recommends the use of new-lines to separate sentences, and indentations (tabs) to make block more visible to humans. In contrast Python requires the use of new-lines and indentations to define sentences and blocks and removes the need for markup resulting in a code less filed with symbols and readable.
+In our experience, both approaches require equal time of mental training to be able to read and understand the code. In contrast, you can argue that code not requiring markup is easier to write and does not require constant care to carefully closing markup resulting in less syntactic errors.
+
+JSON was defined as a subset of JavaScript and it inherits the need for markup. Object blocks require {} Array blocks require [] and parameters requires and end-of-element "," Except for the last one in a block. To make the situation worst, parameter names require "" as well as string values. This generates a code with a high number of symbols. Even if JSON syntax is simple, writing , it is difficult to create a syntactically valid JSON file without and editor that uses syntax coloring and even with them, a JSON syntax validation tool will be necessary to ensure that the code is syntactically correct. This makes writing JSON files manually tedious.
+
+YAML (meaning: Ain't Markup Language) is defined as an alternative encoding, that has very similar capabilities than JSON but it does not require markup. In contrast, blocks require indentation and parameters need to be in different lines. It is a rare exception text encoding where strings does not require quotation marks,  YAML can represent most of the JSON features and has additional features lacking in JSON, including comments, extensible data types, relational anchors, and mapping types preserving key order. Starting from a JSON file, you can transform a JSON file to YAML and back without losing anything. There are several on-line JSON to YAML converters in the web such as: https://www.json2yaml.com.
+
+This is how our first JSON example looks like in YAML:
+
+[source,yaml]
+----
+---
+width: 800
+height: 600
+title: View from 15th Floor
+thumbnail:
+  url: http://www.example.com/image/481989943
+  height: 125
+  width: 100
+animated: false
+ids:
+- 116
+- 943
+- 234
+- 38793
+----
+
+In considering YAML as an alternative to JSON, there are two aspects to take into account:
+* At the time to write this document YAML has no schema like validation language and JSON does have JSON validation. This is considered particularly important for the standardization process providing a starting point for a conformace test.
+* OpenAPI uses YAML as the main format for documenting APIs. JSON is considered a direct alternative but common examples of OpenAPI are found mainly in JSON.
+
+Considering both factors this document recommends to favor JSON for all the encoding of data types and consider YAML an automatic alternative that is always possible but does not need to be emphasized. In contrast, this document recommends the us of YAML for OpenAPI descriptions of APIs (following that is common practice in the web) and consider JSON an automatic alternative that is always possible but does not need to be emphasized.
