@@ -28,7 +28,7 @@ Even if a JSON-LD could also be of the array type (or a simple type) in encoding
 
 === Namespaces
 
-*Rule 2.1*: The _root @context document_ SHALL contain a list of properties with the names of the abbreviated namespaces and value of the full namespace URI for the properties of the root element of the JSON document. 
+*Rule 2.1*: The _root @context document_ SHALL contain a list of properties with the names of the abbreviated namespaces and value of the full namespace URI for the properties of the root element of the JSON document.
 
 [source,JSON]
 .Example of a fragment of the root "@context" document (coverage-context.json) containing definition of the abbreviated and full namespace.
@@ -62,9 +62,9 @@ Even if a JSON-LD could also be of the array type (or a simple type) in encoding
 }
 ----
 
-The properties that starts with "@" are a bit more difficult to access in JavaScript that the others because they can NOT be called using "coverage.@id" but using the array notation that is less _natural_ "coverage[@id]". The existance of this rule allows for using  "context.id" and "context.type" instead for "@id" and "@type" in JavaScript. 
+The properties that starts with "@" are a bit more difficult to access in JavaScript that the others because they can NOT be called using "coverage.@id" but using the array notation that is less _natural_ "coverage[@id]". The existance of this rule allows for using  "context.id" and "context.type" instead for "@id" and "@type" in JavaScript.
 
-*Rule 2.3*: For all abbreviated namespaces, the correspondence to full namespace URI SHALL be listed in a @context document. If the document has more than one "@context", and the abbreviated namespace will be used only inside a particular JSON object that has a "@context" property, the definition SHALL be done in this "@context" (instead of using the root "@context"). 
+*Rule 2.3*: For all abbreviated namespaces, the correspondence to full namespace URI SHALL be listed in a @context document. If the document has more than one "@context", and the abbreviated namespace will be used only inside a particular JSON object that has a "@context" property, the definition SHALL be done in this "@context" (instead of using the root "@context").
 
 
 === Objects
@@ -124,7 +124,7 @@ The properties that starts with "@" are a bit more difficult to access in JavaSc
 
 Using the types values without namespace in the JSON object definitions allows for creating a JSON schema that is able to correctly enumerate the possible values of a type property without the abbreviated namespace. This way the abbreviated namespace may vary from one instance without affecting the common JSON schema. In contrast, "id" values are expected to be different in each instance (and their values are not verified by the JSON schema) so they should contain the abbreviated namespace.
 
-If an object can present more that one type (e.g. there is a one or more generalized classes of a more generic class) the all the alternative types are listed in the appropriate @context section. 
+If an object can present more that one type (e.g. there is a one or more generalized classes of a more generic class) the all the alternative types are listed in the appropriate @context section.
 
 [source,JSON]
 .Example of more that one type definition for a class.
@@ -155,7 +155,7 @@ image::images/PossibleValues.png[]
 "possibleValues": {
 	"title": "Possible Values list",
 	"type": "object",
-	"anyOf": [ 
+	"anyOf": [
 		{
 			"required": [ "type", "allowedValues"],
 			"properties": {
@@ -189,7 +189,7 @@ image::images/PossibleValues.png[]
 
 [[r_sch_image_md_format]]
 .UML model showing a class that is defined as an aggregation of MD_Distribution and also as a complex data type MD_DigitalTransferOptinos
-image::images/MD_format.png[]
+image::images/MD_Format.png[]
 
 [source,JSON]
 .JSON Schema fragment example of a class used as an aggregation and as a data type (the example ignores the tranferOption multiplicity for simplicity)
@@ -201,7 +201,7 @@ image::images/MD_format.png[]
         "distributionFormat": {"$ref": "#/definitions/MD_format"},
         "transferOptions": {
             ...
-            "distributionFormat": {"$ref": "#/definitions/MD_format"}        
+            "distributionFormat": {"$ref": "#/definitions/MD_format"}
         }
     }
 }
@@ -216,7 +216,7 @@ Please consider the rules for complex attributes and properties below.
 Defining the properties in the "@context" that is closer to it makes the definition local to the object where the "@context" belongs.
 
 [source,JSON]
-.Example of the addition of the abbreviate namespace to properties 
+.Example of the addition of the abbreviate namespace to properties
 ----
 {
 	"domainSet":{
@@ -229,7 +229,7 @@ Defining the properties in the "@context" that is closer to it makes the definit
 			"upperBound": "cis:upperBound"
 		},
 		"generalGrid":{
-			"axis": [{ 
+			"axis": [{
 			    "type": "IndexAxisType",
 				"axisLabel": "i",
 				"lowerBound": 0,
@@ -245,12 +245,12 @@ Defining the properties in the "@context" that is closer to it makes the definit
 }
 ----
 
-*Rule 4.2*: All UML class attributes (as well as composition and aggregations) SHALL be listed as _properties_ of the object in the JSON Schema. 
+*Rule 4.2*: All UML class attributes (as well as composition and aggregations) SHALL be listed as _properties_ of the object in the JSON Schema.
 
 [source,JSON]
 .Example of axisLabel, lowerBound and upperBound properties definition.
 ----
-{ 
+{
 	"type": "object",
 	"properties": {
 		"type": { "enum": [ "IndexAxisType"] },
@@ -306,7 +306,7 @@ In JSON instances the arrays of JSON objects will defined the type for each memb
 	"coordinates": {
 		"type": "array",
 		"items": { "type": "number" }
-	},											
+	},
 }
 ----
 
@@ -338,7 +338,7 @@ Numeric attributes with multiplicity more than 1 will have "type": "array" and "
 	"coordinates": {
 		"type": "array",
 		"items": { "type": "number" }
-	},											
+	},
 }
 ----
 
@@ -372,7 +372,7 @@ String attributes with multiplicity more than 1 will have "type": "array" and "i
 .Example of JSON schema for string properties with multiplicity more than 1.
 ----
 {
-	"axisLabels": 
+	"axisLabels":
 	{
 		"type": "array",
 		"items": { "type": "string" }
@@ -396,7 +396,7 @@ anyURL attributes with multiplicity more that 1 will have "type": "array" and "i
 .Example of JSON schema for anyURL properties with multiplicity more than 1.
 ----
 {
-	"srsNames": 
+	"srsNames":
 	{
 		"type": "array",
 		"items": { "type": "string", "format": "uri"}
@@ -425,7 +425,7 @@ The reasoning behind this is that property values defined without "@type": "@id"
 .Example of JSON schema for complex properties with multiplicity 0 or 1.
 ----
 {
-	"generalGrid":{ 
+	"generalGrid":{
 		"title": "General Grid",
 		"description": "General Grid",
 		"type": "object"
@@ -441,7 +441,7 @@ Complex type attributes with multiplicity more than 1 will have "type": "array" 
 {
 	"axis": {
 		"type": "array",
-		"items": { 
+		"items": {
 			"type": "object"
 		}
 	}
@@ -452,7 +452,7 @@ Complex type attributes with multiplicity more than 1 will have "type": "array" 
 
 === Object attributes; null values
 
-*Rule 7.1*: For a attribute that can have null values, an array of types combining the variable data type and "null" SHALL be used. 
+*Rule 7.1*: For a attribute that can have null values, an array of types combining the variable data type and "null" SHALL be used.
 
 [source,JSON]
 .Example of a nullable value.
@@ -468,7 +468,7 @@ Complex type attributes with multiplicity more than 1 will have "type": "array" 
 *Rule 8.1*: A UML "enumeration" SHALL be encoded as an "enum" in a JSON schema. Enumerations SHALL be listed in the "definitions" section of the JSON schema to be able to reuse them as needed.
 
 [[r_sch_image_range_closure]]
-.UML model for a enumeration.
+.UML model for an enumeration.
 image::images/RangeClosure.png[]
 
 [source,JSON]
@@ -483,7 +483,7 @@ image::images/RangeClosure.png[]
 	}
 	"definitions": {
 		"RangeClosure": {
-			"title": "Values of RangeClosure enumeration",	
+			"title": "Values of RangeClosure enumeration",
 			"enum": ["closed", "open", "open-closed", "closed-open"]
 		}
 	}
@@ -567,7 +567,7 @@ Actually, it is highly recommended that all UML classes are defined in the _defi
 {
 	"$schema": "http://json-schema.org/draft-04/schema#",
 	"type": "object",
-	"properties": {      
+	"properties": {
 		"profile" : { "$ref": "#/definitions/links" },
 		"links" : {
 			"type": "array",
@@ -613,9 +613,9 @@ image::images/ServiceIdentification.png[]
 			"required": ["type"],
 			"allOf": [
 				{ "$ref": "#/definitions/DescriptionProperties" },
-				{	
-					"properties":{				
-						"type": {"enum": ["ServiceIdentification"]},	
+				{
+					"properties":{
+						"type": {"enum": ["ServiceIdentification"]},
 						"serviceTypeVersion": {"type": "string"},
 						"profile": {"type": "string"},
 						"fees": {"type": "string"},
@@ -628,8 +628,8 @@ image::images/ServiceIdentification.png[]
 			"required": ["type"],
 			"allOf": [
 				{ "$ref": "#/definitions/DescriptionProperties" },
-				{	
-					"properties":{				
+				{
+					"properties":{
 						"type": {"enum": ["Description"]}
 					}
 				}
@@ -697,7 +697,7 @@ image::images/MD_Constraints.png[]
 		},
 		"MD_LegalConstraintsAdditions": {
 			"required": ["type"],
-			"properties":{				
+			"properties":{
 				"type": {"enum": ["MD_LegalConstraints"]},
 				"accessConstraints": {"type": "object"},
 				"otherConstraints": {"type": "string"}
@@ -705,8 +705,8 @@ image::images/MD_Constraints.png[]
 		},
 		"MD_SecurityConstraintsAdditions": {
 			"required": ["type"],
-			"properties":{				
-				"type": {"enum": ["MD_SecurityConstraints"]},	
+			"properties":{
+				"type": {"enum": ["MD_SecurityConstraints"]},
 				"useNote": {"type": "string"},
 				"classificationSystem": {"type": "string"},
 				"handlingDescription": {"type": "string"}
@@ -714,7 +714,7 @@ image::images/MD_Constraints.png[]
 		},
 		"MD_ConstraintsAdditions": {
 			"required": ["type"],
-			"properties":{				
+			"properties":{
 				"type": {"enum": ["MD_Constraints"]}
 			}
 		},
@@ -802,4 +802,3 @@ UML classes can be structured in a modular way in packages. In this case there i
 ==== Large arrays
 
 A property containing a large array of values (or coordinates), where the order is important, should not be defined in @context objects if an alternative representation of the same information can be provided by other means. Not defining the long ordered arrays properties in @context avoids them to be converted into RDF. Ordered arrays an nasty and very verbose, double ordered arrays cannot even be converted. _Alternative representations_ can be "string literals" (encoding the arrays in a text that is more compact; e.g. coordinates encoded as WKT) or links to URLs in a non RDF format containing this information (such as NetCDF or GeoTIFF files). This is further discussed in the section <<Clause_Data_Formats_Encoding>> with specific focus on coordinate arrays but not only.
-
