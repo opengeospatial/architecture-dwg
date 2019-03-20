@@ -1,7 +1,9 @@
 [appendix]
 = Bibliography
 
-OGC 14-009r1 Testbed-10 Rules for JSON and GeoJSON Adoption: Focus on OWS-Context. 
+OGC 14-009r1 Testbed-10 Rules for JSON and GeoJSON Adoption: Focus on OWS-Context.
+
+OGC 15-100r1 OGC Observations and Measurements - JSON implementation Discussion Paper
 
 OGC 15-053 Implementing JSON/GeoJSON in an OGC Standard ER
 
@@ -10,6 +12,14 @@ OGC 16-051 OGC Testbed 12 A005-2-Javascript-JSON-JSON-LD
 OGC 16-122r1 OGC Testbed 12 A062 (Geo)JSON User Guide
 
 Wright A. (2016) JSON Schema: A Media Type for Describing JSON Documents https://tools.ietf.org/html/draft-wright-json-schema-00
+
+GeoJSON Text Sequences: https://tools.ietf.org/html/rfc8142
+
+GeoJSON-LD: http://geojson.org/geojson-ld/
+
+GeoJSON playground for JSON-LD 1.1 https://json-ld.org/playground-dev/
+
+JSON-LD 1.1: https://json-ld.org/spec/latest/json-ld/
 
 .NOTE: 	All work in this document about JSON schema is based on the last IETF draft (v4) expired "August 4, 2013". At the time to finalize this document we realized that a new version has been recently released. Even if it is not considered a normative reference on this document it iw worth to monitor its progress in the future. It seems that A. Wright, is taking over the F. Galiegue and K. Zyp and the draft are back on the IETF standardization track.
 .
