@@ -8,7 +8,7 @@
 :toclevels: 3
 :numbered:
 :sectanchors:
-:source-highlighter: coderay
+:source-highlighter: pygments
 
 = {title}
 
