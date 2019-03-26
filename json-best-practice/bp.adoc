@@ -3,12 +3,12 @@
 :doctype: book
 :encoding: utf-8
 :lang: en
-:toc:
+:toc: 
 :toc-placement!:
 :toclevels: 3
 :numbered:
 :sectanchors:
-:source-highlighter: pygments
+:source-highlighter: coderay
 
 = {title}
 

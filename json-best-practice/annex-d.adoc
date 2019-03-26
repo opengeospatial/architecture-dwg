@@ -1,5 +1,5 @@
 [appendix]
-= JSON in web services (informative)
+== JSON in web services (informative)
 
 The previous sections of this document have concentrated in JSON general principles and how them can be applied to OGC data models and data encodings. This section focuses on how to use the same techniques in OGC web services. Traditionally, the OGC web services have used XML, the _lingua franca_ for services. Currently, OGC web services are able to expose their capabilities and are able to send requests that cannot be easily encoded in KVP as XML documents that are posted to servers. Actually, in OWS Common, all versions up to 2.0 (the last currently available at the moment of writing this section), the only described encoding is XML. In principle, nothing prevents OGC web services to use other encodings that can be more convenient for modern clients and servers. This section describes how OGC web services can adopt JSON encoding.
 
