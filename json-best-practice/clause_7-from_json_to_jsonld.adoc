@@ -205,7 +205,7 @@ A special kind of data type is "@id". This indicates that a property points to a
         "owscommon":"http://www.opengis.net/def/ows-common/",
         "resource": "http://dbpedia.org/resource/",
         "dbpedia": "http://dbpedia.org/ontology/",
-        "wiki": "http://en.wikipedia.org/wiki/Mississippi_River",
+        "wiki": "http://en.wikipedia.org/wiki/",
 		"describedBy": {
 			"@id": "http://www.iana.org/assignments/relation/describedby",
 			"@type": "@id"
