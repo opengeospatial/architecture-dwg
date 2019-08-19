@@ -1,4 +1,13 @@
 == The geometrical dimension in JSON
+
+//-------Remove after TC approval-------
+
+Readers should consider the following warning.
+
+WARNING: This document defines a draft OGC Best Practice on a particular technology or approach. This document is not an OGC Standard and may not be referred to as an OGC Standard. This document is not an official position of the OGC.
+
+//----------------------------------------
+
 One of the main purposes of OGC is providing ways to represent the geospatial dimension of data and in particular a representation for geometries. In the past, OGC has done this in several ways, some of the most recognized ones are:
 
 * GML (Geographic Markup Language): a XML encoding for geospatial features exchange that mainly focus on providing geospatial primitives encoded in XML. Other XML encodings use it as a basis, such as CityGML, WaterML, O&M, IndoorML, etc.

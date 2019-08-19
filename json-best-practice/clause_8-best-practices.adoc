@@ -1,5 +1,13 @@
 == JSON Best Practices
 
+//-------Remove after TC approval-------
+
+Readers should consider the following warning.
+
+WARNING: This document defines a draft OGC Best Practice on a particular technology or approach. This document is not an OGC Standard and may not be referred to as an OGC Standard. This document is not an official position of the OGC.
+
+//----------------------------------------
+
 [[Basic_JSON_considerations]]
 === Basic JSON considerations
 The basics of JSON encoding are defined initially in the https://tools.ietf.org/html/rfc4627[RFC4627] (2006) and more recently in the https://tools.ietf.org/html/rfc7159[RFC7159] (2013).
@@ -14,13 +22,13 @@ The following aspects have been extracted from the RFC7159 and, in the opinion o
 * For floating point numbers "since software that implements IEEE 754-2008 binary64 (double precision) numbers is generally available and widely used, good interoperability can be achieved by implementations that expect no more precision or range than these provide, in the sense that implementations will approximate JSON numbers within the expected precision. A JSON number such as 1E400 or 3.141592653589793238462643383279 may indicate potential interoperability problems, since it suggests that the software that created it expects receiving software to have greater capabilities for numeric magnitude and precision than is widely available."
 * "JSON text SHALL be encoded in UTF-8, UTF-16, or UTF-32. The default encoding is UTF-8, and JSON texts that are encoded in UTF-8 are interoperable". In practice this affects both _names_ of properties and _string values_. This is particularly important for non English languages that require to encode characters beyond the _common English_ first 128 characters that are shared by most of the encodings.
 * In property _names_ and _string values_ the characters "_quotation mark_, _reverse solidus_, and the _control characters_ (U+0000 through U+001F) " "must be escaped".
-* Any other character in a property _names_ and _string values_ "may be escaped". There are two main escaping strategies. "It may be escaped by a six-character sequence: a _reverse solidus_, a lowercase letter _u_, and four hexadecimal digits that encodes the character's code point.". "For example, a _reverse solidus_ character may be represented as _\u005C_". "Alternatively, there are two-character sequence escape representations of some popular characters" allowed: \" (_quotation mark_), \\ (_reverse solidus_), \/  (_solidus_), \b (_backspace_), \f (_form feed_), \n (_line feed_), \r (_carriage return_) and \t (_tab_). In addition there is the less used "UTF-16 surrogate pair" (e.g. "G clef" character may be represented as "\uD834\uDD1E". 
-*  "Implementations MUST NOT add a byte order mark to the beginning of a JSON text. In the interests of interoperability, implementations that parse JSON texts MAY ignore the presence of a byte order mark rather than treating it as an error.". In UTF8, the _byte order mark_ is the byte sequence: 0xEF,0xBB,0xBF. 
+* Any other character in a property _names_ and _string values_ "may be escaped". There are two main escaping strategies. "It may be escaped by a six-character sequence: a _reverse solidus_, a lowercase letter _u_, and four hexadecimal digits that encodes the character's code point.". "For example, a _reverse solidus_ character may be represented as _\u005C_". "Alternatively, there are two-character sequence escape representations of some popular characters" allowed: \" (_quotation mark_), \\ (_reverse solidus_), \/  (_solidus_), \b (_backspace_), \f (_form feed_), \n (_line feed_), \r (_carriage return_) and \t (_tab_). In addition there is the less used "UTF-16 surrogate pair" (e.g. "G clef" character may be represented as "\uD834\uDD1E".
+*  "Implementations MUST NOT add a byte order mark to the beginning of a JSON text. In the interests of interoperability, implementations that parse JSON texts MAY ignore the presence of a byte order mark rather than treating it as an error.". In UTF8, the _byte order mark_ is the byte sequence: 0xEF,0xBB,0xBF.
 * "The MIME media type for JSON text is application/json"
 * "Security Consideration": Even if "JSON is a subset of JavaScript but excludes assignment and invocation", so that it can not contain code, "to use the "eval()" function to parse JSON texts constitutes an unacceptable security risk, since the text could contain executable code along with data declarations" (text that is not JSON but contains other elements of JavaScript). "The same consideration applies to the use of eval()-like functions in any other programming language".
 
 In addition to these requirements, the authors consider that adding an extra requirement to normal behavior for JSON parsers is interesting:
-* A parser that finds an object property that it is not able to recognize, should ignore it rather than treating it as an error. (This is not what happens by default in the case of XML validation). In special circumstances JSON can limit this inherent behavior, if conveniently justified, but not in general. 
+* A parser that finds an object property that it is not able to recognize, should ignore it rather than treating it as an error. (This is not what happens by default in the case of XML validation). In special circumstances JSON can limit this inherent behavior, if conveniently justified, but not in general.
 
 To increase interoperability the authors of this document would like to add considerations for including more simple data types as restrictions of the "string" type. They were taken directly from the "format" parameter of the JSON Schema standard candidate:
 
@@ -29,7 +37,7 @@ To increase interoperability the authors of this document would like to add cons
 * "hostname": Internet host name, as defined by http://tools.ietf.org/html/rfc1034[RFC 1034, section 3.1].
 * "uri": A universal resource identifier (URI), according to http://tools.ietf.org/html/rfc3986[RFC3986].
 
-See more detail of these four simple data types below. 
+See more detail of these four simple data types below.
 
 [NOTE]
 _format_ in JSON Schemas also defines _ipv4_ and _ipv6_ but these types are not commonly needed in OGC standards.
@@ -74,7 +82,7 @@ It follows RFC 3339, section 5.6. This format follows the profile of ISO 8601 fo
 This subtype is fundamental for OGC and the <<Time_instants_as_strings>> of this document is devoted to it, in the context of the time dimension described in the <<The_time_dimension>>.
 
 ==== Email format
-It follows RFC 5322, section 3.4.1. It specifies Internet identifier that contains a locally interpreted string followed by the at-sign character ("@", ASCII value 64) followed by an Internet domain. The locally interpreted string is either a quoted-string or a dot-atom. If the string can be represented as a dot-atom (that is, it contains no characters other than atext characters or "." surrounded by atext characters), then the dot-atom form SHOULD be used and the quoted-string form SHOULD NOT be used. 
+It follows RFC 5322, section 3.4.1. It specifies Internet identifier that contains a locally interpreted string followed by the at-sign character ("@", ASCII value 64) followed by an Internet domain. The locally interpreted string is either a quoted-string or a dot-atom. If the string can be represented as a dot-atom (that is, it contains no characters other than atext characters or "." surrounded by atext characters), then the dot-atom form SHOULD be used and the quoted-string form SHOULD NOT be used.
 
 .Example of email format
 [source,json]
@@ -178,7 +186,7 @@ The root element can be an object or an array. In this case we are validating an
 {
 	"$schema": "http://json-schema.org/draft-04/schema#",
 	"title": "JSON minimal example",
-	"description": "Schema for the minimal example that is a river",	
+	"description": "Schema for the minimal example that is a river",
 	"type": "object"
 }
 ----
@@ -202,7 +210,7 @@ Now it is time to enumerate the properties. The properties array allows to enume
 
 Since _river_ is an _object_, we can repeat the previous pattern for it. In particular, a river object has a _name_ and this name is an "string".
 
-.The river object has also some properties 
+.The river object has also some properties
 [source,json]
 ----
 {
@@ -252,8 +260,8 @@ Now we add a river property that is called _bridges_ and that can contain a list
 			{
 				[...]
 				"country": { "type": "string" },
-				"bridges": { 
-				    "type": "array", 
+				"bridges": {
+				    "type": "array",
 				    "items": { "type": "string" }
 				}
 			}
@@ -315,7 +323,7 @@ Lets consider now that I need to encode rivers and lakes. In this case, we will 
 }
 ----
 
-Obviously, rivers and lakes will have different properties. There is a _oneOf_ property in JSON Schema that allows a thing to present more than one alternative definition. This way both, the previous JSON instance for the river and the one in this subsection, will be validated with the same JSON Schema. 
+Obviously, rivers and lakes will have different properties. There is a _oneOf_ property in JSON Schema that allows a thing to present more than one alternative definition. This way both, the previous JSON instance for the river and the one in this subsection, will be validated with the same JSON Schema.
 
 .Example of a JSON schema to validate a river or a lake
 [source,json]
@@ -342,8 +350,8 @@ Obviously, rivers and lakes will have different properties. There is a _oneOf_ p
 						"source": { "type": "string" },
 						"mouth": { "type": "string" },
 						"country": { "type": "string" },
-						"bridges": { 
-						    "type": "array", 
+						"bridges": {
+						    "type": "array",
 						    "items": { "type": "string" }
 						}
 					}
@@ -434,8 +442,8 @@ This can be validated by the following JSON Schema, that is very similar to the 
 						"source": { "type": "string" },
 						"mouth": { "type": "string" },
 						"country": { "type": "string" },
-						"bridges": { 
-						    "type": "array", 
+						"bridges": {
+						    "type": "array",
 						    "items": { "type": "string" }
 						}
 					}
@@ -514,8 +522,8 @@ This is the corresponding JSON Schema that can be used to validate the array. No
 				"source": { "type": "string" },
 				"mouth": { "type": "string" },
 				"country": { "type": "string" },
-				"bridges": { 
-				    "type": "array", 
+				"bridges": {
+				    "type": "array",
 				    "items": { "type": "string" }
 				}
 			}

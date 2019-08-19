@@ -1,6 +1,14 @@
 [[Clause_Rules_Instances]]
 == Rules for encoding JSON-LD instances conformant to the UML model
 
+//-------Remove after TC approval-------
+
+Readers should consider the following warning.
+
+WARNING: This document defines a draft OGC Best Practice on a particular technology or approach. This document is not an OGC Standard and may not be referred to as an OGC Standard. This document is not an official position of the OGC.
+
+//----------------------------------------
+
 The rules provided in this section and in the previous one <<Clause_Rules_Schemas>> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an _encoding service_. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non normative) justifications, clarifications and examples can follow.
 
 Rules have been classified in subsections for clarification purposes only. All rules form a single corpus and need to be applied together.
@@ -23,7 +31,7 @@ Several tools exist to validate JSON instances with a JSON schema automatically 
 
 === Root element
 
-*Rule 2.1*: The root element in the JSON-LD instance shall have no name. 
+*Rule 2.1*: The root element in the JSON-LD instance shall have no name.
 
 The JSON file is supposed to be loaded in a JavaScript object that will have a name identifying the object.
 
@@ -33,7 +41,7 @@ The JSON file is supposed to be loaded in a JavaScript object that will have a n
 var coverage=JSON.parse(json_serialized_text);
 ----
 
-*Rule 2.2*: The first property of the root element of a JSON-LD instance SHALL have the name "@context". The root "@context" property SHAL have a value consisting in an array formed two parts: a reference to a @context document (called _root @context document_) and a embedded context (called _root embedded context_). 
+*Rule 2.2*: The first property of the root element of a JSON-LD instance SHALL have the name "@context". The root "@context" property SHAL have a value consisting in an array formed two parts: a reference to a @context document (called _root @context document_) and a embedded context (called _root embedded context_).
 
 *Rule 2.3*: A JSON-LD instance _root embeded context_ SHALL contain at least a property with the name of the abbreviated namespace and value of the full namespace URI of the identifiers present on this JSON document.
 

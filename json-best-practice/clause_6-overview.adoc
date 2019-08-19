@@ -1,6 +1,14 @@
 [[overview]]
 == Overview
 
+//-------Remove after TC approval-------
+
+Readers should consider the following warning.
+
+WARNING: This document defines a draft OGC Best Practice on a particular technology or approach. This document is not an OGC Standard and may not be referred to as an OGC Standard. This document is not an official position of the OGC.
+
+//----------------------------------------
+
 === Introduction to JSON
 
 This section presents the JavaScript Object Notation (JSON). Afterwards, it discusses important questions such as what JSON offers, when a JSON encoding offers an advantage (e.g. in simplicity and performance) in comparison to an eXtensible Markup Language (XML) encoding, and when XML encodings can provide a better solution (e.g. adding more expressivity and robustness). Finally it presents some suggestions of what OGC can add on top of the basic JSON definition to ensure better geospatial interoperability of applications using JSON.
