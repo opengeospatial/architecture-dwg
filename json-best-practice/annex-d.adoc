@@ -1,6 +1,14 @@
 [appendix]
 == JSON in web services (informative)
 
+//-------Remove after TC approval-------
+
+Readers should consider the following warning.
+
+WARNING: This document defines a draft OGC Best Practice on a particular technology or approach. This document is not an OGC Standard and may not be referred to as an OGC Standard. This document is not an official position of the OGC.
+
+//----------------------------------------
+
 The previous sections of this document have concentrated in JSON general principles and how them can be applied to OGC data models and data encodings. This section focuses on how to use the same techniques in OGC web services. Traditionally, the OGC web services have used XML, the _lingua franca_ for services. Currently, OGC web services are able to expose their capabilities and are able to send requests that cannot be easily encoded in KVP as XML documents that are posted to servers. Actually, in OWS Common, all versions up to 2.0 (the last currently available at the moment of writing this section), the only described encoding is XML. In principle, nothing prevents OGC web services to use other encodings that can be more convenient for modern clients and servers. This section describes how OGC web services can adopt JSON encoding.
 
 HTML5 integrated web clients are the ideal platform to work with JSON encoded documents. They are able to automatically interpret a JSON serialized string and convert it to a JavaScript object only invoking JSON.parse(). The server side technologies were mainly not related with JSON and JavaScript, but this has changed with the introduction of Node.js. Node.js allows for the creation of web servers and networking tools using JavaScript and a collection of "modules" that handle various core functionality. Modules are provided for file system I/O, networking (DNS, HTTP, TCP, TLS/SSL, or UDP), binary data (buffers), cryptography functions, data streams, etc. In Node.js, developers can create highly scalable servers without using threading, by using a simplified model of event-driven programming that uses callbacks to signal the completion of a task. Since the Node.js can be defined as JavaScript for services it can easily work with JSON. Even if JavaScript provides a natural supports JSON, it is not the only language supporting JSON; actually there are libraries to use JSON in many modern programming languages, including C, to cite only one. The authors of this document use cjson to include JSON support to CGI server applications developed in C code.

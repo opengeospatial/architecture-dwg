@@ -44,7 +44,9 @@
 |*Warning*
 |===
 
-This document defines an OGC Best Practice on a particular technology or approach related to an OGC standard. This document is not an OGC Standard and may not be referred to as an OGC Standard. It is subject to change without notice. However, this document is an official position of the OGC membership on this particular technology topic.
+This document defines a [red]#draft# OGC Best Practice on a particular technology or approach related to an OGC standard. This document is [red]#not# an OGC Standard and may not be referred to as an OGC Standard. It is subject to change without notice.
+
+//However, this document is an official position of the OGC membership on this particular technology topic.
 
 Recipients of this document are invited to submit, with their comments, notification of any relevant patent rights of which they are aware and to provide supporting documentation.
 

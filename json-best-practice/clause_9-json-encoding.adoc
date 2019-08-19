@@ -1,4 +1,12 @@
-== JSON Encoding 
+== JSON Encoding
+
+//-------Remove after TC approval-------
+
+Readers should consider the following warning.
+
+WARNING: This document defines a draft OGC Best Practice on a particular technology or approach. This document is not an OGC Standard and may not be referred to as an OGC Standard. This document is not an official position of the OGC.
+
+//----------------------------------------
 
 === Links in JSON
 
@@ -71,7 +79,7 @@ JSON-LD allows for a more elegant notation that defines abbreviated namespaces t
 		"dbpedia": "http://dbpedia.org/page/",
 		"wiki": "http://en.wikipedia.org/wiki/",
 		"schema": "http://schema.org/",
-		
+
 		"name": "schema:name",
 		"describedBy": {
 			"@id": "iana_rel:describedby",
@@ -108,7 +116,7 @@ Hypertext Application Language (HAL) is a simple format that tries to give a con
 }
 ----
 
-==== Atom link direct JSON encoding 
+==== Atom link direct JSON encoding
 The book http://shop.oreilly.com/product/9780596801694.do["RESTful Web Services Cookbook; Solutions for Improving Scalability and Simplicity"] By Subbu Allamaraju, in its chapter "How to Use Links in JSON Representations" proposes a direct translation of the Atom xlink notation in two forms:
 
 .Atom translation to JSON. Alternative 1.
@@ -154,5 +162,5 @@ To do the same with the first alternative a JavaScript loop checking all links u
 
 If we remove the _grouping_ property "links", then we almost converge to the JSON-LD alternative.
 
-==== Recommendation 
+==== Recommendation
 Even if it is difficult to formulate a recommendation, the authors of this guide consider that the JSON-LD alternative has the advantage of simplicity and, at the same time, is the only alternative ratified and approved by an standard body. It has also the advantage to connect with the RDF world.
