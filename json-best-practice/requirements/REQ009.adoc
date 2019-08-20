@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 9*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-one-encoding
+ {set:cellbgcolor:#FFFFFF} +
+a|
+Attributes, aggregations and compositions with multiplicity more that 1 in the UML will be encoded as JSON properties of the _type_ "array" in the JSON schema.
+|===

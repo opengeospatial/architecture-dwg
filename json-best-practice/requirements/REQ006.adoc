@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 6*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-attributes
+ {set:cellbgcolor:#FFFFFF} +
+a|
+All UML class attributes (as well as composition and aggregations) SHALL be listed as _properties_ of the object in the JSON Schema.
+|===

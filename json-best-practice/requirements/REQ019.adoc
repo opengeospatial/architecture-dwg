@@ -1,0 +1,10 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 19*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/class-generalization
+ {set:cellbgcolor:#FFFFFF} +
+a|
+If a class is generalized into other classes in the UML, the JSON schema SHALL define the main class properties in the definitions section with the UML class name and the word "Properties" (not including the "type"). If the main class is not abstract, it SHALL then be defined with the UML call name by combining the previous "properties" and the "type" property with _allOf_. The generalized class will do the same and combine the main properties, the "type" and its own properties with _allOf_.
++
+If the main class is empty (it has no attributes) this rule does not apply.
+|===

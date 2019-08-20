@@ -1,0 +1,92 @@
+[[Clause_Rules_Instances]]
+== Rules for encoding JSON-LD instances conformant to UML class diagrams
+
+//-------Remove after TC approval-------
+
+Readers should consider the following warning.
+
+WARNING: This document defines a draft OGC Best Practice on a particular technology or approach. This document is not an OGC Standard and may not be referred to as an OGC Standard. This document is not an official position of the OGC.
+
+//----------------------------------------
+
+The rules provided in this section and in the previous one <<Clause_Rules_Schemas>> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an _encoding service_. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non normative) justifications, clarifications and examples can follow.
+
+Rules have been classified in subsections for clarification purposes only. All rules form a single corpus and need to be applied together.
+
+Also note that we target _JSON-LD instances_ that are validated using JSON Schema and have @context documents to guide the JSON-LD to RDF conversions and give semantics of objects and attribute names. Actually, the previous clause <<Clause_Rules_Schemas>> targets the JSON schemas and @context documents
+
+In practice, these rules inform JSON instance writers
+
+
+=== General
+*Rule 1.1*: A JSON-LD instance SHALL follow the JSON syntax specified in the IETF RFC7159 The JavaScript Object Notation (JSON) Data Interchange Format.
+
+This _RFC7159 conformance rule_ actually implies several other rules stated in RFC7159 and that will not be repeated here but need also considered (e.g. JSON Strings values will be encoded in UTF8 in a JSON-LD instance)
+
+*Rule 1.2*: A JSON-LD instance SHALL validate with the JSON schema derived from the corresponding UML class diagram model.
+
+This rule imposes automatically all the JSON schema specific rules for property values encoding (e.g. Numeric attributes will be encoded as JSON Numbers or Boolean attributes will have the _true_ or _false_ values or Arrays of them in a JSON-LD instance). Most of this rules will not be included here because they are imposed by the JSON schema validation process. Some others are included here are rules for clarity.
+
+Several tools exist to validate JSON instances with a JSON schema automatically (such as XML Validator Buddy).
+
+=== Root element
+
+*Rule 2.1*: The root element in the JSON-LD instance shall have no name.
+
+The JSON file is supposed to be loaded in a JavaScript object that will have a name identifying the object.
+
+[source,JavaScript]
+.Example of code that load the JSON objects in the coverage variable
+----
+var coverage=JSON.parse(json_serialized_text);
+----
+
+*Rule 2.2*: The first property of the root element of a JSON-LD instance SHALL have the name "@context". The root "@context" property SHAL have a value consisting in an array formed two parts: a reference to a @context document (called _root @context document_) and a embedded context (called _root embedded context_).
+
+*Rule 2.3*: A JSON-LD instance _root embedded context_ SHALL contain at least a property with the name of the abbreviated namespace and value of the full namespace URI of the identifiers present on this JSON document.
+
+[source,JSON]
+.Example of a fragment of the first part of the root object of a JSON document. If references the @context document in the last example and also embeds the definition of the id's namespace.
+----
+{
+    "@context": [
+	    "http://localhost/json-ld/coverage-context.json",
+	    {
+	        "examples": "http://www.opengis.net/cis/1.1/examples/"
+        }]
+}
+----
+
+It is important to note that it can be other "@context" objects in the interior of any object (as the first property). This is particularly useful to define properties with local scope.
+
+=== Objects
+
+*Rule 3.1*: In a JSON-LD instance, each JSON object (including the root) SHALL contain a "id" property that uniquely identifies it (this is enforced by the JSON Schema validation). The value of this property shall be composed by a abbreviated namespace of the identifiers, a ":" character and an identifier name.
+
+[source,JSON]
+.Example of the addition of the necessary id's
+----
+{
+    "@context": [
+	    "http://localhost/json-ld/coverage-context.json",
+	    {
+	        "examples": "http://www.opengis.net/cis/1.1/examples/"
+        }]	"id": "examples:CIS_05_2D",
+    [...]
+	"domainSet":{
+		"id": "examples:CIS_DS_05_2D",
+		"generalGrid":{
+			"id": "examples:CIS_DS_GG_05_2D",
+            [...]
+        }
+	}
+}
+----
+
+*Rule 3.2*: In a JSON-LD instance, each JSON object (including the root) SHALL include a “type” property (this is enforced by the JSON Schema validation)
+
+Parsers of the JSON encoding are not required to read and understand the "type" property but they can use it to redirect the code to the right parser of a code fragment or to identify a specialized type among all possible ones of a generic one (among the subclassified types).
+
+*Rule 3.3*: The value of the _type_ property of each JSON object in a JSON instance shall not contain an abbreviated namespace (actually, valid nomes are enforced by the JSON Schema validation).
+
+Using the types values without namespace in the JSON object definitions allows for using a JSON schema that is able to correctly enumerate the possible values of a type property without the abbreviated namespace. This way tha abbreviated namespace may vary  without affecting the common JSON schema. In contrast, "id" values are expected to be different in each instance (and their values are not verified by the JSON schema) so they should contain the abbreviated namespace.

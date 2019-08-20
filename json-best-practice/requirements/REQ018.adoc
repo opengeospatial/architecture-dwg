@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 18*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-datatype
+ {set:cellbgcolor:#FFFFFF} +
+a|
+If a UML class is defined as _DataType_ (and potentially used in more that one place in the UML model) it SHALL be defined in the _definitions_ section of the JSON schema and referenced by each attribute that is declared of this _DataType_.
+|===

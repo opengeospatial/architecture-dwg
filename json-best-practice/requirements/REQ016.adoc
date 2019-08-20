@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 16*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-enumeration
+ {set:cellbgcolor:#FFFFFF} +
+a|
+A UML "enumeration" SHALL be encoded as an "enum" in a JSON schema. Enumerations SHALL be listed in the "definitions" section of the JSON schema to be able to reuse them as needed.
+|===

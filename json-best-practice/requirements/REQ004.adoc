@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 4*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-union
+ {set:cellbgcolor:#FFFFFF} +
+a|
+A UML _Union_ SHALL be expressed as a JSON object defined as an _anyOf_ array. Each anyOf item SHALL be defined as one property (plus the _type_ and _id_ properties) that are defined as required. All _type_ properties SHALL be identically defined.
+|===

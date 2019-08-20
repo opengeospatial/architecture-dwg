@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 7*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-of-one
+ {set:cellbgcolor:#FFFFFF} +
+a|
+Attributes, aggregations and compositions of an object with multiplicity 0 or 1 in the UML shall be listed as JSON properties in the JSON schema.
+|===

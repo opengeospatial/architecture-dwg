@@ -628,7 +628,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_recommendation">9.5. Recommendation</a></li>
 </ul>
 </li>
-<li><a href="#Clause_Rules_Schemas">10. Rules for encoding JSON Schema and JSON-LD context documents from UML class diagrams</a>
+<li><a href="#Clause_Rules_Schemas">10. Rules for encoding JSON Schema from UML class diagrams</a>
 <ul class="sectlevel2">
 <li><a href="#_root_element">10.1. Root element</a></li>
 <li><a href="#_namespaces">10.2. Namespaces</a></li>
@@ -640,11 +640,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_object_attributes_enumerations_and_code_lists">10.8. Object attributes; enumerations and code-lists</a></li>
 <li><a href="#_objects_data_types_and_inheritance">10.9. Objects: Data types and inheritance</a></li>
 <li><a href="#_object_libraries_and_multiple_schemas">10.10. Object libraries and multiple schemas</a></li>
-<li><a href="#_other_considerations">10.11. Other considerations</a>
-<ul class="sectlevel3">
-<li><a href="#_large_arrays">10.11.1. Large arrays</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a href="#Clause_Rules_Instances">11. Rules for encoding JSON-LD instances conformant to the UML model</a>
@@ -2279,7 +2274,7 @@ river.links.describedBy[0]</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Clause_Rules_Schemas"><a class="anchor" href="#Clause_Rules_Schemas"></a>10. Rules for encoding JSON Schema and JSON-LD context documents from UML class diagrams</h2>
+<h2 id="Clause_Rules_Schemas"><a class="anchor" href="#Clause_Rules_Schemas"></a>10. Rules for encoding JSON Schema from UML class diagrams</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Readers should consider the following warning.</p>
@@ -2297,22 +2292,133 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </table>
 </div>
 <div class="paragraph">
-<p>The rules provided in this clause and in the following one <a href="#Clause_Rules_Instances">Rules for encoding JSON-LD instances conformant to the UML model</a> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an <em>encoding service</em>. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non normative) justifications, clarifications and examples can follow.</p>
+<p>The rules provided in this clause and in the following one <a href="#Clause_Rules_Instances">Rules for encoding JSON-LD instances conformant to the UML model</a> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an <em>encoding service</em>. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non-normative) justifications, clarifications and examples can follow.</p>
 </div>
 <div class="paragraph">
-<p>Rules have been classified in subsections for clarification purposes only. All rules form a single corpus and need to be applied together.</p>
+<p>This chapter focuses on <em>JSON Schemas</em>. Rules have been classified in subsections for clarification purposes only. All rules form a single corpus and need to be applied together. In practice, these rules inform UML application schema conversion implementors such as, for example, ShapeChange.</p>
 </div>
-<div class="paragraph">
-<p>Also note that we target <em>JSON Schemas</em> and have @context documents to guide the JSON-LD to RDF conversions and give semantics of objects and attribute names. This JSON Schemas and @context documents are generic and will be applied to several JSON instances. Actually, next clause <a href="#Clause_Rules_Instances">Rules for encoding JSON-LD instances conformant to the UML model</a> targets the JSON instances.</p>
-</div>
-<div class="paragraph">
-<p>In practice, these rules inform UML application schema conversion implementors. In other words, it can be applied in a future automatic UML application schema conversion tool (e.g. ShapeChange).</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirements Class</strong> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Target type</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">JSON Schema</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 1</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/first-object-type" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/first-object-type</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 2</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-id-property" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-id-property</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 3</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-type-property" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-type-property</a>  </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 4</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-union" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-union</a>  </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 5</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-aggregation-composition" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-aggregation-composition</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 6</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-attributes" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-attributes</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 7</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-of-one" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-of-one</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 8</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-zero-naming" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-zero-naming</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 9</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-one-encoding" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-one-encoding</a>  </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 10</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/numeric-attributes" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/numeric-attributes</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 11</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/boolean-attributes" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/boolean-attributes</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 12</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/string-attributes" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/string-attributes</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 13</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/attributes-multiplicity-one" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/attributes-multiplicity-one</a>  </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 14</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/complex-attribute-type" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/complex-attribute-type</a>  </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 15</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/null-attribute-value" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/null-attribute-value</a>  </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 16</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-enumeration" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-enumeration</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 17</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-codelist" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-codelist</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 18</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-datatype" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-datatype</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 19</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/class-generalization" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/class-generalization</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 20</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiple-generalization" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiple-generalization</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 21</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-package-definition" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-package-definition</a>  </p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect2">
 <h3 id="_root_element"><a class="anchor" href="#_root_element"></a>10.1. Root element</h3>
-<div class="paragraph">
-<p><strong>Rule 1.1</strong>: The JSON schema SHALL declare the first type as "object"</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 1</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/first-object-type" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/first-object-type</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>The JSON schema SHALL declare the first type as "object"</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of the start of a JSON Schema file that defines the root property as an object.</div>
 <div class="content">
@@ -2324,59 +2430,33 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Even if a JSON-LD could also be of the array type (or a simple type) in encoding a root class coming from UML, this UML class is represented by a single the root element.</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_namespaces"><a class="anchor" href="#_namespaces"></a>10.2. Namespaces</h3>
 <div class="paragraph">
-<p><strong>Rule 2.1</strong>: The <em>root @context document</em> SHALL contain a list of properties with the names of the abbreviated namespaces and value of the full namespace URI for the properties of the root element of the JSON document.</p>
-</div>
-<div class="listingblock">
-<div class="title">Example of a fragment of the root "@context" document (coverage-context.json) containing definition of the abbreviated and full namespace.</div>
-<div class="content">
-<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
-	&quot;@context&quot;:
-	{
-		&quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
-		&quot;cis&quot;: &quot;http://www.opengis.net/cis/1.1/&quot;,
-		[...]
-	}
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Rule 2.2</strong>: The <em>root "@context" document</em> SHALL define a property "id" as  "@id" and a property "type" as "@type".</p>
-</div>
-<div class="listingblock">
-<div class="title">Example of a fragment of the root "@context" document where id and type are defined.</div>
-<div class="content">
-<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
-	&quot;@context&quot;:
-	{
-		&quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
-		&quot;cis&quot;: &quot;http://www.opengis.net/cis/1.1/&quot;,
-
-	    &quot;id&quot;: &quot;@id&quot;,
-		&quot;type&quot;: &quot;@type&quot;
-		[...]
-	}
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The properties that starts with "@" are a bit more difficult to access in JavaScript that the others because they can NOT be called using "coverage.@id" but using the array notation that is less <em>natural</em> "coverage[@id]". The existence of this rule allows for using  "context.id" and "context.type" instead for "@id" and "@type" in JavaScript.</p>
-</div>
-<div class="paragraph">
-<p><strong>Rule 2.3</strong>: For all abbreviated namespaces, the correspondence to full namespace URI SHALL be listed in a @context document. If the document has more than one "@context", and the abbreviated namespace will be used only inside a particular JSON object that has a "@context" property, the definition SHALL be done in this "@context" (instead of using the root "@context").</p>
+<p>TBA</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_objects"><a class="anchor" href="#_objects"></a>10.3. Objects</h3>
-<div class="paragraph">
-<p><strong>Rule 3.1</strong>: In the JSON schema, each JSON object (including the root) SHALL define "id" property with <em>type</em> "string" and <em>format</em> "uri". This property SHALL be defined as mandatory (<em>required</em>).</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 2</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-id-property" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-id-property</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>In the JSON schema, each JSON object (including the root) SHALL define "id" property with <em>type</em> "string" and <em>format</em> "uri". This property SHALL be defined as mandatory (<em>required</em>).</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of the addition of the necessary id&#8217;s</div>
 <div class="content">
@@ -2391,9 +2471,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 3.2</strong>: In a JSON schema, each JSON object (including the root) SHALL define a “type” property with <em>type</em> <em>enum</em>. The <em>enum</em> will enumerated the UML class type name. The value of the <em>type</em> property of each JSON object in a JSON instance SHALL not contain an abbreviated namespace prefix. UML class type names are usually in UpperCammelCase and the values of the <em>enum</em> will be too.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 3</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-type-property" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-type-property</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>In a JSON schema, each JSON object (including the root) SHALL define a “type” property with <em>type</em> <em>enum</em>. The <em>enum</em> will enumerated the UML class type name. The value of the <em>type</em> property of each JSON object in a JSON instance SHALL not contain an abbreviated namespace prefix. UML class type names are usually in UpperCammelCase and the values of the <em>enum</em> will be too.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of the addition of the necessary type&#8217;s</div>
 <div class="content">
@@ -2408,56 +2503,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 3.3</strong>: The possible values of the <em>type</em> property SHALL be listed as a property name of a @context document with a value of the abbreviated namespace, a ":" character and the name again.</p>
-</div>
-<div class="listingblock">
-<div class="title">Example of the definition of types in JSON-LD.</div>
-<div class="content">
-<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
-	&quot;@context&quot;:
-	{
-		&quot;md&quot;: &quot;http://www.opengis.net/md&quot;,
-		&quot;examples&quot;: &quot;http://www.opengis.net/cis/1.1/examples/&quot;
-
-		&quot;id&quot;: &quot;@id&quot;,
-		&quot;type&quot;: &quot;@type&quot;,
-		&quot;MD_LegalConstraints&quot;: &quot;md:MD_LegalConstraints&quot;
-	},
-	&quot;type&quot;: &quot;MD_LegalConstraints&quot;,
-	&quot;id&quot;: &quot;examples:CIS_05_2D&quot;,
-	...
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Using the types values without namespace in the JSON object definitions allows for creating a JSON schema that is able to correctly enumerate the possible values of a type property without the abbreviated namespace. This way the abbreviated namespace may vary from one instance without affecting the common JSON schema. In contrast, "id" values are expected to be different in each instance (and their values are not verified by the JSON schema) so they should contain the abbreviated namespace.</p>
-</div>
-<div class="paragraph">
-<p>If an object can present more that one type (e.g. there is a one or more generalized classes of a more generic class) the all the alternative types are listed in the appropriate @context section.</p>
-</div>
-<div class="listingblock">
-<div class="title">Example of more that one type definition for a class.</div>
-<div class="content">
-<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
-    &quot;@context&quot;:
-    {
-        &quot;MD_Constraints&quot;: &quot;md:MD_Constraints&quot;,
-        &quot;MD_LegalConstraints&quot;: &quot;md:MD_LegalConstraints&quot;,
-        &quot;MD_SecurityConstraints&quot;: &quot;md:MD_SecurityConstraints&quot;
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Again, there is no need to list the Abstract types due to they cannot be instantiated in JSON-LD instances.</p>
-</div>
-<div class="paragraph">
-<p>In a JSON-LD instance, when UML generalization is used to derive more specific classes from a generic class, the value of the property "type" will be the specialized class type name, instead of the generic class name. This behavior will favor both old and the new implementations. Old implementations will be able to ignore the "type" value, identify the object name and read the common properties from the generic class. New implementation will recognize the "type" value and be prepared to find the specialized properties.</p>
-</div>
-<div class="paragraph">
-<p><strong>Rule 3.4</strong>: A UML <em>Union</em> SHALL be expressed as a JSON object defined as an <em>anyOf</em> array. Each anyOf item SHALL be defined as one property (plus the <em>type</em> and <em>id</em> properties) that are defined as required. All <em>type</em> properties SHALL be identically defined.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 4</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-union" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-union</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>A UML <em>Union</em> SHALL be expressed as a JSON object defined as an <em>anyOf</em> array. Each anyOf item SHALL be defined as one property (plus the <em>type</em> and <em>id</em> properties) that are defined as required. All <em>type</em> properties SHALL be identically defined.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div id="r_sch_image_possible_values" class="imageblock">
 <div class="content">
 <img src="data:image/png;base64,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" alt="PossibleValues">
@@ -2500,9 +2563,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 3.5</strong>: A UML class that is a <em>aggregation</em> or a <em>composition</em> of a parent class, SHALL be considered equivalent to a JSON complex property of the parent object (considering it as the same as a UML complex attribute). The name of the source extreme of the relation (the tip of the arrow) will be considered the name of the complex <em>attribute</em> and the <em>class name</em> will be considered the <em>type</em> of the property.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 5</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-aggregation-composition" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-aggregation-composition</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>A UML class that is a <em>aggregation</em> or a <em>composition</em> of a parent class, SHALL be considered equivalent to a JSON complex property of the parent object (considering it as the same as a UML complex attribute). The name of the source extreme of the relation (the tip of the arrow) will be considered the name of the complex <em>attribute</em> and the <em>class name</em> will be considered the <em>type</em> of the property.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div id="r_sch_image_md_format" class="imageblock">
 <div class="content">
 <img src="data:image/png;base64,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" alt="MD Format">
@@ -2531,45 +2609,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </div>
 <div class="sect2">
 <h3 id="_object_attributes_names"><a class="anchor" href="#_object_attributes_names"></a>10.4. Object attributes; names</h3>
-<div class="paragraph">
-<p><strong>Rule 4.1</strong>: All UML class attributes SHALL be listed in a @context object. If the document has more than one "@context", the property SHALL be defined in the "@context" that is closer to it (with the exception of "id" and "type" that are defined in the root "@context" document and always have global scope). The value of the listed properties has to be the abbreviated namespace, the ":" character and the name of the property again.</p>
-</div>
-<div class="paragraph">
-<p>Defining the properties in the "@context" that is closer to it makes the definition local to the object where the "@context" belongs.</p>
-</div>
-<div class="listingblock">
-<div class="title">Example of the addition of the abbreviate namespace to properties</div>
-<div class="content">
-<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
-	&quot;domainSet&quot;:{
-		&quot;@context&quot;:
-		{
-			&quot;generalGrid&quot;: &quot;cis:generalGrid&quot;,
-			&quot;axis&quot;: &quot;cis:axis&quot;,
-			&quot;axisLabel&quot;: &quot;cis:axisLabel&quot;,
-			&quot;lowerBound&quot;: &quot;cis:lowerBound&quot;,
-			&quot;upperBound&quot;: &quot;cis:upperBound&quot;
-		},
-		&quot;generalGrid&quot;:{
-			&quot;axis&quot;: [{
-			    &quot;type&quot;: &quot;IndexAxisType&quot;,
-				&quot;axisLabel&quot;: &quot;i&quot;,
-				&quot;lowerBound&quot;: 0,
-				&quot;upperBound&quot;: 2
-			},{
-			    &quot;type&quot;: &quot;IndexAxisType&quot;,
-				&quot;axisLabel&quot;: &quot;j&quot;,
-				&quot;lowerBound&quot;: 0,
-				&quot;upperBound&quot;: 2
-			}]
-		}
-	}
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p><strong>Rule 4.2</strong>: All UML class attributes (as well as composition and aggregations) SHALL be listed as <em>properties</em> of the object in the JSON Schema.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 6</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-attributes" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-attributes</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>All UML class attributes (as well as composition and aggregations) SHALL be listed as <em>properties</em> of the object in the JSON Schema.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of axisLabel, lowerBound and upperBound properties definition.</div>
 <div class="content">
@@ -2586,9 +2643,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </div>
 <div class="sect2">
 <h3 id="_object_attributes_multiplicity"><a class="anchor" href="#_object_attributes_multiplicity"></a>10.5. Object attributes; multiplicity</h3>
-<div class="paragraph">
-<p><strong>Rule 5.1</strong>: Attributes, aggregations and compositions of an object with multiplicity 0 or 1 in the UML will be listed as JSON properties in the JSON schema.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 7</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-of-one" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-of-one</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>Attributes, aggregations and compositions of an object with multiplicity 0 or 1 in the UML shall be listed as JSON properties in the JSON schema.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of axisLabel, lowerBound and upperBound properties definition.</div>
 <div class="content">
@@ -2603,9 +2675,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 	},</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 5.2</strong>: Attributes, aggregations and compositions of an object with multiplicity more than 0 in the UML will have their names listed in the array of "required" properties in the JSON schema</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 8</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-zero-naming" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-zero-naming</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>Attributes, aggregations and compositions of an object with multiplicity more than 0 in the UML will have their names listed in the array of "required" properties in the JSON schema.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of the "required" list of property.</div>
 <div class="content">
@@ -2621,9 +2708,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 	},</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 5.3</strong>: Attributes, aggregations and compositions with multiplicity more that 1 in the UML will be encoded as JSON properties of the <em>type</em> "array" in the JSON schema</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 9</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-one-encoding" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-one-encoding</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>Attributes, aggregations and compositions with multiplicity more that 1 in the UML will be encoded as JSON properties of the <em>type</em> "array" in the JSON schema.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>In JSON instances the arrays of JSON objects will defined the type for each member of the array. The "type" can be different from the other members of the array (JavaScript allows arrays that are heterogenous in types) but all "type" values will be an generalization of the same generic UML class.</p>
 </div>
@@ -2638,18 +2740,27 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 5.4</strong>: A property defined in the UML as <em>ordered</em> and with multiplicity more than 1, SHALL be defined as "@container": "@list" in a @context document.</p>
-</div>
-<div class="paragraph">
-<p>There is an important singularity in JSON-LD about this. When a JSON document is converted into JavaScript all JSON arrays becomes automatically with order. However in JSON-LD the situation is the opposite, and by default arrays are NOT considered as ordered when converting JSON-LD arrays to RDF. There is technical reason behind this: ordered arrays require much more RDF code and the conversion does <em>not</em> result in a <em>nice</em> RDF code. For that reason if the a property is marked as <em>ordered</em> in the UML, we have to explicitly indicate this in a @context. Please limit the use this parameter only when order is really important.</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_object_attributes_data_types"><a class="anchor" href="#_object_attributes_data_types"></a>10.6. Object attributes; data types</h3>
-<div class="paragraph">
-<p><strong>Rule 6.1</strong>: Numeric attributes in the UML SHALL have "type": "number" in the JSON Schema.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 10</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/numeric-attributes" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/numeric-attributes</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>Numeric attributes in the UML SHALL have "type": "number" in the JSON Schema.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of JSON schema for anyURL properties with multiplicity 0 or 1.</div>
 <div class="content">
@@ -2660,7 +2771,7 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </div>
 </div>
 <div class="paragraph">
-<p>In JSON there is no able to distinction between different numeric data types: E.g. Integer, Float, Double etc and they all became <em>number</em>.</p>
+<p>In JSON there is no distinction between different numeric data types: E.g. Integer, Float, Double etc and they all became <em>number</em>.</p>
 </div>
 <div class="paragraph">
 <p>Numeric attributes with multiplicity more than 1 will have "type": "array" and "items": {"type": "number"} in the JSON Schema.</p>
@@ -2676,15 +2787,45 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 6.2</strong>: Boolean attributes SHALL have "type": "boolean" in the JSON Schema.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 11</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/boolean-attributes" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/boolean-attributes</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>Boolean attributes SHALL have "type": "boolean" in the JSON Schema.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>Boolean attributes with multiplicity more than 1 will have "type": "array" and "items": {"type": "boolean"} in the JSON Schema.</p>
 </div>
-<div class="paragraph">
-<p><strong>Rule 6.3</strong>: String attributes SHALL have "type": "string" in the JSON Schema.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 12</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/string-attributes" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/string-attributes</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>String attributes SHALL have "type": "string" in the JSON Schema.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of JSON schema for anyURL properties with multiplicity 0 or 1.</div>
 <div class="content">
@@ -2719,9 +2860,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 6.4</strong>: anyURL attributes with multiplicity 0 or 1 SHALL have "type": "string" and "format": "uri" in the JSON Schema.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 13</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/attributes-multiplicity-one" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/attributes-multiplicity-one</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>anyURL attributes with multiplicity 0 or 1 SHALL have "type": "string" and "format": "uri" in the JSON Schema.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of JSON schema for anyURL properties with multiplicity 0 or 1.</div>
 <div class="content">
@@ -2745,26 +2901,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 6.5</strong>: A property that has the value anyURI SHALL be described as "@type": "@id" in a JSON @context document</p>
-</div>
-<div class="listingblock">
-<div class="title">Example of the definition of a value anyURI in JSON-LD</div>
-<div class="content">
-<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
-    &quot;@context&quot;:
-    {
-        &quot;srsName&quot;: {&quot;@id&quot;:&quot;swe:srsName&quot;, &quot;@type&quot;: &quot;@id&quot;}
-    }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The reasoning behind this is that property values defined without "@type": "@id" are considered literals when converted to RDF. Property values defined with "@type": "@id" considered as URIs when converted to RDF.</p>
-</div>
-<div class="paragraph">
-<p><strong>Rule 6.6</strong>: Complex type attributes SHALL have "type": "object" in the JSON Schema.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 14</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/complex-attribute-type" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/complex-attribute-type</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>Complex type attributes SHALL have "type": "object" in the JSON Schema.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of JSON schema for complex properties with multiplicity 0 or 1.</div>
 <div class="content">
@@ -2793,15 +2947,27 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 6.7</strong>: A UML complex type attribute SHALL be encoded as JSON Object properties or as an Array of JSON Object type properties in a JSON-LD instance.</p>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_object_attributes_null_values"><a class="anchor" href="#_object_attributes_null_values"></a>10.7. Object attributes; null values</h3>
-<div class="paragraph">
-<p><strong>Rule 7.1</strong>: For a attribute that can have null values, an array of types combining the variable data type and "null" SHALL be used.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 15</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/null-attribute-value" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/null-attribute-value</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>For an attribute that can have null values, an array of types combining the variable data type and "null" SHALL be used.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of a nullable value.</div>
 <div class="content">
@@ -2813,9 +2979,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </div>
 <div class="sect2">
 <h3 id="_object_attributes_enumerations_and_code_lists"><a class="anchor" href="#_object_attributes_enumerations_and_code_lists"></a>10.8. Object attributes; enumerations and code-lists</h3>
-<div class="paragraph">
-<p><strong>Rule 8.1</strong>: A UML "enumeration" SHALL be encoded as an "enum" in a JSON schema. Enumerations SHALL be listed in the "definitions" section of the JSON schema to be able to reuse them as needed.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 16</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-enumeration" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-enumeration</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>A UML "enumeration" SHALL be encoded as an "enum" in a JSON schema. Enumerations SHALL be listed in the "definitions" section of the JSON schema to be able to reuse them as needed.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div id="r_sch_image_range_closure" class="imageblock">
 <div class="content">
 <img src="data:image/png;base64,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" alt="RangeClosure">
@@ -2841,9 +3022,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 8.2</strong>: A UML "codelist" SHALL be encoded as an oneOf "enum" or "string" in a JSON schema. Codelists SHALL be listed in the <em>definitions</em> section of the JSON schema to be able to reuse them as needed.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 17</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-codelist" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-codelist</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>A UML "codelist" SHALL be encoded as an oneOf "enum" or "string" in a JSON schema. Codelists SHALL be listed in the <em>definitions</em> section of the JSON schema to be able to reuse them as needed.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of the addition of the necessary id&#8217;s</div>
 <div class="content">
@@ -2875,9 +3071,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </div>
 <div class="sect2">
 <h3 id="_objects_data_types_and_inheritance"><a class="anchor" href="#_objects_data_types_and_inheritance"></a>10.9. Objects: Data types and inheritance</h3>
-<div class="paragraph">
-<p><strong>Rule 9.1</strong>: If a UML class is defined as <em>DataType</em> (and potentially used in more that one place in the UML model) it SHALL be defined in the <em>definitions</em> section of the JSON schema and referenced by each attribute that is declared of this <em>DataType</em></p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 18</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-datatype" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-datatype</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>If a UML class is defined as <em>DataType</em> (and potentially used in more that one place in the UML model) it SHALL be defined in the <em>definitions</em> section of the JSON schema and referenced by each attribute that is declared of this <em>DataType</em>.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>Actually, it is highly recommended that all UML classes are defined in the <em>definitions</em> sections. Only the objects defined in the <em>definitions</em> and the root object can be referenced from another JSON schema.</p>
 </div>
@@ -2916,7 +3127,7 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </div>
 </div>
 <div class="listingblock">
-<div class="title">Example of using "definitions" section to define an object that can be used in more that one place emulating the UML data type behaviour.</div>
+<div class="title">Example of using "definitions" section to define an object that can be used in more that one place emulating the UML data type behavior.</div>
 <div class="content">
 <pre class="pygments highlight"><code data-lang="JSON"><span></span>{
 {
@@ -2944,12 +3155,28 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 	}</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 9.2</strong>: If an class is generalized into other classes in the UML, the JSON schema SHALL define the main class properties in the definitions section with the UML class name and the word "Properties" (not including the "type"). If the main class is not abstract, it SHALL then be defined with the UML call name by combining the previous "properties" and the "type" property with <em>allOf</em>. The generalized class will do the same and combine the main properties, the "type" and its own properties with <em>allOf</em></p>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 19</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/class-generalization" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/class-generalization</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>If a class is generalized into other classes in the UML, the JSON schema SHALL define the main class properties in the definitions section with the UML class name and the word "Properties" (not including the "type"). If the main class is not abstract, it SHALL then be defined with the UML call name by combining the previous "properties" and the "type" property with <em>allOf</em>. The generalized class will do the same and combine the main properties, the "type" and its own properties with <em>allOf</em>.</p>
 </div>
 <div class="paragraph">
-<p>If the main class is empty (it has no attributes) this rule does not apply.</p>
-</div>
+<p>+
+If the main class is empty (it has no attributes) this rule does not apply.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>Unnecessary duplication of the definition do the common elements coming from the abstract class is avoided by using <em>$ref</em> and pointing to a <em>definitions</em> element in the JSON Schema. There is no mechanism to inhered properties from a previous object in JSON schema but the suggested mechanism achieves an equivalent results.</p>
 </div>
@@ -3020,12 +3247,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 9.3</strong>: If a class is generalized into more than one classes in the UML (which forces the instance to choose one among of them), the JSON Schema SHALL define an object that offers the different options using the <em>oneOf</em> property.</p>
-</div>
-<div class="paragraph">
-<p>When the main class is <em>abstract</em>, there is no need to define it as a data type due to it cannot be instantiated in JSON-LD instances.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 20</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiple-generalization" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiple-generalization</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>If a class is generalized into more than one classes in the UML (which forces the instance to choose one among of them), the JSON Schema SHALL define an object that offers the different options using the <em>oneOf</em> property.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>In the following example, the class MD_Constraints is generalized into 2 different classes: MD_LegalConstraints and MD_SecurityConstraints. The pattern used in the example is a bit diffent for the one in the example of he Rule 3.4. Testing the us of <em>oneOf</em> to select between object definitions that contains <em>allOf</em> including the same $ref fails to work. To solve this, we define <em>MD_LegalConstraintsAdditions</em> and <em>MD_SecurityConstraintsAdditions</em> that only defines the non common properties. Then A new object <em>Alternatives_MD_Constraints</em> offers all the alternatives available with <em>oneOf</em>  and add the common properties <em>MD_ConstraintsProperties</em> at the end with <em>allOf</em>.</p>
 </div>
@@ -3100,9 +3339,24 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 <div class="paragraph">
 <p>UML classes can be structured in a modular way in packages. In this case there is a need to use more than one schema file. The core schema offers a set of <em>datatypes</em> in the <em>definitions</em> section. This core schemas can be reused by other schemas pointing the definition of the right objects in the core schemas using a full path to them.</p>
 </div>
-<div class="paragraph">
-<p><strong>Rule 10.1</strong>: Each UML class packages SHALL be described in the <em>definitions</em> in a JSON schema. Schemas that reuse other UML classes in other packages SHALL point to them using a full path.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" rowspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 21</strong></p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-package-definition" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-package-definition</a>
+ <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><div class="content"><div class="paragraph">
+<p>Each UML class package SHALL be described in the <em>definitions</em> in a JSON schema. Schemas that reuse other UML classes in other packages SHALL point to them using a full path.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of a core JSON schema (called ServiceMetadata_schema.json) for a common class in OWS common package</div>
 <div class="content">
@@ -3167,15 +3421,6 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_other_considerations"><a class="anchor" href="#_other_considerations"></a>10.11. Other considerations</h3>
-<div class="sect3">
-<h4 id="_large_arrays"><a class="anchor" href="#_large_arrays"></a>10.11.1. Large arrays</h4>
-<div class="paragraph">
-<p>A property containing a large array of values (or coordinates), where the order is important, should not be defined in @context objects if an alternative representation of the same information can be provided by other means. Not defining the long ordered arrays properties in @context avoids them to be converted into RDF. Ordered arrays an nasty and very verbose, double ordered arrays cannot even be converted. <em>Alternative representations</em> can be "string literals" (encoding the arrays in a text that is more compact; e.g. coordinates encoded as WKT) or links to URLs in a non RDF format containing this information (such as NetCDF or GeoTIFF files). This is further discussed in the section <a href="#Clause_Data_Formats_Encoding">[Clause_Data_Formats_Encoding]</a> with specific focus on coordinate arrays but not only.</p>
-</div>
-</div>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -3197,13 +3442,13 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </table>
 </div>
 <div class="paragraph">
-<p>The rules provided in this section and in the previous one <a href="#Clause_Rules_Schemas">Rules for encoding JSON Schema and JSON-LD context documents from UML class diagrams</a> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an <em>encoding service</em>. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non normative) justifications, clarifications and examples can follow.</p>
+<p>The rules provided in this section and in the previous one <a href="#Clause_Rules_Schemas">Rules for encoding JSON Schema from UML class diagrams</a> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an <em>encoding service</em>. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non normative) justifications, clarifications and examples can follow.</p>
 </div>
 <div class="paragraph">
 <p>Rules have been classified in subsections for clarification purposes only. All rules form a single corpus and need to be applied together.</p>
 </div>
 <div class="paragraph">
-<p>Also note that we target <em>JSON-LD instances</em> that are validated using JSON Schema and have @context documents to guide the JSON-LD to RDF conversions and give semantics of objects and attribute names. Actually, the previous clause <a href="#Clause_Rules_Schemas">Rules for encoding JSON Schema and JSON-LD context documents from UML class diagrams</a> targets the JSON schemas and @context documents</p>
+<p>Also note that we target <em>JSON-LD instances</em> that are validated using JSON Schema and have @context documents to guide the JSON-LD to RDF conversions and give semantics of objects and attribute names. Actually, the previous clause <a href="#Clause_Rules_Schemas">Rules for encoding JSON Schema from UML class diagrams</a> targets the JSON schemas and @context documents</p>
 </div>
 <div class="paragraph">
 <p>In practice, these rules inform JSON instance writers</p>
@@ -3244,7 +3489,7 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 <p><strong>Rule 2.2</strong>: The first property of the root element of a JSON-LD instance SHALL have the name "@context". The root "@context" property SHAL have a value consisting in an array formed two parts: a reference to a @context document (called <em>root @context document</em>) and a embedded context (called <em>root embedded context</em>).</p>
 </div>
 <div class="paragraph">
-<p><strong>Rule 2.3</strong>: A JSON-LD instance <em>root embeded context</em> SHALL contain at least a property with the name of the abbreviated namespace and value of the full namespace URI of the identifiers present on this JSON document.</p>
+<p><strong>Rule 2.3</strong>: A JSON-LD instance <em>root embedded context</em> SHALL contain at least a property with the name of the abbreviated namespace and value of the full namespace URI of the identifiers present on this JSON document.</p>
 </div>
 <div class="listingblock">
 <div class="title">Example of a fragment of the first part of the root object of a JSON document. If references the @context document in the last example and also embeds the definition of the id&#8217;s namespace.</div>
@@ -3849,7 +4094,7 @@ This method is not recommended due to security and interoperability consideratio
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-08-20 11:49:08 +0100
+Last updated 2019-08-20 18:10:11 +0100
 </div>
 </div>
 <style>

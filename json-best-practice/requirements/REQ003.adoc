@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 3*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-type-property
+ {set:cellbgcolor:#FFFFFF} +
+a|
+In a JSON schema, each JSON object (including the root) SHALL define a “type” property with _type_ _enum_. The _enum_ will enumerated the UML class type name. The value of the _type_ property of each JSON object in a JSON instance SHALL not contain an abbreviated namespace prefix. UML class type names are usually in UpperCammelCase and the values of the _enum_ will be too.
+|===

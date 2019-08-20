@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 17*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-codelist
+ {set:cellbgcolor:#FFFFFF} +
+a|
+A UML "codelist" SHALL be encoded as an oneOf "enum" or "string" in a JSON schema. Codelists SHALL be listed in the _definitions_ section of the JSON schema to be able to reuse them as needed.
+|===

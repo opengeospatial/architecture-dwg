@@ -1,0 +1,24 @@
+[cols="1,1,4,4",width="90%"]
+|===
+|x|1|*Rule 1.1*: The JSON schema SHALL declare the first type as "object"|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/first-object-type
+||2|*Rule 3.1*: In the JSON schema, each JSON object (including the root) SHALL define "id" property with _type_ "string" and _format_ "uri".|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-id-property
+||3|*Rule 3.2*: In a JSON schema, each JSON object (including the root) SHALL define a “type” property with _type_ _enum_.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-type-property
+||4|*Rule 3.3*: A UML _Union_ SHALL be expressed as a JSON object defined as an _anyOf_ array.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-union
+||5|*Rule 3.4*: A UML class that is a _aggregation_ or a _composition_ of a parent class, SHALL be considered equivalent to a JSON complex property of the parent object (considering it as the same as a UML complex attribute).|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-aggregation-composition
+||6|*Rule 4.1*: All UML class attributes (as well as composition and aggregations) SHALL be listed as _properties_ of the object in the JSON Schema.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-attributes
+||7|*Rule 5.1*: Attributes, aggregations and compositions of an object with multiplicity 0 or 1 in the UML shall be listed as JSON properties in the JSON schema.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-of-one
+||8|*Rule 5.2*: Attributes, aggregations and compositions of an object with multiplicity more than 0 in the UML will have their names listed in the array of "required" properties in the JSON schema.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-zero-naming
+||9|*Rule 5.3*: Attributes, aggregations and compositions with multiplicity more that 1 in the UML will be encoded as JSON properties of the _type_ "array" in the JSON schema.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-one-encoding
+||10|*Rule 6.1*: Numeric attributes in the UML SHALL have "type": "number" in the JSON Schema.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/numeric-attributes
+||11|*Rule 6.2*: Boolean attributes SHALL have "type": "boolean" in the JSON Schema.| http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/boolean-attributes
+||12|*Rule 6.3*: String attributes SHALL have "type": "string" in the JSON Schema.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/string-attributes
+||13|*Rule 6.4*: anyURL attributes with multiplicity 0 or 1 SHALL have "type": "string" and "format": "uri" in the JSON Schema.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/attributes-multiplicity-one
+||14|*Rule 6.5*: Complex type attributes SHALL have "type": "object" in the JSON Schema.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/complex-attribute-type
+||15|*Rule 7.1*: For an attribute that can have null values, an array of types combining the variable data type and "null" SHALL be used.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/null-attribute-value
+||16|*Rule 8.1*: A UML "enumeration" SHALL be encoded as an "enum" in a JSON schema.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-enumeration
+||17|*Rule 8.2*: A UML "codelist" SHALL be encoded as an oneOf "enum" or "string" in a JSON schema.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-codelist
+||18|*Rule 9.1*: If a UML class is defined as _DataType_ (and potentially used in more that one place in the UML model) it SHALL be defined in the _definitions_ section of the JSON schema and referenced by each attribute that is declared of this _DataType_.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-datatype
+||19|*Rule 9.2*: If an class is generalized into other classes in the UML, the JSON schema SHALL define the main class properties in the definitions section with the UML class name and the word "Properties" (not including the "type"). |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/class-generalization
+||20|*Rule 9.3*: If a class is generalized into more than one classes in the UML (which forces the instance to choose one among of them), the JSON Schema SHALL define an object that offers the different options using the _oneOf_ property.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiple-generalization
+||21|*Rule 10.1*: Each UML class packages SHALL be described in the _definitions_ in a JSON schema. Schemas that reuse other UML classes in other packages SHALL point to them using a full path.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-package-definition
+|===
