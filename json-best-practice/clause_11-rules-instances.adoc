@@ -43,7 +43,7 @@ var coverage=JSON.parse(json_serialized_text);
 
 *Rule 2.2*: The first property of the root element of a JSON-LD instance SHALL have the name "@context". The root "@context" property SHAL have a value consisting in an array formed two parts: a reference to a @context document (called _root @context document_) and a embedded context (called _root embedded context_).
 
-*Rule 2.3*: A JSON-LD instance _root embeded context_ SHALL contain at least a property with the name of the abbreviated namespace and value of the full namespace URI of the identifiers present on this JSON document.
+*Rule 2.3*: A JSON-LD instance _root embedded context_ SHALL contain at least a property with the name of the abbreviated namespace and value of the full namespace URI of the identifiers present on this JSON document.
 
 [source,JSON]
 .Example of a fragment of the first part of the root object of a JSON document. If references the @context document in the last example and also embeds the definition of the id's namespace.
