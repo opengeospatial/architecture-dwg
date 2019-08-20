@@ -70,7 +70,7 @@ Even if a JSON-LD could also be of the array type (or a simple type) in encoding
 }
 ----
 
-The properties that starts with "@" are a bit more difficult to access in JavaScript that the others because they can NOT be called using "coverage.@id" but using the array notation that is less _natural_ "coverage[@id]". The existance of this rule allows for using  "context.id" and "context.type" instead for "@id" and "@type" in JavaScript.
+The properties that starts with "@" are a bit more difficult to access in JavaScript that the others because they can NOT be called using "coverage.@id" but using the array notation that is less _natural_ "coverage[@id]". The existence of this rule allows for using  "context.id" and "context.type" instead for "@id" and "@type" in JavaScript.
 
 *Rule 2.3*: For all abbreviated namespaces, the correspondence to full namespace URI SHALL be listed in a @context document. If the document has more than one "@context", and the abbreviated namespace will be used only inside a particular JSON object that has a "@context" property, the definition SHALL be done in this "@context" (instead of using the root "@context").
 
@@ -147,7 +147,7 @@ If an object can present more that one type (e.g. there is a one or more general
 }
 ----
 
-Again, there is no need to list the Abstract types due to they cannot be instanciated in JSON-LD instances.
+Again, there is no need to list the Abstract types due to they cannot be instantiated in JSON-LD instances.
 
 In a JSON-LD instance, when UML generalization is used to derive more specific classes from a generic class, the value of the property "type" will be the specialized class type name, instead of the generic class name. This behavior will favor both old and the new implementations. Old implementations will be able to ignore the "type" value, identify the object name and read the common properties from the generic class. New implementation will recognize the "type" value and be prepared to find the specialized properties.
 
@@ -200,7 +200,7 @@ image::images/PossibleValues.png[]
 image::images/MD_Format.png[]
 
 [source,JSON]
-.JSON Schema fragment example of a class used as an aggregation and as a data type (the example ignores the tranferOption multiplicity for simplicity)
+.JSON Schema fragment example of a class used as an aggregation and as a data type (the example ignores the transferOption multiplicity for simplicity)
 ----
 {
     ...
@@ -320,7 +320,7 @@ In JSON instances the arrays of JSON objects will defined the type for each memb
 
 *Rule 5.4*: A property defined in the UML as _ordered_ and with multiplicity more than 1, SHALL be defined as "@container": "@list" in a @context document.
 
-There is an important singularity in JSON-LD about this. When a JSON document is converted into JavaScript all JSON arrays becomes automatically with order. However in JSON-LD the situation is the opposite, and by default arrays are NOT considered as ordered when converting JSON-LD arrays to RDF. There is technical reason behind this: ordered arrays require much more RDF code and the conversion does _not_ result in a _nice_ RDF code. For that reason if the a property is maked as _ordered_ in the UML, we have to explicitly indicate this in a @context. Please limit the use this parameter only when order is really important.
+There is an important singularity in JSON-LD about this. When a JSON document is converted into JavaScript all JSON arrays becomes automatically with order. However in JSON-LD the situation is the opposite, and by default arrays are NOT considered as ordered when converting JSON-LD arrays to RDF. There is technical reason behind this: ordered arrays require much more RDF code and the conversion does _not_ result in a _nice_ RDF code. For that reason if the a property is marked as _ordered_ in the UML, we have to explicitly indicate this in a @context. Please limit the use this parameter only when order is really important.
 
 === Object attributes; data types
 
@@ -335,7 +335,7 @@ There is an important singularity in JSON-LD about this. When a JSON document is
 }
 ----
 
-In JSON there is no able to distinction between diferent numeric data types: E.g. Integer, Float, Double etc and they all became _number_.
+In JSON there is no able to distinction between different numeric data types: E.g. Integer, Float, Double etc and they all became _number_.
 
 Numeric attributes with multiplicity more than 1 will have "type": "array" and "items": {"type": "number"} in the JSON Schema.
 
@@ -367,7 +367,7 @@ Boolean attributes with multiplicity more than 1 will have "type": "array" and "
 If there is a reason to believe that the attribute has been defined as UML string to allow both numbers or strings (depending of the case), define the type as an array of "number" and "string" is recommended.
 
 [source,JSON]
-.Example of JSON schema for an string that can be also instanciated as a number.
+.Example of JSON schema for an string that can be also instantiated as a number.
 ----
 {
 	"value":  { "type": ["number", "string"] },
@@ -670,7 +670,7 @@ image::images/ServiceIdentification.png[]
 
 *Rule 9.3*: If a class is generalized into more than one classes in the UML (which forces the instance to choose one among of them), the JSON Schema SHALL define an object that offers the different options using the _oneOf_ property.
 
-When the main class is _abstract_, there is no need to define it as a data type due to it cannot be instanciated in JSON-LD instances.
+When the main class is _abstract_, there is no need to define it as a data type due to it cannot be instantiated in JSON-LD instances.
 
 In the following example, the class MD_Constraints is generalized into 2 different classes: MD_LegalConstraints and MD_SecurityConstraints. The pattern used in the example is a bit diffent for the one in the example of he Rule 3.4. Testing the us of _oneOf_ to select between object definitions that contains _allOf_ including the same $ref fails to work. To solve this, we define _MD_LegalConstraintsAdditions_ and _MD_SecurityConstraintsAdditions_ that only defines the non common properties. Then A new object _Alternatives_MD_Constraints_ offers all the alternatives available with _oneOf_  and add the common properties _MD_ConstraintsProperties_ at the end with _allOf_.
 

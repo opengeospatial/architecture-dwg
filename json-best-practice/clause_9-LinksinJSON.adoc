@@ -1,4 +1,5 @@
-== JSON Encoding
+[[LinksinJSON]]
+== Links in JSON
 
 //-------Remove after TC approval-------
 
@@ -8,9 +9,7 @@ WARNING: This document defines a draft OGC Best Practice on a particular technol
 
 //----------------------------------------
 
-=== Links in JSON
-
-==== Introduction
+=== Introduction
 Following the https://tools.ietf.org/html/rfc5988[RFC5988] description, a link is a typed connection between two resources that are identified by internationalized Resource Identifiers (IRIs) [https://tools.ietf.org/html/rfc3987[RFC3987]], and is comprised of:
 
 * a context IRI,
@@ -21,7 +20,7 @@ Following the https://tools.ietf.org/html/rfc5988[RFC5988] description, a link i
 This schema was adopted both by Xlink and Atom in a similar way. The question that is discussed in this section is what is the status of links in JSON and what is the recommendation for the OGC.
 
 [[JSON-LD_links_subsection]]
-==== JSON-LD
+=== JSON-LD
 In the next section we will explain JSON-LD in detail (please see <<Apply_JSONLD_to_JSON_objects_subsection>>) but, in this subsection, we can anticipate what is essential in JSON-LD that allow it to work with links. In JSON-LD, objects have an _id_ that identifies the context IRI. To do that, JSON objects include a property called _@id_. As we know, a JSON object has properties, and JSON-LD defines how to use a key-value property in a particular way that allows expressing a link from this object to other objects.
 
 .Relation between a river and its description expressed in JSON
@@ -100,9 +99,9 @@ JSON-LD can be automatically converted to RDF triples. In the conversion, done u
 <http://dbpedia.org/page/Mississippi_River> <http://www.iana.org/assignments/relation/describedby> <http://en.wikipedia.org/wiki/Mississippi_River> .
 ----
 
-==== Hypertext Application Language
+=== Hypertext Application Language
 
-Hypertext Application Language (HAL) is a simple format that tries to give a consistent and easy way to express hyperlinks between resources. It was defined by Mike Kelly, that is a software engineer from the UK that runs an http://stateless.co/[API consultancy] helping companies design and build APIs.
+Hypertext Application Language (HAL) is a simple format that tries to give a consistent and easy way to express hyperlinks between resources. It was defined by Mike Kelly, that is a software engineer from the UK that runs an http://stateless.co/[API consultancy] helping companies design and build APIs. HAL has been submitted to the IETF for standardization, however it does not appear to have progressed beyond https://tools.ietf.org/html/draft-kelly-json-hal-08[draft stage]. Nonetheless, HAL has been implemented in a number of products for example https://docs.microsoft.com/en-us/iis-administration/api/hal[Microsoft IIS] and https://docs.camunda.org/manual/7.4/reference/rest/overview/hal/[Camunda].
 
 .HAL notation for JSON links
 [source,json]
@@ -116,7 +115,7 @@ Hypertext Application Language (HAL) is a simple format that tries to give a con
 }
 ----
 
-==== Atom link direct JSON encoding
+=== Atom link direct JSON encoding
 The book http://shop.oreilly.com/product/9780596801694.do["RESTful Web Services Cookbook; Solutions for Improving Scalability and Simplicity"] By Subbu Allamaraju, in its chapter "How to Use Links in JSON Representations" proposes a direct translation of the Atom xlink notation in two forms:
 
 .Atom translation to JSON. Alternative 1.
@@ -162,5 +161,6 @@ To do the same with the first alternative a JavaScript loop checking all links u
 
 If we remove the _grouping_ property "links", then we almost converge to the JSON-LD alternative.
 
-==== Recommendation
-Even if it is difficult to formulate a recommendation, the authors of this guide consider that the JSON-LD alternative has the advantage of simplicity and, at the same time, is the only alternative ratified and approved by an standard body. It has also the advantage to connect with the RDF world.
+=== Recommendation
+
+Even if it is difficult to formulate a recommendation, the authors of this guide consider that the JSON-LD alternative has the advantage of simplicity and, at the same time, is the only alternative ratified and approved by a Standards Development Organization. It has also the advantage to connect with the RDF world.

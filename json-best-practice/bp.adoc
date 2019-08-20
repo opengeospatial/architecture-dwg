@@ -3,7 +3,7 @@
 :doctype: book
 :encoding: utf-8
 :lang: en
-:toc: 
+:toc:
 :toc-placement!:
 :toclevels: 3
 :numbered:
@@ -95,11 +95,11 @@ include::clause_5_conventions.adoc[]
 
 include::clause_6-overview.adoc[]
 
-include::clause_7-from_json_to_jsonld.adoc[]
+include::clause_7-JSONLDContextDocuments.adoc[]
 
-include::clause_8-best-practices.adoc[]
+include::clause_8-JSONSchema.adoc[]
 
-include::clause_9-json-encoding.adoc[]
+include::clause_9-LinksinJSON.adoc[]
 
 include::clause_10-rules-schemas.adoc[]
 

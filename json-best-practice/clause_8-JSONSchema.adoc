@@ -1,4 +1,5 @@
-== JSON Best Practices
+[[JSONSchema]]
+== JSON Schema
 
 //-------Remove after TC approval-------
 
@@ -115,14 +116,14 @@ It follows RFC3986 and supports both a URI and a URN. The following text represe
 }
 ----
 
-[[JSON_Schema]]
-=== JSON Schema
-==== Why OGC needs JSON validation
+
+=== Why OGC needs to validate JSON
 OGC is transitioning from standards that were written in plain English to a robust way of written standards based on requirements classes that are linked to conformance test classes. Conformance tests are designed to determine if implementations follow the standard. When an XML encoding is involved, standards that provide XML Schema files defining each data type, provide a straightforward way to check if a document follows the standard: _validating_ the XML document with XSD, RelaxNG or Schematron (or a combination of them).
 
 If OGC is going to adopt JSON as an alternative encoding for data models, some automatic way of validating if objects in the JSON file follow the data models proposed by the corresponding standard could be also convenient.
 
-==== JSON Schema standard candidate
+[[JSON_Schema]]
+=== JSON Schema standard candidate
 JSON Schema is intended for validation and documentation of data models. It acts in a similar way to XSD for an XML file.
 Indeed, some applications (such us XML Validator Buddy) are able to combine a JSON file with its corresponding JSON schema to test and validate if the content of the JSON file corresponds to the expected data model. Several implementations of JSON schema validation are available to be used also on-line. An example is the one available in this URL http://json-schema-validator.herokuapp.com/ and the corresponding opensource code available in github https://github.com/daveclayton/json-schema-validator.
 
@@ -136,7 +137,7 @@ Unfortunately, JSON schema is a IETF draft that expired in August 2013 and the f
 
 Note that the Internet media type is "application/schema+json". According to the last available draft of JSON Schema (v4), there is not a new file extension proposed for files storing JSON Schemas. The file extension ".json" is used profusely. To make the situation a bit more complex, there is no documented mechanism to associate a JSON instance to its schema (even if it seems that some applications use "$schema" to do this; as discussed in https://groups.google.com/forum/#!topic/json-schema/VBRZE3_GvbQ). In preparing these examples, we found the need to be able prepare json instances and json schemas with similar file names to make the relation between them more explicit and it was practical to name the schema files ending with "_schema.json".
 
-==== JSON Schema simple example
+=== JSON Schema simple example
 Lets use a simple feature example encoded in JSON to later illustrate how JSON Schema is useful for documentation and validation.
 
 .Example of a river feature in JSON
@@ -307,7 +308,7 @@ Schema path:#/properties/river/properties/length/minimum
 .Response of the http://jsonschemalint.com/#/version/draft-04/markup/json
 image::images/jsonschemalint_com.png[]
 
-==== JSON Schema for an object that can represent two things
+=== JSON Schema for an object that can represent two things
 Lets consider now that I need to encode rivers and lakes. In this case, we will need an object that can present itself either as a river or as a lake. We have already seen an example for a river, and we now present an instance for a lake.
 
 .Example of a lake feature in JSON
@@ -381,7 +382,7 @@ Obviously, rivers and lakes will have different properties. There is a _oneOf_ p
 }
 ----
 
-==== JSON Schema for an array of features
+=== JSON Schema for an array of features
 After showing how to do a single feature (i.e. rivers and lakes, each one in an independent JSON document that can be validated with the same JSON Schema) to show how to represent a feature collections as arrays can be useful. Following this approach, we are able to include rivers and lakes as array items in the same JSON file:
 
 .Example of a river and a lake feature in JSON. Variant A.
@@ -473,7 +474,7 @@ This can be validated by the following JSON Schema, that is very similar to the 
 }
 ----
 
-JSON is one of these cases where simplicity is highly appreciated. It could be useful to consider a second alternative, where there is not need to use an object name. Instead we will use a "type" property to differentiate among object types and this will result in a notation with less indentations. A part from being more elegant (what is a matter of opinion) it will result in a much more nice conversion to RDF when JSON-LD @context is introduced later (see <<Apply_JSONLD_to_JSON_objects_subsection>>).
+JSON is one of these cases where simplicity is highly appreciated. It could be useful to consider a second alternative, where there is not need to use an object name. Instead we will use a "type" property to differentiate among object types and this will result in a notation with less indentations. 
 
 .Example of a river and a lake feature in JSON. Variant B.
 [source,json]

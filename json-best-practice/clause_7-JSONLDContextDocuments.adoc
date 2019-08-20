@@ -1,4 +1,5 @@
-== From JSON to JSON-LD
+[[JSONLDContextDocuments]]
+== JSON-LD Context Documents
 
 //-------Remove after TC approval-------
 
@@ -8,7 +9,7 @@ WARNING: This document defines a draft OGC Best Practice on a particular technol
 
 //----------------------------------------
 
-=== What is JSON-LD
+=== Introduction
 
 JSON-LD is a lightweight syntax to encode Linked Data in JSON. Its design allows existing JSON to be interpreted as Linked Data with minimal changes. JSON-LD is 100% compatible with JSON. JSON-LD introduces a universal identifier mechanism for JSON objects via the use of a Uniform Resource Identifier (URI) and a way to associate data types with values.
 
