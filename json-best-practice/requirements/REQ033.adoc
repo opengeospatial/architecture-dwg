@@ -1,0 +1,7 @@
+[width="90%",cols="2,6"]
+|===
+|*Requirement 33* {set:cellbgcolor:#CACCCE}|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/possible-property-values
+ +
+The possible values of the _type_ property SHALL be listed as a property name of a @context document with a value of the abbreviated namespace, a ":" character and the name again.
+{set:cellbgcolor:#FFFFFF}
+|===

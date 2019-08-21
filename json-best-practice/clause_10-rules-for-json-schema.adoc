@@ -75,6 +75,7 @@ include::requirements/REQ003.adoc[]
 }
 ----
 
+[[requirement4,Requirement 4]]
 include::requirements/REQ004.adoc[]
 
 
@@ -573,7 +574,7 @@ include::requirements/REQ020.adoc[]
 
 
 
-In the following example, the class MD_Constraints is generalized into 2 different classes: MD_LegalConstraints and MD_SecurityConstraints. The pattern used in the example is a bit diffent for the one in the example of he Rule 3.4. Testing the us of _oneOf_ to select between object definitions that contains _allOf_ including the same $ref fails to work. To solve this, we define _MD_LegalConstraintsAdditions_ and _MD_SecurityConstraintsAdditions_ that only defines the non common properties. Then A new object _Alternatives_MD_Constraints_ offers all the alternatives available with _oneOf_  and add the common properties _MD_ConstraintsProperties_ at the end with _allOf_.
+In the following example, the class MD_Constraints is generalized into 2 different classes: MD_LegalConstraints and MD_SecurityConstraints. The pattern used in the example is a bit different for the one in the example of <<requirement4>>. Testing the us of _oneOf_ to select between object definitions that contains _allOf_ including the same $ref fails to work. To solve this, we define _MD_LegalConstraintsAdditions_ and _MD_SecurityConstraintsAdditions_ that only defines the non common properties. Then A new object _Alternatives_MD_Constraints_ offers all the alternatives available with _oneOf_  and add the common properties _MD_ConstraintsProperties_ at the end with _allOf_.
 
 [[r_sch_image_constraints]]
 .UML model for a generalized class from MD_Constraints.

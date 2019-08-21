@@ -1,0 +1,7 @@
+[width="90%",cols="2,6"]
+|===
+|*Requirement 28* {set:cellbgcolor:#CACCCE}|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-property-id
+ +
+The _root "@context" document_ SHALL define a property "id" as  "@id" and a property "type" as "@type".
+{set:cellbgcolor:#FFFFFF}
+|===

@@ -1,0 +1,7 @@
+[width="90%",cols="2,6"]
+|===
+|*Requirement 30* {set:cellbgcolor:#CACCCE}|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-id
+ +
+In a JSON-LD instance, each JSON object (including the root) SHALL contain a "id" property that uniquely identifies it. The value of this property shall be composed by a abbreviated namespace of the identifiers, a ":" character and an identifier name.
+{set:cellbgcolor:#FFFFFF}
+|===

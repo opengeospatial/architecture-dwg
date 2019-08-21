@@ -1,0 +1,7 @@
+[width="90%",cols="2,6"]
+|===
+|*Requirement 32* {set:cellbgcolor:#CACCCE}|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/object-type-value
+ +
+The value of the _type_ property of each JSON object in a JSON instance shall not contain an abbreviated namespace.
+{set:cellbgcolor:#FFFFFF}
+|===

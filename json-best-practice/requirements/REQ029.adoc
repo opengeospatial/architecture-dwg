@@ -1,0 +1,7 @@
+[width="90%",cols="2,6"]
+|===
+|*Requirement 29* {set:cellbgcolor:#CACCCE}|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/all-abbreviated-namespaces
+ +
+For all abbreviated namespaces, the correspondence to full namespace URI SHALL be listed in a @context document. If the document has more than one "@context", and the abbreviated namespace will be used only inside a particular JSON object that has a "@context" property, the definition SHALL be done in this "@context" (instead of using the root "@context").
+{set:cellbgcolor:#FFFFFF}
+|===

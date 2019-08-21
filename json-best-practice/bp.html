@@ -628,7 +628,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_recommendation">9.5. Recommendation</a></li>
 </ul>
 </li>
-<li><a href="#Clause_Rules_Schemas">10. Rules for encoding JSON Schema from UML class diagrams</a>
+<li><a href="#Clause_Rules_Schemas">10. Rules for encoding JSON Schema conforming to UML class diagrams</a>
 <ul class="sectlevel2">
 <li><a href="#_root_element">10.1. Root element</a></li>
 <li><a href="#_namespaces">10.2. Namespaces</a></li>
@@ -642,11 +642,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_object_libraries_and_multiple_schemas">10.10. Object libraries and multiple schemas</a></li>
 </ul>
 </li>
-<li><a href="#Clause_Rules_Instances">11. Rules for encoding JSON-LD instances conformant to the UML model</a>
+<li><a href="#Clause_Rules_Instances">11. Rules for encoding JSON-LD instances conformant to a UML model</a>
 <ul class="sectlevel2">
 <li><a href="#_general">11.1. General</a></li>
 <li><a href="#_root_element_2">11.2. Root element</a></li>
-<li><a href="#_objects_2">11.3. Objects</a></li>
+<li><a href="#_namespaces_2">11.3. Namespaces</a></li>
+<li><a href="#_objects_2">11.4. Objects</a></li>
+<li><a href="#_object_attributes_names_2">11.5. Object attributes; names</a></li>
+<li><a href="#_other_considerations">11.6. Other considerations</a>
+<ul class="sectlevel3">
+<li><a href="#_large_arrays">11.6.1. Large arrays</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#Annex_Schemas_Examples">Appendix A: Conformance Class Abstract Test Suite (Normative)</a>
@@ -2274,7 +2281,7 @@ river.links.describedBy[0]</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Clause_Rules_Schemas"><a class="anchor" href="#Clause_Rules_Schemas"></a>10. Rules for encoding JSON Schema from UML class diagrams</h2>
+<h2 id="Clause_Rules_Schemas"><a class="anchor" href="#Clause_Rules_Schemas"></a>10. Rules for encoding JSON Schema conforming to UML class diagrams</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Readers should consider the following warning.</p>
@@ -2292,7 +2299,7 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </table>
 </div>
 <div class="paragraph">
-<p>The rules provided in this clause and in the following one <a href="#Clause_Rules_Instances">Rules for encoding JSON-LD instances conformant to the UML model</a> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an <em>encoding service</em>. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non-normative) justifications, clarifications and examples can follow.</p>
+<p>The rules provided in this clause and in the following one <a href="#Clause_Rules_Instances">Rules for encoding JSON-LD instances conformant to a UML model</a> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an <em>encoding service</em>. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non-normative) justifications, clarifications and examples can follow.</p>
 </div>
 <div class="paragraph">
 <p>This chapter focuses on <em>JSON Schemas</em>. Rules have been classified in subsections for clarification purposes only. All rules form a single corpus and need to be applied together. In practice, these rules inform UML application schema conversion implementors such as, for example, ShapeChange.</p>
@@ -2503,7 +2510,7 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<table class="tableblock frame-all grid-all" style="width: 90%;">
+<table id="requirement4" class="tableblock frame-all grid-all" style="width: 90%;">
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 75%;">
@@ -3266,7 +3273,7 @@ If the main class is empty (it has no attributes) this rule does not apply.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>In the following example, the class MD_Constraints is generalized into 2 different classes: MD_LegalConstraints and MD_SecurityConstraints. The pattern used in the example is a bit diffent for the one in the example of he Rule 3.4. Testing the us of <em>oneOf</em> to select between object definitions that contains <em>allOf</em> including the same $ref fails to work. To solve this, we define <em>MD_LegalConstraintsAdditions</em> and <em>MD_SecurityConstraintsAdditions</em> that only defines the non common properties. Then A new object <em>Alternatives_MD_Constraints</em> offers all the alternatives available with <em>oneOf</em>  and add the common properties <em>MD_ConstraintsProperties</em> at the end with <em>allOf</em>.</p>
+<p>In the following example, the class MD_Constraints is generalized into 2 different classes: MD_LegalConstraints and MD_SecurityConstraints. The pattern used in the example is a bit different for the one in the example of <a href="#requirement4">Requirement 4</a>. Testing the us of <em>oneOf</em> to select between object definitions that contains <em>allOf</em> including the same $ref fails to work. To solve this, we define <em>MD_LegalConstraintsAdditions</em> and <em>MD_SecurityConstraintsAdditions</em> that only defines the non common properties. Then A new object <em>Alternatives_MD_Constraints</em> offers all the alternatives available with <em>oneOf</em>  and add the common properties <em>MD_ConstraintsProperties</em> at the end with <em>allOf</em>.</p>
 </div>
 <div id="r_sch_image_constraints" class="imageblock">
 <div class="content">
@@ -3424,7 +3431,7 @@ If the main class is empty (it has no attributes) this rule does not apply.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="Clause_Rules_Instances"><a class="anchor" href="#Clause_Rules_Instances"></a>11. Rules for encoding JSON-LD instances conformant to the UML model</h2>
+<h2 id="Clause_Rules_Instances"><a class="anchor" href="#Clause_Rules_Instances"></a>11. Rules for encoding JSON-LD instances conformant to a UML model</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Readers should consider the following warning.</p>
@@ -3442,40 +3449,146 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </table>
 </div>
 <div class="paragraph">
-<p>The rules provided in this section and in the previous one <a href="#Clause_Rules_Schemas">Rules for encoding JSON Schema from UML class diagrams</a> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an <em>encoding service</em>. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non normative) justifications, clarifications and examples can follow.</p>
+<p>The rules provided in this section and in the previous one <a href="#Clause_Rules_Schemas">Rules for encoding JSON Schema conforming to UML class diagrams</a> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an <em>encoding service</em>. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non normative) justifications, clarifications and examples can follow.</p>
 </div>
 <div class="paragraph">
 <p>Rules have been classified in subsections for clarification purposes only. All rules form a single corpus and need to be applied together.</p>
 </div>
 <div class="paragraph">
-<p>Also note that we target <em>JSON-LD instances</em> that are validated using JSON Schema and have @context documents to guide the JSON-LD to RDF conversions and give semantics of objects and attribute names. Actually, the previous clause <a href="#Clause_Rules_Schemas">Rules for encoding JSON Schema from UML class diagrams</a> targets the JSON schemas and @context documents</p>
+<p>This chapter focuses on <em>JSON-LD instances</em>. In practice, these rules inform JSON instance writers.</p>
 </div>
-<div class="paragraph">
-<p>In practice, these rules inform JSON instance writers</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirements Class</strong> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">Target type</p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock">JSON-LD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 22</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-syntax" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-syntax</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 23</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/shacl-validation" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/shacl-validation</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 24</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/root-element-name" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/root-element-name</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 25</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-element" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-element</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 26</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/instance-context-namespace-uri" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/instance-context-namespace-uri</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 27</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-namespace-uri" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-namespace-uri</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 28</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-property-id" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-property-id</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 29</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/all-abbreviated-namespaces" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/all-abbreviated-namespaces</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 30</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-id" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-id</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 31</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-type" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-type</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 32</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/object-type-value" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/object-type-value</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 33</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/possible-property-values" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/possible-property-values</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 34</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/uml-class-attributes" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/uml-class-attributes</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 35</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/ordered-property" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/ordered-property</a> </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 36</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/anyuri-property" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/anyuri-property</a>  </p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 37</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/complex-type-attribute" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/complex-type-attribute</a> </p></td>
+</tr>
+</tbody>
+</table>
 <div class="sect2">
 <h3 id="_general"><a class="anchor" href="#_general"></a>11.1. General</h3>
-<div class="paragraph">
-<p><strong>Rule 1.1</strong>: A JSON-LD instance SHALL follow the JSON syntax specified in the IETF RFC7159 The JavaScript Object Notation (JSON) Data Interchange Format.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 22</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-syntax" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-syntax</a>
+<br>
+A JSON-LD instance SHALL follow the JSON syntax specified in the IETF RFC7159 The JavaScript Object Notation (JSON) Data Interchange Format.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>This <em>RFC7159 conformance rule</em> actually implies several other rules stated in RFC7159 and that will not be repeated here but need also considered (e.g. JSON Strings values will be encoded in UTF8 in a JSON-LD instance)</p>
 </div>
-<div class="paragraph">
-<p><strong>Rule 1.2</strong>: A JSON-LD instance SHALL validate with the JSON schema derived from the corresponding UML class diagram model.</p>
-</div>
-<div class="paragraph">
-<p>This rule imposes automatically all the JSON schema specific rules for property values encoding (e.g. Numeric attributes will be encoded as JSON Numbers or Boolean attributes will have the <em>true</em> or <em>false</em> values or Arrays of them in a JSON-LD instance). Most of this rules will not be included here because they are imposed by the JSON schema validation process. Some others are included here are rules for clarity.</p>
-</div>
-<div class="paragraph">
-<p>Several tools exist to validate JSON instances with a JSON schema automatically (such as XML Validator Buddy).</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 23</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/shacl-validation" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/shacl-validation</a>
+<br>
+A JSON-LD instance SHALL validate with SHACL derived from the corresponding UML class diagram model.</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
 <h3 id="_root_element_2"><a class="anchor" href="#_root_element_2"></a>11.2. Root element</h3>
-<div class="paragraph">
-<p><strong>Rule 2.1</strong>: The root element in the JSON-LD instance shall have no name.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 24</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/root-element-name" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/root-element-name</a>
+<br>
+The root element in the JSON-LD instance shall have no name.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>The JSON file is supposed to be loaded in a JavaScript object that will have a name identifying the object.</p>
 </div>
@@ -3485,12 +3598,34 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 <pre class="pygments highlight"><code data-lang="JavaScript"><span></span>var coverage=JSON.parse(json_serialized_text);</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 2.2</strong>: The first property of the root element of a JSON-LD instance SHALL have the name "@context". The root "@context" property SHAL have a value consisting in an array formed two parts: a reference to a @context document (called <em>root @context document</em>) and a embedded context (called <em>root embedded context</em>).</p>
-</div>
-<div class="paragraph">
-<p><strong>Rule 2.3</strong>: A JSON-LD instance <em>root embedded context</em> SHALL contain at least a property with the name of the abbreviated namespace and value of the full namespace URI of the identifiers present on this JSON document.</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 25</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-element" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-element</a>
+<br>
+The first property of the root element of a JSON-LD instance SHALL have the name "@context". The root "@context" property SHAL have a value consisting in an array formed two parts: a reference to a @context document (called <em>root @context document</em>) and a embedded context (called <em>root embedded context</em>).</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 26</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/instance-context-namespace-uri" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/instance-context-namespace-uri</a>
+<br>
+A JSON-LD instance <em>root embedded context</em> SHALL contain at least a property with the name of the abbreviated namespace and value of the full namespace URI of the identifiers present on this JSON document.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of a fragment of the first part of the root object of a JSON document. If references the @context document in the last example and also embeds the definition of the id&#8217;s namespace.</div>
 <div class="content">
@@ -3508,10 +3643,98 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 </div>
 </div>
 <div class="sect2">
-<h3 id="_objects_2"><a class="anchor" href="#_objects_2"></a>11.3. Objects</h3>
-<div class="paragraph">
-<p><strong>Rule 3.1</strong>: In a JSON-LD instance, each JSON object (including the root) SHALL contain a "id" property that uniquely identifies it (this is enforced by the JSON Schema validation). The value of this property shall be composed by a abbreviated namespace of the identifiers, a ":" character and an identifier name.</p>
+<h3 id="_namespaces_2"><a class="anchor" href="#_namespaces_2"></a>11.3. Namespaces</h3>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 27</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-namespace-uri" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-namespace-uri</a>
+<br>
+The <em>root @context document</em> SHALL contain a list of properties with the names of the abbreviated namespaces and value of the full namespace URI for the properties of the root element of the JSON document.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example of a fragment of the root "@context" document (coverage-context.json) containing definition of the abbreviated and full namespace.</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
+	&quot;@context&quot;:
+	{
+		&quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
+		&quot;cis&quot;: &quot;http://www.opengis.net/cis/1.1/&quot;,
+		[...]
+	}
+}</code></pre>
 </div>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 28</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-property-id" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-property-id</a>
+<br>
+The <em>root "@context" document</em> SHALL define a property "id" as  "@id" and a property "type" as "@type".</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example of a fragment of the root "@context" document where id and type are defined.</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
+	&quot;@context&quot;:
+	{
+		&quot;xsd&quot;: &quot;http://www.w3.org/2001/XMLSchema#&quot;,
+		&quot;cis&quot;: &quot;http://www.opengis.net/cis/1.1/&quot;,
+
+	    &quot;id&quot;: &quot;@id&quot;,
+		&quot;type&quot;: &quot;@type&quot;
+		[...]
+	}
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The properties that starts with "@" are a bit more difficult to access in JavaScript that the others because they can NOT be called using "coverage.@id" but using the array notation that is less <em>natural</em> "coverage[@id]". The existence of this rule allows for using  "context.id" and "context.type" instead for "@id" and "@type" in JavaScript.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 29</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/all-abbreviated-namespaces" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/all-abbreviated-namespaces</a>
+<br>
+For all abbreviated namespaces, the correspondence to full namespace URI SHALL be listed in a @context document. If the document has more than one "@context", and the abbreviated namespace will be used only inside a particular JSON object that has a "@context" property, the definition SHALL be done in this "@context" (instead of using the root "@context").</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_objects_2"><a class="anchor" href="#_objects_2"></a>11.4. Objects</h3>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 30</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-id" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-id</a>
+<br>
+In a JSON-LD instance, each JSON object (including the root) SHALL contain a "id" property that uniquely identifies it. The value of this property shall be composed by a abbreviated namespace of the identifiers, a ":" character and an identifier name.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="listingblock">
 <div class="title">Example of the addition of the necessary id&#8217;s</div>
 <div class="content">
@@ -3532,19 +3755,211 @@ This document defines a draft OGC Best Practice on a particular technology or ap
 }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><strong>Rule 3.2</strong>: In a JSON-LD instance, each JSON object (including the root) SHALL include a “type” property (this is enforced by the JSON Schema validation)</p>
-</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 31</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-type" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-type</a>
+<br>
+In a JSON-LD instance, each JSON object (including the root) SHALL include a “type” property.</p></td>
+</tr>
+</tbody>
+</table>
 <div class="paragraph">
 <p>Parsers of the JSON encoding are not required to read and understand the "type" property but they can use it to redirect the code to the right parser of a code fragment or to identify a specialized type among all possible ones of a generic one (among the subclassified types).</p>
 </div>
-<div class="paragraph">
-<p><strong>Rule 3.3</strong>: The value of the <em>type</em> property of each JSON object in a JSON instance shall not contain an abbreviated namespace (actually, valid nomes are enforced by the JSON Schema validation).</p>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 32</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/object-type-value" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/object-type-value</a>
+<br>
+The value of the <em>type</em> property of each JSON object in a JSON instance shall not contain an abbreviated namespace.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 33</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/possible-property-values" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/possible-property-values</a>
+<br>
+The possible values of the <em>type</em> property SHALL be listed as a property name of a @context document with a value of the abbreviated namespace, a ":" character and the name again.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example of the definition of types in JSON-LD.</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
+	&quot;@context&quot;:
+	{
+		&quot;md&quot;: &quot;http://www.opengis.net/md&quot;,
+		&quot;examples&quot;: &quot;http://www.opengis.net/cis/1.1/examples/&quot;
+
+		&quot;id&quot;: &quot;@id&quot;,
+		&quot;type&quot;: &quot;@type&quot;,
+		&quot;MD_LegalConstraints&quot;: &quot;md:MD_LegalConstraints&quot;
+	},
+	&quot;type&quot;: &quot;MD_LegalConstraints&quot;,
+	&quot;id&quot;: &quot;examples:CIS_05_2D&quot;,
+	...
+}</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Using the types values without namespace in the JSON object definitions allows for using a JSON schema that is able to correctly enumerate the possible values of a type property without the abbreviated namespace. This way tha abbreviated namespace may vary  without affecting the common JSON schema. In contrast, "id" values are expected to be different in each instance (and their values are not verified by the JSON schema) so they should contain the abbreviated namespace.</p>
+<p>If an object can present more that one type (e.g. there is one or more generalized classes of a more generic class) then all the alternative types are listed in the appropriate @context section.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of more that one type definition for a class.</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
+    &quot;@context&quot;:
+    {
+        &quot;MD_Constraints&quot;: &quot;md:MD_Constraints&quot;,
+        &quot;MD_LegalConstraints&quot;: &quot;md:MD_LegalConstraints&quot;,
+        &quot;MD_SecurityConstraints&quot;: &quot;md:MD_SecurityConstraints&quot;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, there is no need to list the Abstract types due to they cannot be instantiated in JSON-LD instances.</p>
+</div>
+<div class="paragraph">
+<p>In a JSON-LD instance, when UML generalization is used to derive more specific classes from a generic class, the value of the property "type" will be the specialized class type name, instead of the generic class name. This behavior will favor both old and the new implementations. Old implementations will be able to ignore the "type" value, identify the object name and read the common properties from the generic class. New implementation will recognize the "type" value and be prepared to find the specialized properties.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_object_attributes_names_2"><a class="anchor" href="#_object_attributes_names_2"></a>11.5. Object attributes; names</h3>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 34</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/uml-class-attributes" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/uml-class-attributes</a>
+<br>
+All UML class attributes SHALL be listed in a @context object. If the document has more than one "@context", the property SHALL be defined in the "@context" that is closer to it (with the exception of "id" and "type" that are defined in the root "@context" document and always have global scope). The value of the listed properties has to be the abbreviated namespace, the ":" character and the name of the property again.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Defining the properties in the "@context" that is closer to it makes the definition local to the object where the "@context" belongs.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of the addition of the abbreviate namespace to properties</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
+	&quot;domainSet&quot;:{
+		&quot;@context&quot;:
+		{
+			&quot;generalGrid&quot;: &quot;cis:generalGrid&quot;,
+			&quot;axis&quot;: &quot;cis:axis&quot;,
+			&quot;axisLabel&quot;: &quot;cis:axisLabel&quot;,
+			&quot;lowerBound&quot;: &quot;cis:lowerBound&quot;,
+			&quot;upperBound&quot;: &quot;cis:upperBound&quot;
+		},
+		&quot;generalGrid&quot;:{
+			&quot;axis&quot;: [{
+			    &quot;type&quot;: &quot;IndexAxisType&quot;,
+				&quot;axisLabel&quot;: &quot;i&quot;,
+				&quot;lowerBound&quot;: 0,
+				&quot;upperBound&quot;: 2
+			},{
+			    &quot;type&quot;: &quot;IndexAxisType&quot;,
+				&quot;axisLabel&quot;: &quot;j&quot;,
+				&quot;lowerBound&quot;: 0,
+				&quot;upperBound&quot;: 2
+			}]
+		}
+	}
+}</code></pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 35</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/ordered-property" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/ordered-property</a>
+<br>
+A property defined in the UML as <em>ordered</em> and with multiplicity more than 1, SHALL be defined as "@container": "@list" in a @context document.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>There is an important singularity in JSON-LD about this. When a JSON document is converted into JavaScript all JSON arrays becomes automatically with order. However in JSON-LD the situation is the opposite, and by default arrays are NOT considered as ordered when converting JSON-LD arrays to RDF. There is technical reason behind this: ordered arrays require much more RDF code and the conversion does <em>not</em> result in a <em>nice</em> RDF code. For that reason if the a property is marked as <em>ordered</em> in the UML, we have to explicitly indicate this in a @context. Please limit the use this parameter only when order is really important.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 36</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/anyuri-property" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/anyuri-property</a>
+<br>
+A property that has the value anyURI SHALL be described as "@type": "@id" in a JSON @context document</p></td>
+</tr>
+</tbody>
+</table>
+<div class="listingblock">
+<div class="title">Example of the definition of a value anyURI in JSON-LD</div>
+<div class="content">
+<pre class="pygments highlight"><code data-lang="JSON"><span></span>{
+    &quot;@context&quot;:
+    {
+        &quot;srsName&quot;: {&quot;@id&quot;:&quot;swe:srsName&quot;, &quot;@type&quot;: &quot;@id&quot;}
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The reasoning behind this is that property values defined without "@type": "@id" are considered literals when converted to RDF. Property values defined with "@type": "@id" considered as URIs when converted to RDF.</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" style="background-color: #CACCCE;"><p class="tableblock"><strong>Requirement 37</strong> </p></td>
+<td class="tableblock halign-left valign-top" style="background-color: #FFFFFF;"><p class="tableblock"><a href="http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/complex-type-attribute" class="bare">http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/complex-type-attribute</a>
+<br>
+A UML complex type attribute SHALL be encoded as JSON Object properties or as an Array of JSON Object type properties in a JSON-LD instance.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_other_considerations"><a class="anchor" href="#_other_considerations"></a>11.6. Other considerations</h3>
+<div class="sect3">
+<h4 id="_large_arrays"><a class="anchor" href="#_large_arrays"></a>11.6.1. Large arrays</h4>
+<div class="paragraph">
+<p>A property containing a large array of values (or coordinates), where the order is important, should not be defined in @context objects if an alternative representation of the same information can be provided by other means. Not defining the long ordered arrays properties in @context avoids them to be converted into RDF. Ordered arrays an nasty and very verbose, double ordered arrays cannot even be converted. <em>Alternative representations</em> can be "string literals" (encoding the arrays in a text that is more compact; e.g. coordinates encoded as WKT) or links to URLs in a non RDF format containing this information (such as NetCDF or GeoTIFF files). This is further discussed in the section <a href="#Clause_Data_Formats_Encoding">[Clause_Data_Formats_Encoding]</a> with specific focus on coordinate arrays but not only.</p>
 </div>
 <div style="page-break-after: always;"></div>
+</div>
 </div>
 </div>
 </div>
