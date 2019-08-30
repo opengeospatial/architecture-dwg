@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 5*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-aggregation-composition
+ {set:cellbgcolor:#FFFFFF} +
+a|
+A UML class that is a _aggregation_ or a _composition_ of a parent class, SHALL be considered equivalent to a JSON complex property of the parent object (considering it as the same as a UML complex attribute). The name of the source extreme of the relation (the tip of the arrow) will be considered the name of the complex _attribute_ and the _class name_ will be considered the _type_ of the property.
+|===

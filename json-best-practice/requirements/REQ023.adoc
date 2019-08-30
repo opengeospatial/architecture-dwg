@@ -1,0 +1,7 @@
+[width="90%",cols="2,6"]
+|===
+|*Requirement 23* {set:cellbgcolor:#CACCCE}|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/shacl-validation
+ +
+A JSON-LD instance SHALL validate with SHACL derived from the corresponding UML class diagram model.
+{set:cellbgcolor:#FFFFFF}
+|===

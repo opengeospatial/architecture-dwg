@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 15*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/null-attribute-value
+ {set:cellbgcolor:#FFFFFF} +
+a|
+For an attribute that can have null values, an array of types combining the variable data type and "null" SHALL be used.
+|===

@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 1*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/first-object-type
+ {set:cellbgcolor:#FFFFFF} +
+a|
+The JSON schema SHALL declare the first type as "object"
+|===

@@ -1,0 +1,27 @@
+[cols="1,4",width="90%"]
+|===
+2+|*Requirements Class* {set:cellbgcolor:#CACCCE}
+2+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema {set:cellbgcolor:#FFFFFF}
+|Target type | JSON Schema
+|*Requirement 1* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/first-object-type {set:cellbgcolor:#FFFFFF}
+|*Requirement 2* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-id-property {set:cellbgcolor:#FFFFFF}
+|*Requirement 3* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-type-property  {set:cellbgcolor:#FFFFFF}
+|*Requirement 4* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-union  {set:cellbgcolor:#FFFFFF}
+|*Requirement 5* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-aggregation-composition {set:cellbgcolor:#FFFFFF}
+|*Requirement 6* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-attributes {set:cellbgcolor:#FFFFFF}
+|*Requirement 7* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-of-one {set:cellbgcolor:#FFFFFF}
+|*Requirement 8* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-zero-naming {set:cellbgcolor:#FFFFFF}
+|*Requirement 9* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiplicity-more-than-one-encoding  {set:cellbgcolor:#FFFFFF}
+|*Requirement 10* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/numeric-attributes {set:cellbgcolor:#FFFFFF}
+|*Requirement 11* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/boolean-attributes {set:cellbgcolor:#FFFFFF}
+|*Requirement 12* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/string-attributes {set:cellbgcolor:#FFFFFF}
+|*Requirement 13* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/attributes-multiplicity-one  {set:cellbgcolor:#FFFFFF}
+|*Requirement 14* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/complex-attribute-type  {set:cellbgcolor:#FFFFFF}
+|*Requirement 15* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/null-attribute-value  {set:cellbgcolor:#FFFFFF}
+|*Requirement 16* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-enumeration {set:cellbgcolor:#FFFFFF}
+|*Requirement 17* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-codelist {set:cellbgcolor:#FFFFFF}
+|*Requirement 18* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-class-datatype {set:cellbgcolor:#FFFFFF}
+|*Requirement 19* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/class-generalization {set:cellbgcolor:#FFFFFF}
+|*Requirement 20* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/multiple-generalization {set:cellbgcolor:#FFFFFF}
+|*Requirement 21* {set:cellbgcolor:#CACCCE} |http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-package-definition  {set:cellbgcolor:#FFFFFF}
+|===

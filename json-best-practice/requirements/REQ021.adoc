@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 21*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/uml-package-definition
+ {set:cellbgcolor:#FFFFFF} +
+a|
+Each UML class package SHALL be described in the _definitions_ in a JSON schema. Schemas that reuse other UML classes in other packages SHALL point to them using a full path.
+|===

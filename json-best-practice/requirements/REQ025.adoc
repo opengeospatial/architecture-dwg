@@ -1,0 +1,7 @@
+[width="90%",cols="2,6"]
+|===
+|*Requirement 25* {set:cellbgcolor:#CACCCE}|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-element
+ +
+The first property of the root element of a JSON-LD instance SHALL have the name "@context". The root "@context" property SHAL have a value consisting in an array formed two parts: a reference to a @context document (called _root @context document_) and a embedded context (called _root embedded context_).
+{set:cellbgcolor:#FFFFFF}
+|===

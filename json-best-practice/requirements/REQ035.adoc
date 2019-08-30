@@ -1,0 +1,7 @@
+[width="90%",cols="2,6"]
+|===
+|*Requirement 35* {set:cellbgcolor:#CACCCE}|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/ordered-property
+ +
+A property defined in the UML as _ordered_ and with multiplicity more than 1, SHALL be defined as "@container": "@list" in a @context document.
+{set:cellbgcolor:#FFFFFF}
+|===

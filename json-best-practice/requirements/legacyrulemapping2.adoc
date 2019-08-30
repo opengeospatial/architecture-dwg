@@ -1,0 +1,19 @@
+[cols="1,1,4,4",width="90%"]
+|===
+| |22|*Rule 1.1*: A JSON-LD instance SHALL follow the JSON syntax specified in the IETF RFC7159 The JavaScript Object Notation (JSON) Data Interchange Format.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-syntax
+| |23|*Rule 1.2*: A JSON-LD instance SHALL validate with SHACL derived from the corresponding UML class diagram model.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/shacl-validation
+| |24|*Rule 2.1*: The root element in the JSON-LD instance shall have no name.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/root-element-name
+| |25|*Rule 2.2*: The first property of the root element of a JSON-LD instance SHALL have the name "@context".|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-element
+| |26|*Rule 2.3*: A JSON-LD instance _root embedded context_ SHALL contain at least a property with the name of the abbreviated namespace and value of the full namespace URI of the identifiers present on this JSON document.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/instance-context-namespace-uri
+| |27|*Rule 2.4*: The _root @context document_ SHALL contain a list of properties with the names of the abbreviated namespaces and value of the full namespace URI for the properties of the root element of the JSON document.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-namespace-uri
+| |28|*Rule 2.5*: The _root "@context" document_ SHALL define a property "id" as  "@id" and a property "type" as "@type".|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/context-property-id
+| |29|*Rule 2.6*: For all abbreviated namespaces, the correspondence to full namespace URI SHALL be listed in a @context document.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/all-abbreviated-namespaces
+| |30|*Rule 3.1*: In a JSON-LD instance, each JSON object (including the root) SHALL contain a "id" property that uniquely identifies it.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-id
+| |31|*Rule 3.2*: In a JSON-LD instance, each JSON object (including the root) SHALL include a “type” property.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/json-object-type
+| |32|*Rule 3.3*: The value of the _type_ property of each JSON object in a JSON instance shall not contain an abbreviated namespace.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/object-type-value
+| |33|*Rule 3.4*: The possible values of the _type_ property SHALL be listed as a property name of a @context document with a value of the abbreviated namespace, a ":" character and the name again.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/possible-property-values
+| |34|*Rule 4.1*: All UML class attributes SHALL be listed in a @context object.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/uml-class-attributes
+| |35|*Rule 5.4*: A property defined in the UML as _ordered_ and with multiplicity more than 1, SHALL be defined as "@container": "@list" in a @context document.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/ordered-property
+| |36|*Rule 6.5*: A property that has the value anyURI SHALL be described as "@type": "@id" in a JSON @context document|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/anyuri-property
+| |37|*Rule 6.7*: A UML complex type attribute SHALL be encoded as JSON Object properties or as an Array of JSON Object type properties in a JSON-LD instance.|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/complex-type-attribute
+|===

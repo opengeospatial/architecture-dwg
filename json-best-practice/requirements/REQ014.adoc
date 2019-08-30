@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 14*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/complex-attribute-type
+ {set:cellbgcolor:#FFFFFF} +
+a|
+Complex type attributes SHALL have "type": "object" in the JSON Schema.
+|===

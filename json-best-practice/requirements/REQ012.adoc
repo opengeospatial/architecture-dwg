@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 12*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/string-attributes
+ {set:cellbgcolor:#FFFFFF} +
+a|
+String attributes SHALL have "type": "string" in the JSON Schema.
+|===

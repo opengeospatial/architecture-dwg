@@ -1,0 +1,247 @@
+[[Clause_Rules_Instances]]
+== Rules for encoding JSON-LD instances conformant to a UML model
+
+//-------Remove after TC approval-------
+
+Readers should consider the following warning.
+
+WARNING: This document defines a draft OGC Best Practice on a particular technology or approach. This document is not an OGC Standard and may not be referred to as an OGC Standard. This document is not an official position of the OGC.
+
+//----------------------------------------
+
+The rules provided in this section and in the previous one <<Clause_Rules_Schemas>> have been created in a very formal way using normative language (i.e. using SHALL as a indication of obligation). Even if this style could be considered not appropriate for an ER, it has been done with the objective of facilitating the migration of the rules into normative document or an standard in the near future. In this sense, they are numbered and contain only ONE normative paragraph after the rule number. The normative text has been elaborated with the intention of being self-sufficient to implement an _encoding service_. However, the consequences or the reasoning behind a rule are sometimes difficult to extract from the rule itself. In these cases, after the normative text, informative (non normative) justifications, clarifications and examples can follow.
+
+Rules have been classified in subsections for clarification purposes only. All rules form a single corpus and need to be applied together.
+
+This chapter focuses on _JSON-LD instances_. In practice, these rules inform JSON instance writers.
+
+include::requirements/requirements_class_02.adoc[]
+
+=== General
+
+include::requirements/REQ022.adoc[]
+
+
+
+This _RFC7159 conformance rule_ actually implies several other rules stated in RFC7159 and that will not be repeated here but need also considered (e.g. JSON Strings values will be encoded in UTF8 in a JSON-LD instance)
+
+include::requirements/REQ023.adoc[]
+
+
+
+=== Root element
+
+include::requirements/REQ024.adoc[]
+
+
+
+The JSON file is supposed to be loaded in a JavaScript object that will have a name identifying the object.
+
+[source,JavaScript]
+.Example of code that load the JSON objects in the coverage variable
+----
+var coverage=JSON.parse(json_serialized_text);
+----
+
+include::requirements/REQ025.adoc[]
+
+
+
+include::requirements/REQ026.adoc[]
+
+
+
+[source,JSON]
+.Example of a fragment of the first part of the root object of a JSON document. If references the @context document in the last example and also embeds the definition of the id's namespace.
+----
+{
+    "@context": [
+	    "http://localhost/json-ld/coverage-context.json",
+	    {
+	        "examples": "http://www.opengis.net/cis/1.1/examples/"
+        }]
+}
+----
+
+It is important to note that it can be other "@context" objects in the interior of any object (as the first property). This is particularly useful to define properties with local scope.
+
+
+=== Namespaces
+
+include::requirements/REQ027.adoc[]
+
+
+[source,JSON]
+.Example of a fragment of the root "@context" document (coverage-context.json) containing definition of the abbreviated and full namespace.
+----
+{
+	"@context":
+	{
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"cis": "http://www.opengis.net/cis/1.1/",
+		[...]
+	}
+}
+----
+
+include::requirements/REQ028.adoc[]
+
+[source,JSON]
+.Example of a fragment of the root "@context" document where id and type are defined.
+----
+{
+	"@context":
+	{
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"cis": "http://www.opengis.net/cis/1.1/",
+
+	    "id": "@id",
+		"type": "@type"
+		[...]
+	}
+}
+----
+
+The properties that starts with "@" are a bit more difficult to access in JavaScript that the others because they can NOT be called using "coverage.@id" but using the array notation that is less _natural_ "coverage[@id]". The existence of this rule allows for using  "context.id" and "context.type" instead for "@id" and "@type" in JavaScript.
+
+include::requirements/REQ029.adoc[]
+
+
+=== Objects
+
+include::requirements/REQ030.adoc[]
+
+[source,JSON]
+.Example of the addition of the necessary id's
+----
+{
+    "@context": [
+	    "http://localhost/json-ld/coverage-context.json",
+	    {
+	        "examples": "http://www.opengis.net/cis/1.1/examples/"
+        }]	"id": "examples:CIS_05_2D",
+    [...]
+	"domainSet":{
+		"id": "examples:CIS_DS_05_2D",
+		"generalGrid":{
+			"id": "examples:CIS_DS_GG_05_2D",
+            [...]
+        }
+	}
+}
+----
+
+include::requirements/REQ031.adoc[]
+
+Parsers of the JSON encoding are not required to read and understand the "type" property but they can use it to redirect the code to the right parser of a code fragment or to identify a specialized type among all possible ones of a generic one (among the subclassified types).
+
+include::requirements/REQ032.adoc[]
+
+include::requirements/REQ033.adoc[]
+
+
+[source,JSON]
+.Example of the definition of types in JSON-LD.
+----
+{
+	"@context":
+	{
+		"md": "http://www.opengis.net/md",
+		"examples": "http://www.opengis.net/cis/1.1/examples/"
+
+		"id": "@id",
+		"type": "@type",
+		"MD_LegalConstraints": "md:MD_LegalConstraints"
+	},
+	"type": "MD_LegalConstraints",
+	"id": "examples:CIS_05_2D",
+	...
+}
+----
+
+
+If an object can present more that one type (e.g. there is one or more generalized classes of a more generic class) then all the alternative types are listed in the appropriate @context section.
+
+[source,JSON]
+.Example of more that one type definition for a class.
+----
+{
+    "@context":
+    {
+        "MD_Constraints": "md:MD_Constraints",
+        "MD_LegalConstraints": "md:MD_LegalConstraints",
+        "MD_SecurityConstraints": "md:MD_SecurityConstraints"
+    }
+}
+----
+
+Again, there is no need to list the Abstract types due to they cannot be instantiated in JSON-LD instances.
+
+In a JSON-LD instance, when UML generalization is used to derive more specific classes from a generic class, the value of the property "type" will be the specialized class type name, instead of the generic class name. This behavior will favor both old and the new implementations. Old implementations will be able to ignore the "type" value, identify the object name and read the common properties from the generic class. New implementation will recognize the "type" value and be prepared to find the specialized properties.
+
+=== Object attributes; names
+
+include::requirements/REQ034.adoc[]
+
+
+Defining the properties in the "@context" that is closer to it makes the definition local to the object where the "@context" belongs.
+
+[source,JSON]
+.Example of the addition of the abbreviate namespace to properties
+----
+{
+	"domainSet":{
+		"@context":
+		{
+			"generalGrid": "cis:generalGrid",
+			"axis": "cis:axis",
+			"axisLabel": "cis:axisLabel",
+			"lowerBound": "cis:lowerBound",
+			"upperBound": "cis:upperBound"
+		},
+		"generalGrid":{
+			"axis": [{
+			    "type": "IndexAxisType",
+				"axisLabel": "i",
+				"lowerBound": 0,
+				"upperBound": 2
+			},{
+			    "type": "IndexAxisType",
+				"axisLabel": "j",
+				"lowerBound": 0,
+				"upperBound": 2
+			}]
+		}
+	}
+}
+----
+
+include::requirements/REQ035.adoc[]
+
+
+
+There is an important singularity in JSON-LD about this. When a JSON document is converted into JavaScript all JSON arrays becomes automatically with order. However in JSON-LD the situation is the opposite, and by default arrays are NOT considered as ordered when converting JSON-LD arrays to RDF. There is technical reason behind this: ordered arrays require much more RDF code and the conversion does _not_ result in a _nice_ RDF code. For that reason if the a property is marked as _ordered_ in the UML, we have to explicitly indicate this in a @context. Please limit the use this parameter only when order is really important.
+
+include::requirements/REQ036.adoc[]
+
+[source,JSON]
+.Example of the definition of a value anyURI in JSON-LD
+----
+{
+    "@context":
+    {
+        "srsName": {"@id":"swe:srsName", "@type": "@id"}
+    }
+}
+----
+
+The reasoning behind this is that property values defined without "@type": "@id" are considered literals when converted to RDF. Property values defined with "@type": "@id" considered as URIs when converted to RDF.
+
+include::requirements/REQ037.adoc[]
+
+
+
+=== Other considerations
+==== Large arrays
+
+A property containing a large array of values (or coordinates), where the order is important, should not be defined in @context objects if an alternative representation of the same information can be provided by other means. Not defining the long ordered arrays properties in @context avoids them to be converted into RDF. Ordered arrays an nasty and very verbose, double ordered arrays cannot even be converted. _Alternative representations_ can be "string literals" (encoding the arrays in a text that is more compact; e.g. coordinates encoded as WKT) or links to URLs in a non RDF format containing this information (such as NetCDF or GeoTIFF files). This is further discussed in the section <<Clause_Data_Formats_Encoding>> with specific focus on coordinate arrays but not only.

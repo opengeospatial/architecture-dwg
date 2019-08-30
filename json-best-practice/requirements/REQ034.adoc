@@ -1,0 +1,7 @@
+[width="90%",cols="2,6"]
+|===
+|*Requirement 34* {set:cellbgcolor:#CACCCE}|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/uml-class-attributes
+ +
+All UML class attributes SHALL be listed in a @context object. If the document has more than one "@context", the property SHALL be defined in the "@context" that is closer to it (with the exception of "id" and "type" that are defined in the root "@context" document and always have global scope). The value of the listed properties has to be the abbreviated namespace, the ":" character and the name of the property again.
+{set:cellbgcolor:#FFFFFF}
+|===

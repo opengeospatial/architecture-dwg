@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 2*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/object-id-property
+ {set:cellbgcolor:#FFFFFF} +
+a|
+In the JSON schema, each JSON object (including the root) SHALL define "id" property with _type_ "string" and _format_ "uri". This property SHALL be defined as mandatory (_required_).
+|===

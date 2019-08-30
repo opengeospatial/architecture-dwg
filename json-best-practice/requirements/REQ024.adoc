@@ -1,0 +1,7 @@
+[width="90%",cols="2,6"]
+|===
+|*Requirement 24* {set:cellbgcolor:#CACCCE}|http://www.opengis.net/spec/JSON-BP/1.0/req/json-ld/root-element-name
+ +
+The root element in the JSON-LD instance shall have no name.
+{set:cellbgcolor:#FFFFFF}
+|===

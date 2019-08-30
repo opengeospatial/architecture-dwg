@@ -1,0 +1,8 @@
+[width="90%",cols="2,6"]
+|===
+.2+|*Requirement 11*{set:cellbgcolor:#CACCCE}
+|http://www.opengis.net/spec/JSON-BP/1.0/req/json-schema/boolean-attributes
+ {set:cellbgcolor:#FFFFFF} +
+a|
+Boolean attributes SHALL have "type": "boolean" in the JSON Schema.
+|===

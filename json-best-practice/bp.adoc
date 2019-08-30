@@ -101,9 +101,9 @@ include::clause_8-JSONSchema.adoc[]
 
 include::clause_9-LinksinJSON.adoc[]
 
-include::clause_10-rules-schemas.adoc[]
+include::clause_10-rules-for-json-schema.adoc[]
 
-include::clause_11-rules-instances.adoc[]
+include::clause_11-rules-for-json-ld.adoc[]
 
 <<<
 ////
