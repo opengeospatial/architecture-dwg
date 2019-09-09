@@ -11,11 +11,11 @@ WARNING: This document defines a draft OGC Best Practice on a particular technol
 
 === Introduction
 
-JSON-LD is a lightweight syntax to encode Linked Data in JSON. Its design allows existing JSON to be interpreted as Linked Data with minimal changes. JSON-LD is 100% compatible with JSON. JSON-LD introduces a universal identifier mechanism for JSON objects via the use of a Uniform Resource Identifier (URI) and a way to associate data types with values.
+JSON-LD is a lightweight syntax to encode Linked Data in JSON. Its design allows existing JSON to be interpreted as Linked Data with minimal changes. JSON-LD is 100% compatible with JSON. JSON-LD introduces a universal identifier mechanism for JSON objects via the use of a Uniform Resource Identifier (URI) and a way to associate data types with property values.
 
 JSON-LD is considered another Resource Description Framework (RDF) encoding, for use with other Linked Data technologies like SPARQL. Tools are available to transform JSON-LD into other RDF encodings like Turtle (such as the http://json-ld.org/playground/[JSON-LD playground]).
 
-The authors of this document perceive that the current documentation of JSON-LD as confusing and provides many information that is difficult to understand from the point of view of a JSON and XML user. That is why another approach in explaining how to use JSON-LD is presented here.
+The authors of this document perceive that the current documentation of JSON-LD as confusing. providing much information that is difficult to understand from the point of view of a JSON and XML user. That is why another approach in explaining how to use JSON-LD is presented here.
 
 [[Apply_JSONLD_to_JSON_objects_subsection]]
 === Applying JSON-LD to JSON objects: minimum example
@@ -32,7 +32,7 @@ First of all, JSON-LD defines two specific properties for each object: @id and @
 }
 ----
 
-Within the context of RDF, a triple is a construct built from a subject, predicate and an object. The conversion to RDF results in a single triple stating that the Mississippi river is of a river type.
+Within the context of RDF, a triple is a construct built from a subject, predicate and an object. The conversion to RDF results in a single triple stating that the Mississippi river is a river.
 
 .Conversion to the minimum example of a river object to RDF triples
 [source,turtle]
@@ -48,7 +48,7 @@ In this section, all conversions to RDF triples have been derived automatically 
 
 === JSON-LD encoding for JSON objects properties
 
-To add a property to the Mississippi river we should define the semantics of the property by associating a URI to it. To do this we need to also add a @context property. Here we have two possibilities:
+To add a property to the Mississippi river we should define the semantics of the property by associating a URI to the property name. To do this we need to also add a @context property. Here we have two possibilities:
 
 * reuse a preexisting vocabulary
 * create our own vocabulary

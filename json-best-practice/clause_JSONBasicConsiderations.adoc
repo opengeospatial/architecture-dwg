@@ -1,0 +1,107 @@
+[[Basic_JSON_considerations]]
+
+== Basic JSON considerations
+The basics of JSON encoding are defined initially in the https://tools.ietf.org/html/rfc4627[RFC4627] (2006) and more recently in the https://tools.ietf.org/html/rfc7159[RFC7159] (2013).
+
+The following aspects have been extracted from the RFC7159 and, in the opinion of the authors of this document, should be considered requirements to JSON in OGC implementations of JSON encodings. These aspects go a bit beyond the immediate description of a simple JSON format but are needed to improve JSON interoperability. In the following text, the use of _quotation marks_ indicates that the text comes directly from RFC7159 (sometimes with minimal editorial changes).
+
+* An object has "an _unordered_ collection of zero or more name/value pairs". "Implementations whose behavior does not depend on member ordering will be interoperable". This means that the order of the properties can change and the object should be considered exactly the same. This is not what happens by default in the case of XML encodings, where any variation in the order of properties generates a validation error. (Note that in most of the classes in OGC UML models, the order of properties is not important, even if, after XML conversion, order becomes an extra imposed restriction).
+* "The property names within an object SHOULD be unique". This means that if you need multiplicity _more than one_ in a property, it should be defined as a single property of _array_ type.
+* "There is no requirement that values in an array have to be of the same type.". This means that, e.g. an array presenting an string (quotation marks), a number (no quotation marks), an object (curly brackets) and an array (square brackets) is a perfectly valid array (Note that you can limit this behavior in your application by applying a JSON Schema type restriction to a property).
+* "An array is an _ordered_ sequence of zero or more values". Note that this means that multiplicity _more than one_ is ordered. This is not what happens by default in the case of XML, where multiplicity is unsorted by default (as, it is also the case in most of the OGC UML diagrams too).
+* For numbers, "_Infinity_, _NaN_, etc are not permitted".
+* For floating point numbers "since software that implements IEEE 754-2008 binary64 (double precision) numbers is generally available and widely used, good interoperability can be achieved by implementations that expect no more precision or range than these provide, in the sense that implementations will approximate JSON numbers within the expected precision. A JSON number such as 1E400 or 3.141592653589793238462643383279 may indicate potential interoperability problems, since it suggests that the software that created it expects receiving software to have greater capabilities for numeric magnitude and precision than is widely available."
+* "JSON text SHALL be encoded in UTF-8, UTF-16, or UTF-32. The default encoding is UTF-8, and JSON texts that are encoded in UTF-8 are interoperable". In practice this affects both _names_ of properties and _string values_. This is particularly important for non English languages that require to encode characters beyond the _common English_ first 128 characters that are shared by most of the encodings.
+* In property _names_ and _string values_ the characters "_quotation mark_, _reverse solidus_, and the _control characters_ (U+0000 through U+001F) " "must be escaped".
+* Any other character in a property _names_ and _string values_ "may be escaped". There are two main escaping strategies. "It may be escaped by a six-character sequence: a _reverse solidus_, a lowercase letter _u_, and four hexadecimal digits that encodes the character's code point.". "For example, a _reverse solidus_ character may be represented as _\u005C_". "Alternatively, there are two-character sequence escape representations of some popular characters" allowed: \" (_quotation mark_), \\ (_reverse solidus_), \/  (_solidus_), \b (_backspace_), \f (_form feed_), \n (_line feed_), \r (_carriage return_) and \t (_tab_). In addition there is the less used "UTF-16 surrogate pair" (e.g. "G clef" character may be represented as "\uD834\uDD1E".
+*  "Implementations MUST NOT add a byte order mark to the beginning of a JSON text. In the interests of interoperability, implementations that parse JSON texts MAY ignore the presence of a byte order mark rather than treating it as an error.". In UTF8, the _byte order mark_ is the byte sequence: 0xEF,0xBB,0xBF.
+* "The MIME media type for JSON text is application/json"
+* "Security Consideration": Even if "JSON is a subset of JavaScript but excludes assignment and invocation", so that it can not contain code, "to use the "eval()" function to parse JSON texts constitutes an unacceptable security risk, since the text could contain executable code along with data declarations" (text that is not JSON but contains other elements of JavaScript). "The same consideration applies to the use of eval()-like functions in any other programming language".
+
+In addition to these requirements, the authors consider that adding an extra requirement to normal behavior for JSON parsers is interesting:
+* A parser that finds an object property that it is not able to recognize, should ignore it rather than treating it as an error. (This is not what happens by default in the case of XML validation). In special circumstances JSON can limit this inherent behavior, if conveniently justified, but not in general.
+
+To increase interoperability the authors of this document would like to add considerations for including more simple data types as restrictions of the "string" type. They were taken directly from the "format" parameter of the JSON Schema standard candidate:
+
+* "date-time": Date representation, as defined by http://tools.ietf.org/html/rfc3339[RFC 3339, section 5.6].
+* "email": Internet email address, as defined by http://tools.ietf.org/html/rfc5322[RFC 5322, section 3.4.1].
+* "hostname": Internet host name, as defined by http://tools.ietf.org/html/rfc1034[RFC 1034, section 3.1].
+* "uri": A universal resource identifier (URI), according to http://tools.ietf.org/html/rfc3986[RFC3986].
+
+See more detail of these four simple data types below.
+
+[NOTE]
+_format_ in JSON Schemas also defines _ipv4_ and _ipv6_ but these types are not commonly needed in OGC standards.
+
+In addition to these simple types, complex geometrical types are fundamental for OGC and will be discussed in <<Geospatial_dimension_in_JSON>>.
+
+[[DateTime_Format]]
+=== Date-Time format
+It follows RFC 3339, section 5.6. This format follows the profile of ISO 8601 for dates used on the Internet. This is specified using the following syntax description, in Augmented  Backus-Naur Form (ABNF, RFC2234) notation.
+
+.Description of date-time format (including range for each sub-element)
+[source,text]
+----
+   date-fullyear   = 4DIGIT
+   date-month      = 2DIGIT  ; 01-12
+   date-mday       = 2DIGIT  ; 01-28, 01-29, 01-30, 01-31 based on
+                             ; month/year
+   time-hour       = 2DIGIT  ; 00-23
+   time-minute     = 2DIGIT  ; 00-59
+   time-second     = 2DIGIT  ; 00-58, 00-59, 00-60 based on leap second
+                             ; rules
+   time-secfrac    = "." 1*DIGIT
+   time-numoffset  = ("+" / "-") time-hour ":" time-minute
+   time-offset     = "Z" / time-numoffset
+
+   partial-time    = time-hour ":" time-minute ":" time-second
+                     [time-secfrac]
+   full-date       = date-fullyear "-" date-month "-" date-mday
+   full-time       = partial-time time-offset
+
+   date-time       = full-date "T" full-time
+----
+
+.Example of date-time format
+[source,json]
+----
+{
+    "date": "1985-04-12T23:20:50.52Z"
+}
+----
+
+This subtype is fundamental for OGC and the <<Time_instants_as_strings>> of this document is devoted to it, in the context of the time dimension described in the <<The_time_dimension>>.
+
+=== Email format
+It follows RFC 5322, section 3.4.1. It specifies Internet identifier that contains a locally interpreted string followed by the at-sign character ("@", ASCII value 64) followed by an Internet domain. The locally interpreted string is either a quoted-string or a dot-atom. If the string can be represented as a dot-atom (that is, it contains no characters other than atext characters or "." surrounded by atext characters), then the dot-atom form SHOULD be used and the quoted-string form SHOULD NOT be used.
+
+.Example of email format
+[source,json]
+----
+{
+    "email": "mr.bob@opengeospatial.org"
+}
+----
+
+=== URI format
+It follows RFC3986 and supports both a URI and a URN. The following text represents the common structure of the two previously mentioned types.
+
+.URI component parts
+[source,text]
+----
+     foo://example.com:8042/over/there?name=ferret#nose
+     \_/   \______________/\_________/ \_________/ \__/
+      |           |            |            |        |
+   scheme     authority       path        query   fragment
+      |   _____________________|__
+     / \ /                        \
+     urn:example:animal:ferret:nose
+----
+
+.Example of URI format
+[source,json]
+----
+{
+    "url": "http://www.opengeospatial.org/standards"
+}
+----

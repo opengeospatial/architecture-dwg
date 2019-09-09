@@ -95,6 +95,8 @@ include::clause_5_conventions.adoc[]
 
 include::clause_6-overview.adoc[]
 
+include::clause_JSONBasicConsiderations.adoc[]
+
 include::clause_7-JSONLDContextDocuments.adoc[]
 
 include::clause_8-JSONSchema.adoc[]

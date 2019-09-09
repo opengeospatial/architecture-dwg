@@ -17,11 +17,13 @@ Following the https://tools.ietf.org/html/rfc5988[RFC5988] description, a link i
 * a target IRI, and
 * optionally, target attributes.
 
-This schema was adopted both by Xlink and Atom in a similar way. The question that is discussed in this section is what is the status of links in JSON and what is the recommendation for the OGC.
+This abstract definition was adopted and encoded in XML both by Xlink and Atom in a similar way. The question that is discussed in this section is what is the status of links in JSON and what is the recommendation for the OGC.
+
+In the following subsections, we are exploring existing mechanisms for encoding links in JSON. In these subsections we are presenting examples that establish a link from an object describing the Mississippi river (the context) to the wiki page http://en.wikipedia.org/wiki/Mississippi_River (the target) with the purpose of describing it (relation type _describedBy_).
 
 [[JSON-LD_links_subsection]]
 === JSON-LD
-In the next section we will explain JSON-LD in detail (please see <<Apply_JSONLD_to_JSON_objects_subsection>>) but, in this subsection, we can anticipate what is essential in JSON-LD that allow it to work with links. In JSON-LD, objects have an _id_ that identifies the context IRI. To do that, JSON objects include a property called _@id_. As we know, a JSON object has properties, and JSON-LD defines how to use a key-value property in a particular way that allows expressing a link from this object to other objects.
+We have been explained JSON-LD in detail in a previous section (please see <<Apply_JSONLD_to_JSON_objects_subsection>>) but, in this subsection, we reflect on a JSON-LD that directly allows to work with links in JSON. In JSON-LD, objects have an _id_ that identifies the _context IRI_. To do that, JSON objects include a property called _@id_. As we know, a JSON object has properties, and JSON-LD defines how to use a key-value property in a particular way that allows expressing a link from this object to other objects.
 
 .Relation between a river and its description expressed in JSON
 [source,json]
@@ -99,6 +101,8 @@ JSON-LD can be automatically converted to RDF triples. In the conversion, done u
 <http://dbpedia.org/page/Mississippi_River> <http://www.iana.org/assignments/relation/describedby> <http://en.wikipedia.org/wiki/Mississippi_River> .
 ----
 
+In brief: an object expresses a link by adding a property name that is the _relation_ and a value that acts as the target.
+
 === Hypertext Application Language
 
 Hypertext Application Language (HAL) is a simple format that tries to give a consistent and easy way to express hyperlinks between resources. It was defined by Mike Kelly, that is a software engineer from the UK that runs an http://stateless.co/[API consultancy] helping companies design and build APIs. HAL has been submitted to the IETF for standardization, however it does not appear to have progressed beyond https://tools.ietf.org/html/draft-kelly-json-hal-08[draft stage]. Nonetheless, HAL has been implemented in a number of products for example https://docs.microsoft.com/en-us/iis-administration/api/hal[Microsoft IIS] and https://docs.camunda.org/manual/7.4/reference/rest/overview/hal/[Camunda].
@@ -115,7 +119,7 @@ Hypertext Application Language (HAL) is a simple format that tries to give a con
 }
 ----
 
-=== Atom link direct JSON encoding
+=== Atom link reencoded in JSON
 The book http://shop.oreilly.com/product/9780596801694.do["RESTful Web Services Cookbook; Solutions for Improving Scalability and Simplicity"] By Subbu Allamaraju, in its chapter "How to Use Links in JSON Representations" proposes a direct translation of the Atom xlink notation in two forms:
 
 .Atom translation to JSON. Alternative 1.
@@ -148,7 +152,7 @@ There is also a more compact format alternative.
 }
 ----
 
-The later alternative has the advantage that checking for a the presence of a "describedBy" linking is easier in JavaScript and at the same time looks almost identical to the HAL proposal.
+The later alternative has the advantage that checking for a the presence of a "describedBy" linking is easier in JavaScript and, at the same time, looks almost identical to the HAL proposal. It is the alternative chosen by the OWS Context JSON encoding.
 
 .Accessing a link in the alternative 2.
 [source,JavaScript]
@@ -163,4 +167,69 @@ If we remove the _grouping_ property "links", then we almost converge to the JSO
 
 === Recommendation
 
-Even if it is difficult to formulate a recommendation, the authors of this guide consider that the JSON-LD alternative has the advantage of simplicity and, at the same time, is the only alternative ratified and approved by a Standards Development Organization. It has also the advantage to connect with the RDF world.
+It is difficult to formulate a recommendation when so many practices are coexisting. The authors of this guide consider that the JSON-LD alternative has the advantage of simplicity and, at the same time, it is the only alternative ratified and approved by a Standards Development Organization. It has also the advantage to connect with the RDF world. The main disadvantage is that it does not support additional target attributes such as "title", "type" etc.
+
+In the OGC API effort, a direct recoding of xlink in JSON is getting traction and it is the alternative recommended for any OGC API. Links are added by explicitly including a property called _links_, that is an array, each one following this schema:
+
+[source,json]
+----
+{
+  "link": {
+    "type": "object",
+    "required": [
+      "href"
+    ],
+    "properties": {
+      "href": {
+        "type": "string",
+        "example": "http://data.example.com/buildings/123"
+      },
+      "rel": {
+        "type": "string",
+        "example": "alternate"
+      },
+      "type": {
+        "type": "string",
+        "pattern": "^(?=[-a-z]{1,127}/[-\\.a-z0-9]{1,127}$)[a-z]+(-[a-z]+)*/[a-z0-9]+([-\\.][a-z0-9]+)*$",
+        "example": "application/geo+json"
+      },
+      "hreflang": {
+        "type": "string",
+        "example": "en"
+      },
+      "title": {
+        "type": "string",
+        "example": "Trierer Strasse 70, 53115 Bonn"
+      },
+      "length": {
+        "type": "integer",
+        "minimum": 0
+      }
+    }
+  }
+}
+----
+
+Sometimes it is so difficult to decided for a single option that groups decide for more than one approach in the same document. This is the case of the SpatioTemporal Asset Catalog (STAC). In the definition of the STAC item two approaches are coexisting (https://github.com/radiantearth/stac-spec/blob/master/item-spec/examples/landsat8-sample.json). On one hand, some links (called _assets_ are mapped in a similar way as the Atom links alternative 2 (_rel_ is the name of the object)
+
+[source,json]
+----
+{
+	"assets" :{
+    "thumbnail": {
+      "href": "http://landsat-pds.s3.amazonaws.com/L8/153/025/LC81530252014153LGN00/LC81530252014153LGN00_thumb_large.jpg",
+      "type": "image/jpeg"
+    }
+  }
+}
+----
+
+Other links are mapped as Atom links alternative 1 (_rel_ is another property of the link).
+
+[source,json]
+----
+"links": [
+	 { "rel":"self", "href": "http://landsat-pds.s3.amazonaws.com/L8/153/025/LC81530252014153LGN00/LC81530252014153LGN00.json"},
+	 { "rel":"alternate", "href": "https://landsatonaws.com/L8/153/025/LC81530252014153LGN00", "type": "text/html"}
+]
+----
