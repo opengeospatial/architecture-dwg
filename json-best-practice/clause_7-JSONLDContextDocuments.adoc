@@ -27,7 +27,7 @@ First of all, JSON-LD defines two specific properties for each object: @id and @
 [source,json]
 ----
 {
-    "@id": "http://dbpedia.org/page/Mississippi_River",
+    "@id": "http://dbpedia.org/resource/Mississippi_River",
     "@type": "http://dbpedia.org/ontology/River"
 }
 ----
@@ -37,7 +37,7 @@ Within the context of RDF, a triple is a construct built from a subject, predica
 .Conversion to the minimum example of a river object to RDF triples
 [source,turtle]
 ----
-<http://dbpedia.org/page/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
+<http://dbpedia.org/resource/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
 ----
 
 [NOTE]
@@ -60,7 +60,7 @@ In this example we are adding a _name_ to a river resulting on a second triple a
 ----
 {
     "@context": "http://schema.org/",
-    "@id": "http://dbpedia.org/page/Mississippi_River",
+    "@id": "http://dbpedia.org/resource/Mississippi_River",
     "@type": "http://dbpedia.org/ontology/River",
     "name": "Mississippi river"
 }
@@ -69,8 +69,8 @@ In this example we are adding a _name_ to a river resulting on a second triple a
 .Conversion to a named river object encoded as RDF triples
 [source,turtle]
 ----
-<http://dbpedia.org/page/Mississippi_River> <http://schema.org/name> "Mississippi river" .
-<http://dbpedia.org/page/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
+<http://dbpedia.org/resource/Mississippi_River> <http://schema.org/name> "Mississippi river" .
+<http://dbpedia.org/resource/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
 ----
 
 As a second alternative, when the appropriate vocabulary in the JSON-LD format is not available, we can define the needed term on-the-fly as embedded content in the @context section of the JSON instance.
@@ -82,7 +82,7 @@ As a second alternative, when the appropriate vocabulary in the JSON-LD format i
     "@context": {
         "name": "http://www.opengis.net/def/ows-common/name"
     },
-    "@id": "http://dbpedia.org/page/Mississippi_River",
+    "@id": "http://dbpedia.org/resource/Mississippi_River",
     "@type": "http://dbpedia.org/ontology/River",
     "name": "Mississippi river"
 }
@@ -97,7 +97,7 @@ It is also possible to combine two vocabularies, one pre-existing and another em
     "@context": ["http://schema.org/", {
         "bridges": "http://www.opengis.net/def/ows-common/river/bridge"
     }],
-    "@id": "http://dbpedia.org/page/Mississippi_River",
+    "@id": "http://dbpedia.org/resource/Mississippi_River",
     "@type": "http://dbpedia.org/ontology/River",
     "name": "Mississippi river",
     "bridges": ["Eads Bridge", "Chain of Rocks Bridge"]
@@ -107,10 +107,10 @@ It is also possible to combine two vocabularies, one pre-existing and another em
 .Conversion to a named river object encoded as RDF triples
 [source,turtle]
 ----
-<http://dbpedia.org/page/Mississippi_River> <http://schema.org/name> "Mississippi river" .
-<http://dbpedia.org/page/Mississippi_River> <http://www.opengis.net/def/ows-common/river/bridge> "Chain of Rocks Bridge" .
-<http://dbpedia.org/page/Mississippi_River> <http://www.opengis.net/def/ows-common/river/bridge> "Eads Bridge" .
-<http://dbpedia.org/page/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
+<http://dbpedia.org/resource/Mississippi_River> <http://schema.org/name> "Mississippi river" .
+<http://dbpedia.org/resource/Mississippi_River> <http://www.opengis.net/def/ows-common/river/bridge> "Chain of Rocks Bridge" .
+<http://dbpedia.org/resource/Mississippi_River> <http://www.opengis.net/def/ows-common/river/bridge> "Eads Bridge" .
+<http://dbpedia.org/resource/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
 ----
 
 === Using namespaces in JSON-LD
@@ -123,11 +123,11 @@ Now we can refine the example and provide a more elegant encoding introducing th
 {
     "@context": ["http://schema.org/", {
         "owscommon":"http://www.opengis.net/def/ows-common/",
-        "page": "http://dbpedia.org/page/",
+        "dbresource": "http://dbpedia.org/resource/",
         "dbpedia": "http://dbpedia.org/ontology/",
         "bridges": "owscommon:river/bridge"
     }],
-    "@id": "page:Mississippi_River",
+    "@id": "dbresource:Mississippi_River",
     "@type": "dbpedia:River",
     "name": "Mississippi river",
     "bridges": ["Eads Bridge", "Chain of Rocks Bridge"]
@@ -144,7 +144,7 @@ By default, JSON-LD considers properties as strings. JSON-LD also permits defini
 {
     "@context": ["http://schema.org/", {
         "owscommon":"http://www.opengis.net/def/ows-common/",
-        "page": "http://dbpedia.org/page/",
+        "dbresource": "http://dbpedia.org/resource/",
         "dbpedia": "http://dbpedia.org/ontology/",
         "bridges": "owscommon:river/bridge",
 		"length": {
@@ -152,7 +152,7 @@ By default, JSON-LD considers properties as strings. JSON-LD also permits defini
 			"@type": "xsd:float"
     	}
     }],
-    "@id": "page:Mississippi_River",
+    "@id": "dbresource:Mississippi_River",
     "@type": "dbpedia:River",
     "name": "Mississippi river",
     "bridges": ["Eads Bridge", "Chain of Rocks Bridge"],
@@ -163,7 +163,7 @@ By default, JSON-LD considers properties as strings. JSON-LD also permits defini
 .Conversion of the length of a river object to RDF triples
 [source,turtle]
 ----
-<http://dbpedia.org/page/Mississippi_River> <http://schema.org/distance> "3734"^^<http://www.w3.org/2001/XMLSchema#float> .
+<http://dbpedia.org/resource/Mississippi_River> <http://schema.org/distance> "3734"^^<http://www.w3.org/2001/XMLSchema#float> .
 [...]
 ----
 
@@ -177,14 +177,14 @@ An interesting aspect of JSON-LD is that it overwrites the behavior of JSON arra
 {
     "@context": ["http://schema.org/", {
         "owscommon":"http://www.opengis.net/def/ows-common/",
-        "page": "http://dbpedia.org/page/",
+        "dbresource": "http://dbpedia.org/resource/",
         "dbpedia": "http://dbpedia.org/ontology/",
         "bridges": {
           	"@id": "owscommon:river/bridge",
             "@container": "@list"
         }
    }],
-    "@id": "page:Mississippi_River",
+    "@id": "dbresource:Mississippi_River",
     "@type": "dbpedia:River",
     "name": "Mississippi river",
     "bridges": ["Eads Bridge", "Chain of Rocks Bridge"]
@@ -194,9 +194,9 @@ An interesting aspect of JSON-LD is that it overwrites the behavior of JSON arra
 .Transformation, to RDF triples, of a list of bridges where order is important
 [source,json]
 ----
-<http://dbpedia.org/page/Mississippi_River> <http://schema.org/name> "Mississippi river" .
-<http://dbpedia.org/page/Mississippi_River> <http://www.opengis.net/def/ows-common/river/bridge> _:b0 .
-<http://dbpedia.org/page/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
+<http://dbpedia.org/resource/Mississippi_River> <http://schema.org/name> "Mississippi river" .
+<http://dbpedia.org/resource/Mississippi_River> <http://www.opengis.net/def/ows-common/river/bridge> _:b0 .
+<http://dbpedia.org/resource/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
 _:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> "Eads Bridge" .
 _:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest> _:b1 .
 _:b1 <http://www.w3.org/1999/02/22-rdf-syntax-ns#first> "Chain of Rocks Bridge" .
@@ -212,7 +212,7 @@ A special kind of data type is "@id". This indicates that a property points to a
 {
     "@context": ["http://schema.org/", {
         "owscommon":"http://www.opengis.net/def/ows-common/",
-        "page": "http://dbpedia.org/page/",
+        "dbresource": "http://dbpedia.org/resource/",
         "dbpedia": "http://dbpedia.org/ontology/",
         "wiki": "http://en.wikipedia.org/wiki/Mississippi_River",
 		"describedBy": {
@@ -220,7 +220,7 @@ A special kind of data type is "@id". This indicates that a property points to a
 			"@type": "@id"
 		}
     }],
-    "@id": "page:Mississippi_River",
+    "@id": "dbresource:Mississippi_River",
     "@type": "dbpedia:River",
     "name": "Mississippi river",
     "describedBy":  "wiki:Mississippi_River"
@@ -230,7 +230,7 @@ A special kind of data type is "@id". This indicates that a property points to a
 .Conversion to a river object related to another object encoded as RDF triples
 [source,turtle]
 ----
-<http://dbpedia.org/page/Mississippi_River> <http://schema.org/name> "Mississippi river" .
-<http://dbpedia.org/page/Mississippi_River> <http://www.iana.org/assignments/relation/describedby> <http://en.wikipedia.org/wiki/Mississippi_RiverMississippi_River> .
-<http://dbpedia.org/page/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
+<http://dbpedia.org/resource/Mississippi_River> <http://schema.org/name> "Mississippi river" .
+<http://dbpedia.org/resource/Mississippi_River> <http://www.iana.org/assignments/relation/describedby> <http://en.wikipedia.org/wiki/Mississippi_RiverMississippi_River> .
+<http://dbpedia.org/resource/Mississippi_River> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://dbpedia.org/ontology/River> .
 ----

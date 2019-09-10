@@ -29,7 +29,7 @@ We have been explained JSON-LD in detail in a previous section (please see <<App
 [source,json]
 ----
 {
-	"@id": "http://dbpedia.org/page/Mississippi_River",
+	"@id": "http://dbpedia.org/resource/Mississippi_River",
 	"describedBy": "http://en.wikipedia.org/wiki/Mississippi_River",
 	"name": "Mississippi river"
 }
@@ -63,7 +63,7 @@ Both JSON fragments can be combined in a single JSON-LD document
 			"@type": "@id"
 		}
 	},
-	"@id": "http://dbpedia.org/page/Mississippi_River",
+	"@id": "http://dbpedia.org/resource/Mississippi_River",
 	"describedBy": "http://en.wikipedia.org/wiki/Mississippi_River",
 	"name": "Mississippi river"
 }
@@ -77,7 +77,7 @@ JSON-LD allows for a more elegant notation that defines abbreviated namespaces t
 {
 	"@context": {
 		"iana_rel": "http://www.iana.org/assignments/relation/",
-		"dbpedia": "http://dbpedia.org/page/",
+		"dbpedia": "http://dbpedia.org/resource/",
 		"wiki": "http://en.wikipedia.org/wiki/",
 		"schema": "http://schema.org/",
 
@@ -97,8 +97,8 @@ JSON-LD can be automatically converted to RDF triples. In the conversion, done u
 
 [source,RDF]
 ----
-<http://dbpedia.org/page/Mississippi_River> <http://schema.org/name> "Mississippi river" .
-<http://dbpedia.org/page/Mississippi_River> <http://www.iana.org/assignments/relation/describedby> <http://en.wikipedia.org/wiki/Mississippi_River> .
+<http://dbpedia.org/resource/Mississippi_River> <http://schema.org/name> "Mississippi river" .
+<http://dbpedia.org/resource/Mississippi_River> <http://www.iana.org/assignments/relation/describedby> <http://en.wikipedia.org/wiki/Mississippi_River> .
 ----
 
 In brief: an object expresses a link by adding a property name that is the _relation_ and a value that acts as the target.
@@ -111,7 +111,7 @@ Hypertext Application Language (HAL) is a simple format that tries to give a con
 [source,json]
 ----
 {
-	"@id": "http://dbpedia.org/page/Mississippi_River",
+	"@id": "http://dbpedia.org/resource/Mississippi_River",
 	"name": "Mississippi river",
 	"_links": {
 		"describedBy": { "href": "http://en.wikipedia.org/wiki/Mississippi_River" }
@@ -126,7 +126,7 @@ The book http://shop.oreilly.com/product/9780596801694.do["RESTful Web Services 
 [source,json]
 ----
 {
-	"@id": "http://dbpedia.org/page/Mississippi_River",
+	"@id": "http://dbpedia.org/resource/Mississippi_River",
 	"name": "Mississippi river",
 	"links": [{
 		"rel": "describedBy",
@@ -143,7 +143,7 @@ There is also a more compact format alternative.
 [source,json]
 ----
 {
-	"@id": "http://dbpedia.org/page/Mississippi_River",
+	"@id": "http://dbpedia.org/resource/Mississippi_River",
 	"name": "Mississippi river",
 	"links": [{
 		"describedBy": { "href": "http://en.wikipedia.org/wiki/Mississippi_River" }
