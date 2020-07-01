@@ -49,7 +49,8 @@ tags:
     description: Status operations
   - name: Dismiss
     description: Dismiss operations
-
+  - name: Result
+    description: Result operations
 
 paths:
   /:
@@ -193,7 +194,24 @@ paths:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
         500:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ServerError.yaml"
-
+  /processes/{processId}/jobs/{jobId}/results:
+    get:
+      summary: retrieve the result(s) of a job
+      description: >-
+        Lists available results of a job. In case of a failure, lists exceptions instead.
+      operationId: getResult
+      tags:
+        - Result
+      parameters:
+        - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/processId.yaml"
+        - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/jobId.yaml"
+      responses:
+        200:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/Results.yaml"
+        404:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
+        500:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ServerError.yaml"
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
