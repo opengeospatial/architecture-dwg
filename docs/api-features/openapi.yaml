@@ -14,11 +14,14 @@ info:
     [OGC](http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml).
   version: 1.0.0
   contact:
-    name: Clemens Portele
-    email: portele@interactive-instruments.de
+    name: "Open Geospatial Consortium (OGC)"
+    email: standards-team@ogc.org
+    url: 'https://www.ogc.org/contacts'
   license:
     name: OGC License
     url: http://www.opengeospatial.org/legal/
+  x-logo:
+    url: 'https://www.ogc.org/pub/www/files/OGC_Logo_2D_Blue_x_0_0.png'
 servers:
   - url: 'https://data.example.org/'
     description: Production server
