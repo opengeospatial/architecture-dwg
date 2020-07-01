@@ -140,6 +140,7 @@ paths:
               $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/schemas/execute.yaml"
       responses:
         200:
+          # changed to ghobona repo because of Token 'components' does not exist error when deployed to GitHub Pages
           $ref: 'https://raw.githubusercontent.com/ghobona/wps-rest-binding/master/core/openapi/responses/ExecuteSync.yaml'
         201:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ExecuteAsync.yaml"
@@ -207,7 +208,7 @@ paths:
         - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/jobId.yaml"
       responses:
         200:
-          # changed from Results.yaml to Status.yaml because of items because of Invalid reference token error when deployed to GitHub pages
+          # changed from Results.yaml to Status.yaml because of Invalid reference token - items error when deployed to GitHub pages
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/Status.yaml"
         404:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
