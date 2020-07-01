@@ -37,6 +37,10 @@ tags:
     description: Capabilities operations
   - name: ConformanceDeclaration
     description: ConformanceDeclaration operations
+  - name: ProcessCollection
+    description: ProcessCollection operations
+  - name: ProcessDescription
+    description: ProcessDescription operations
 
 
 paths:
@@ -68,7 +72,33 @@ paths:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ConformanceDeclaration.yaml"
         500:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ServerError.yaml"
- 
+  /processes:
+    get:
+      summary: retrieve available processes
+      description: >-
+        Lists all available processes this server offers.
+      operationId: getProcesses
+      tags:
+        - ProcessCollection
+      responses:
+        200:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ProcessCollection.yaml"
+  /processes/{processId}:
+    get:
+      summary: retrieve a process description
+      description: >-
+        Describes a process.
+      operationId: getProcessDescription
+      tags:
+        - ProcessDescription
+      parameters:
+        - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/processId.yaml"
+      responses:
+        200:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ProcessDescription.yaml"
+        404:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
+
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
