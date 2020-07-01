@@ -35,6 +35,9 @@ info:
 tags:
   - name: Capabilities
     description: Capabilities operations
+  - name: ConformanceDeclaration
+    description: ConformanceDeclaration operations
+
 
 paths:
   /:
@@ -50,7 +53,22 @@ paths:
         200:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/LandingPage.yaml"
         500:
-          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ServerError.yaml" 
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ServerError.yaml"
+  /conformance:
+    get:
+      summary: information about standards that this API conforms to
+      description: >-
+        Lists all requirements classes specified in the standard (e.g., OGC API - Processes
+        Part 1: Core) that the server conforms to
+      operationId: getConformanceClasses
+      tags:
+        - ConformanceDeclaration
+      responses:
+        200:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ConformanceDeclaration.yaml"
+        500:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ServerError.yaml"
+ 
 servers:
   # Added by API Auto Mocking Plugin
   - description: SwaggerHub API Auto Mocking
