@@ -35,22 +35,7 @@ info:
 tags:
   - name: Capabilities
     description: Capabilities operations
-  - name: ConformanceDeclaration
-    description: ConformanceDeclaration operations
-  - name: ProcessCollection
-    description: ProcessCollection operations
-  - name: ProcessDescription
-    description: ProcessDescription operations
-  - name: JobCollection
-    description: JobCollection operations
-  - name: Execute
-    description: Execute operations
-  - name: Status
-    description: Status operations
-  - name: Dismiss
-    description: Dismiss operations
-  - name: Result
-    description: Result operations
+
 
 paths:
   /:
@@ -142,7 +127,7 @@ paths:
         200:
           $ref: 'https://raw.githubusercontent.com/ghobona/wps-rest-binding/master/core/openapi/responses/ExecuteSync.yaml'
         201:
-          $ref: "https://raw.githubusercontent.com/ghobona/wps-rest-binding/master/core/openapi/responses/ExecuteAsync.yaml"
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ExecuteAsync.yaml"
         404:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
         500:
