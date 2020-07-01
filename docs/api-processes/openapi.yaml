@@ -45,6 +45,10 @@ tags:
     description: JobCollection operations
   - name: Execute
     description: Execute operations
+  - name: Status
+    description: Status operations
+  - name: Dismiss
+    description: Dismiss operations
 
 
 paths:
@@ -154,6 +158,41 @@ paths:
               responses:
                 200:
                   description: Results received successfully
+  /processes/{processId}/jobs/{jobId}:
+    get:
+      summary: retrieve the status of a job
+      description: >-
+        Shows the status of a job.
+      operationId: getStatus
+      tags:
+        - Status
+      parameters:
+        - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/processId.yaml"
+        - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/jobId.yaml"
+      responses:
+        200:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/Status.yaml"
+        404:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
+        500:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ServerError.yaml"
+    delete:
+      summary: cancel a job execution, remove a finished job
+      description: >-
+        Cancel a job execution and remove it from the jobs list.
+      operationId: dismiss
+      tags:
+        - Dismiss
+      parameters:
+        - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/processId.yaml"
+        - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/jobId.yaml"
+      responses:
+        200:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/Status.yaml"
+        404:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
+        500:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ServerError.yaml"
 
 servers:
   # Added by API Auto Mocking Plugin
