@@ -41,6 +41,10 @@ tags:
     description: ProcessCollection operations
   - name: ProcessDescription
     description: ProcessDescription operations
+  - name: JobCollection
+    description: JobCollection operations
+  - name: Execute
+    description: Execute operations
 
 
 paths:
@@ -98,6 +102,58 @@ paths:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ProcessDescription.yaml"
         404:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
+  /processes/{processId}/jobs:
+    get:
+      summary: retrieve the list of jobs for a process.
+      description: >-
+        Lists available jobs of a process.
+      operationId: getJobs
+      tags:
+        - JobCollection
+      parameters:
+        - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/processId.yaml"
+      responses:
+        200:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/JobCollection.yaml"
+        404:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
+    post:
+      summary: execute a process.
+      description: >-
+        Submits a new job.
+      operationId: execute
+      tags:
+        - Execute
+      parameters:
+        - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/processId.yaml"
+      requestBody:
+        description: Mandatory execute request JSON
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/schemas/execute.yaml"
+      responses:
+        200:
+          $ref: 'https://raw.githubusercontent.com/ghobona/wps-rest-binding/master/core/openapi/responses/ExecuteSync.yaml'
+        201:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ExecuteAsync.yaml"
+        404:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
+        500:
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ServerError.yaml"
+      callbacks:
+        jobCompleted:
+          "{$request.body#/subscriber/successUri}":
+            post:
+              requestBody:
+                content:
+                  application/json:
+                    schema:
+                      $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/schemas/result.yaml"
+              responses:
+                200:
+                  description: Results received successfully
 
 servers:
   # Added by API Auto Mocking Plugin
