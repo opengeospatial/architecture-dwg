@@ -2965,7 +2965,3 @@ components:
         type: string
         example: CRS84          
 
-
-servers:
-  - description: Example endpoint, not implemented
-    url: https://ogcapi.ogc.org/

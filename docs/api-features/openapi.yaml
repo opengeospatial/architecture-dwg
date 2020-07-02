@@ -980,6 +980,3 @@ components:
         text/html:
           schema:
             type: string
-servers:
-  - description: Example endpoint, not implemented
-    url: https://ogcapi.ogc.org/

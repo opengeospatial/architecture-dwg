@@ -1380,6 +1380,3 @@ components:
 #          $ref: 'https://api.swaggerhub.com/domains/cportele/ogcapi-draft-extensions/1.0.0#/components/schemas/queryables'
         sampleData:
           $ref: 'https://api.swaggerhub.com/domains/cportele/ogcapi-features-1/1.0.0-draft.2#/components/schemas/link'
-servers:
-  - description: Example endpoint, not implemented
-    url: https://ogcapi.ogc.org/
