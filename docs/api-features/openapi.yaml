@@ -22,11 +22,6 @@ info:
     url: http://www.opengeospatial.org/legal/
   x-logo:
     url: 'https://www.ogc.org/pub/www/files/OGC_Logo_2D_Blue_x_0_0.png'
-servers:
-  - url: 'https://data.example.org/'
-    description: Production server
-  - url: 'https://dev.example.org/'
-    description: Development server
 tags:
   - name: Capabilities
     description: |-
@@ -985,4 +980,6 @@ components:
         text/html:
           schema:
             type: string
-
+servers:
+  - description: Example endpoint, not implemented
+    url: https://ogcapi.ogc.org/
