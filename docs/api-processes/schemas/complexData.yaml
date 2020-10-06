@@ -1,0 +1,8 @@
+allOf:
+   - $ref: "dataType.yaml"
+   - type: object
+     required:
+        - value
+     properties:
+        value:
+           $ref: "valueType.yaml"

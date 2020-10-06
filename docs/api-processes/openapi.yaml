@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  version: 1.0.0
+  version: 0.0.1
   title: "Building Blocks specified in OGC API - Processes - Part 1: Core"
   termsOfService: 'http://www.opengeospatial.org/legal/'
   contact:
@@ -91,7 +91,7 @@ paths:
         - ProcessCollection
       responses:
         200:
-          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ProcessCollection.yaml"
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ProcessList.yaml"
   /processes/{processId}:
     get:
       summary: retrieve a process description
@@ -119,7 +119,7 @@ paths:
         - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/processId.yaml"
       responses:
         200:
-          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/JobCollection.yaml"
+          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/JobList.yaml"
         404:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
     post:
@@ -140,8 +140,7 @@ paths:
               $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/schemas/execute.yaml"
       responses:
         200:
-          # changed to ghobona repo because of Token 'components' does not exist error when deployed to GitHub Pages
-          $ref: 'https://raw.githubusercontent.com/ghobona/wps-rest-binding/master/core/openapi/responses/ExecuteSync.yaml'
+          $ref: 'https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ExecuteSync.yaml'
         201:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ExecuteAsync.yaml"
         404:
@@ -208,8 +207,7 @@ paths:
         - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/jobId.yaml"
       responses:
         200:
-          # changed from Results.yaml to Status.yaml because of Invalid reference token - items error when deployed to GitHub pages
-          $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/Status.yaml"
+          $ref: "https://opengeospatial.github.io/architecture-dwg/api-processes/responses/Results.yaml"
         404:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/NotFound.yaml"
         500:
