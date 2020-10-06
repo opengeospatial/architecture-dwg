@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  version: 1.0-draft.3
+  version: 1.0-draft.4
   title: "Building Blocks specified in OGC API - Processes - Part 1: Core"
   termsOfService: 'http://www.opengeospatial.org/legal/'
   contact:
@@ -37,12 +37,12 @@ tags:
     description: Capabilities operations
   - name: ConformanceDeclaration
     description: ConformanceDeclaration operations
-  - name: ProcessCollection
-    description: ProcessCollection operations
+  - name: ProcessList
+    description: ProcessList operations
   - name: ProcessDescription
     description: ProcessDescription operations
-  - name: JobCollection
-    description: JobCollection operations
+  - name: JobList
+    description: JobList operations
   - name: Execute
     description: Execute operations
   - name: Status
@@ -88,7 +88,7 @@ paths:
         Lists all available processes this server offers.
       operationId: getProcesses
       tags:
-        - ProcessCollection
+        - ProcessList
       responses:
         200:
           $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/responses/ProcessList.yaml"
@@ -114,7 +114,7 @@ paths:
         Lists available jobs of a process.
       operationId: getJobs
       tags:
-        - JobCollection
+        - JobList
       parameters:
         - $ref: "https://raw.githubusercontent.com/opengeospatial/wps-rest-binding/master/core/openapi/parameters/processId.yaml"
       responses:
