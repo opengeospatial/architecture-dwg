@@ -10,8 +10,8 @@ info:
     Copyright (c) 2019 Open Geospatial Consortium.
     To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
 
-    This document is also available on
-    [OGC](http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml).
+    This is an informative document. The building blocks in this document are also available on the
+    [OGC](http://schemas.opengis.net/ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml) schema repository.
   version: 1.0.0
   contact:
     name: "Open Geospatial Consortium (OGC)"
@@ -407,7 +407,7 @@ components:
                   nullable: true
                 example:
                 - '2011-11-11T12:22:11Z'
-                - 
+                -
             trs:
               description: |-
                 Coordinate reference system of the coordinates in the temporal extent
@@ -781,7 +781,7 @@ components:
                 temporal:
                   interval:
                   - - '2010-02-15T12:34:56Z'
-                    - 
+                    -
               links:
               - href: http://data.example.org/collections/buildings/items
                 rel: items
@@ -834,7 +834,7 @@ components:
               temporal:
                 interval:
                 - - '2010-02-15T12:34:56Z'
-                  - 
+                  -
             links:
             - href: http://data.example.org/collections/buildings/items
               rel: items
