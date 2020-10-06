@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  version: 0.0.1
+  version: 1.0-draft.3
   title: "Building Blocks specified in OGC API - Processes - Part 1: Core"
   termsOfService: 'http://www.opengeospatial.org/legal/'
   contact:
