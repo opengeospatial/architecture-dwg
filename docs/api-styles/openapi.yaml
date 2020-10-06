@@ -1,7 +1,7 @@
 openapi: 3.0.2
 info:
   version: 0.0.1
-  title: "OGC API - Styles - Part 1: Core"
+  title: "Building Blocks specified in OGC API - Styles - Part 1: Core"
   termsOfService: 'http://www.opengeospatial.org/legal/'
   contact:
     name: "Open Geospatial Consortium (OGC)"

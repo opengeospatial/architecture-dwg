@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: Environmental Data Retrieval API's
+  title: Building Blocks specified in OGC API - Environmental Data Retrieval
   description: Example of Candidate Environmental Data Retrieval API OpenAPI docs. This document is not an OGC Standard. This document is distributed for review and comment. This document is subject to change without notice and may not be referred to as an OGC Standard. Recipients of this document are invited to submit, with their comments, notification of any relevant patent rights of which they are aware and to provide supporting documentation.
   version: 0.0.9
   contact:
