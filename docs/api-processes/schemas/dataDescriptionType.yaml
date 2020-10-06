@@ -1,0 +1,5 @@
+allOf:
+   - $ref: "descriptionType.yaml"
+   - type: object
+     required:
+        - id
