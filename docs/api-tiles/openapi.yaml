@@ -1849,7 +1849,7 @@ components:
           type: string
           format: uri
           example: http://schemas.opengis.net/tms/1.0/json/examples/WorldMercatorWGS84Quad.json
-        #tileMatrixSetLimits: # commented out by @ghobona because of errors detected by ReDoc
+        #tileMatrixSetLimits: # commented out by @ghobona because of errors detected by ReDoc 
         #  minItems: 1
         #  type: array
         #  items:
