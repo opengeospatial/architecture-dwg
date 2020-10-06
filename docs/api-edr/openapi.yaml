@@ -12,9 +12,6 @@ info:
     url: http://www.opengeospatial.org/legal/
   x-logo:
     url: 'https://www.ogc.org/pub/www/files/OGC_Logo_2D_Blue_x_0_0.png'
-servers:
-  - url: 'http://www.example.org/edr'
-    description: ''
 paths:
   /:
     get:

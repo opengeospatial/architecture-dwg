@@ -12,16 +12,13 @@ info:
     url: http://www.opengeospatial.org/legal/
   x-logo:
     url: 'https://www.ogc.org/pub/www/files/OGC_Logo_2D_Blue_x_0_0.png'
-servers:
-  - url: 'http://www.example.org/edr'
-    description: ''
 tags:
   - name: Capabilities
     description: Essential characteristics of this API including information about the data.
   - name: Collection
     description: Collection operations
   - name: Record
-    description: Record operations        
+    description: Record operations
 paths:
   /:
     get:
