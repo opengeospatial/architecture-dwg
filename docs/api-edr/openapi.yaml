@@ -3,6 +3,15 @@ info:
   title: Environmental Data Retrieval API's
   description: Example of Candidate Environmental Data Retrieval API OpenAPI docs.
   version: 0.0.9
+  contact:
+    name: "Open Geospatial Consortium (OGC)"
+    email: standards-team@ogc.org
+    url: 'https://www.ogc.org/contacts'
+  license:
+    name: OGC License
+    url: http://www.opengeospatial.org/legal/
+  x-logo:
+    url: 'https://www.ogc.org/pub/www/files/OGC_Logo_2D_Blue_x_0_0.png'  
 servers:
   - url: 'http://www.example.org/edr'
     description: ''
