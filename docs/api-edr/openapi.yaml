@@ -183,8 +183,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json:  #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -246,8 +244,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json:  #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -309,8 +305,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -374,8 +368,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -435,8 +427,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -500,8 +490,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -685,8 +673,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -749,8 +735,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -813,8 +797,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -880,8 +862,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -942,8 +922,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -1008,8 +986,6 @@ paths:
         '200':
           description: Data ranges required to construct valid queries for the choosen data collection
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -1115,8 +1091,6 @@ paths:
         '200':
           description: Data returned by querying by location identifier
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
@@ -1219,8 +1193,6 @@ paths:
         '200':
           description: Data returned when querying by identifier
           content:
-            #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
-            #  schema:
                 $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
