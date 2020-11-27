@@ -179,7 +179,13 @@ properties:
           type: array
           items:
             type: number
-
+        values:
+          description: Parameter data values
+          type: array
+          items:
+            oneOf:
+              - type: number
+              - type: string
       example:
         type: NdArray
         dataType: float
