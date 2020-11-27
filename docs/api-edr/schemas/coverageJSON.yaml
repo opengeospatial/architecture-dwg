@@ -149,7 +149,7 @@ properties:
     type: object
     additionalProperties:
       title: Parameter data values
-      description: Parameter data values described by N dimensional data arrays 
+      description: Parameter data values described by N dimensional data arrays
       required:
         - type
         - dataType
@@ -182,10 +182,10 @@ properties:
         values:
           description: Parameter data values
           type: array
-          items: 
+          items:
             oneOf:
-              number
-              string
+              - type: number
+              - type: string
       example:
         type: NdArray
         dataType: float
