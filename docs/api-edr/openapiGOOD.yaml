@@ -185,7 +185,7 @@ paths:
           content:
             #application/prs.coverage+json:  #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -248,7 +248,7 @@ paths:
           content:
             #application/prs.coverage+json:  #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -311,7 +311,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -376,7 +376,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -437,7 +437,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -502,7 +502,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -687,7 +687,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -751,7 +751,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -815,7 +815,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -882,7 +882,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -944,7 +944,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -1010,7 +1010,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -1117,7 +1117,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
@@ -1221,7 +1221,7 @@ paths:
           content:
             #application/prs.coverage+json: #deactivated because it causes ReDoc to crash
             #  schema:
-                $ref: schemas/coverageJSON.yaml
+            #    $ref: schemas/coverageJSON.yaml
             application/geo+json:
               schema:
                 $ref: schemas/edrFeatureCollectionGeoJSON.yaml
