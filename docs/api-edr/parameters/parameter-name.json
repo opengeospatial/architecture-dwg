@@ -1,5 +1,5 @@
 {
-  "name": "parametername",
+  "name": "parameter-name",
   "in": "query",
   "description": "comma delimited list of parameters to retrieve data for.  Valid parameters are listed in the collections metadata",
   "schema": {
