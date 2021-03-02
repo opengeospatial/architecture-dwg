@@ -1,8 +1,0 @@
-allOf:
-   - $ref: "dataType.yaml"
-   - type: object
-     properties:
-        id:
-           type: string
-        transmissionMode:
-           $ref: "transmissionMode.yaml"
