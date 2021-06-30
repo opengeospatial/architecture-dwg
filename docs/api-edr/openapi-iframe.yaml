@@ -14,7 +14,7 @@ info:
   description: >
     # Draft Standard
 
-    <iframe src="https://docs.ogc.org/is/18-067r3/18-067r3.html" width="1200" height="800">
+    <iframe src="https://portal.ogc.org/files/?artifact_id=97581" width="1200" height="800">
 
 servers:
 - url: http://www.example.org/edr
