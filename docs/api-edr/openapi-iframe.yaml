@@ -14,7 +14,7 @@ info:
   description: >
     # Draft Standard
 
-    This document describes the OGC API - Environmental Data Retrieval candidate standard.
+    <iframe src="https://docs.ogc.org/is/18-067r3/18-067r3.html" width="1200" height="800">
 
 servers:
 - url: http://www.example.org/edr
