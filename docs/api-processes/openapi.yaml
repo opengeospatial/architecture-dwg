@@ -15,6 +15,282 @@ info:
   description: >
     # Draft Standard
 
+    <header id="title-block-header">
+    <h1 class="title">OGC API - Processes - Part 1: Core Candidate Standard</h1>
+    </header>
+    <div class="title-section">
+    <div id="toggle">
+    <span></span>
+    </div>
+    <div class="coverpage">
+    <div class="wrapper-top">
+    <div class="coverpage-doc-identity">
+    <div class="coverpage-title">
+    <span class="title-first">OGC API - Processes - Part 1: Core Candidate Standard</span>
+    </div>
+    </div>
+    <div class="coverpage-logo">
+    <span>Open Geospatial Consortium</span>
+    </div>
+    <div class="coverpage-metadata">
+    <span class="label">Submission Date: </span> <span class="value">YYY-MM-DD</span> <span class="label">Approval Date: </span> <span class="value">YYY-MM-DD</span> <span class="label">Publication Date: </span> <span class="value">YYY-MM-DD</span> <span class="label">External identifier of this OGC® document: <span class="docnumber value">http://www.opengis.net/doc/IS/ogcapi-edr-1/1.0</span></span> <span class="label">Internal identifier of this OGC® document: <span class="docnumber value">18-062</span></span>
+    </div>
+    <div class="coverpage-alt-formats">
+    <span class="label">Version: </span> <span class="value">1.0.0</span><br />
+    <span class="label">Additional Formats: </span> <span class="value"><a href="./document.xml"><em></em>XML</a></span> <span class="value"><a href="./document.pdf"><em></em>PDF</a></span> <span class="value"><a href="./document.doc"><em></em>DOC</a></span>
+    </div>
+    </div>
+    <div class="wrapper-top-bottom">
+
+    </div>
+    <div class="WordSection11">
+    </div>
+    <div class="coverpage-warning">
+    <div class="boilerplate-legal">
+    <div>
+    <h1 id="warning-for-drafts" class="IntroTitle">Warning for Drafts</h1>
+    <p>This document is not an OGC Standard. This document is distributed for review and comment. This document is subject to change without notice and may not be referred to as an OGC Standard.</p>
+    <p>Recipients of this document are invited to submit, with their comments, notification of any relevant patent rights of which they are aware and to provide supporting documentation.</p>
+    </div>
+    </div>
+    </div>
+    <div class="docstage-box">
+    <table>
+    <tbody>
+    <tr class="odd">
+    <td>Document number:</td>
+    <td>18-062</td>
+    </tr>
+    <tr class="even">
+    <td>Document type:</td>
+    <td>OGC Standard</td>
+    </tr>
+    <tr class="odd">
+    <td>Document subtype:</td>
+    <td>Implementation</td>
+    </tr>
+    <tr class="even">
+    <td>Document stage:</td>
+    <td>Draft</td>
+    </tr>
+    <tr class="odd">
+    <td>Document language:</td>
+    <td>English</td>
+    </tr>
+    </tbody>
+    </table>
+    </div>
+    <div class="info-section">
+    <div class="copyright">
+    <div class="boilerplate-copyright">
+    <div>
+    <h1 id="copyright-notice" class="IntroTitle">Copyright notice</h1>
+    <p>Copyright © 2021 Open Geospatial Consortium<br />
+    To obtain additional rights of use, visit <a href="http://www.ogc.org/legal/">http://www.ogc.org/legal/</a></p>
+    </div>
+    <div>
+    <h1 id="note" class="IntroTitle">Note</h1>
+    <p>Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. The Open Geospatial Consortium shall not be held responsible for identifying any or all such patent rights.</p>
+    <p>Recipients of this document are requested to submit, with their comments, notification of any relevant patent claims or other intellectual property rights of which they may be aware that might be infringed by any implementation of the standard set forth in this document, and to provide supporting documentation.</p>
+    </div>
+    </div>
+    </div>
+    <div class="rule">
+
+    </div>
+    </div>
+    </div>
+    <p> </p>
+    </div>
+    <p><br />
+    </p>
+    <div class="prefatory-section">
+    <div class="license">
+    <div class="boilerplate-license">
+    <div>
+    <h1 id="license-agreement" class="IntroTitle">License Agreement</h1>
+    <p>Permission is hereby granted by the Open Geospatial Consortium, (“Licensor”), free of charge and subject to the terms set forth below, to any person obtaining a copy of this Intellectual Property and any associated documentation, to deal in the Intellectual Property without restriction (except as set forth below), including without limitation the rights to implement, use, copy, modify, merge, publish, distribute, and/or sublicense copies of the Intellectual Property, and to permit persons to whom the Intellectual Property is furnished to do so, provided that all copyright notices on the intellectual property are retained intact and that each person to whom the Intellectual Property is furnished agrees to the terms of this Agreement.</p>
+    <p>If you modify the Intellectual Property, all copies of the modified Intellectual Property must include, in addition to the above copyright notice, a notice that the Intellectual Property includes modifications that have not been approved or adopted by LICENSOR.</p>
+    <p>THIS LICENSE IS A COPYRIGHT LICENSE ONLY, AND DOES NOT CONVEY ANY RIGHTS UNDER ANY PATENTS THAT MAY BE IN FORCE ANYWHERE IN THE WORLD. THE INTELLECTUAL PROPERTY IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT OF THIRD PARTY RIGHTS. THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS NOTICE DO NOT WARRANT THAT THE FUNCTIONS CONTAINED IN THE INTELLECTUAL PROPERTY WILL MEET YOUR REQUIREMENTS OR THAT THE OPERATION OF THE INTELLECTUAL PROPERTY WILL BE UNINTERRUPTED OR ERROR FREE. ANY USE OF THE INTELLECTUAL PROPERTY SHALL BE MADE ENTIRELY AT THE USER’S OWN RISK. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR ANY CONTRIBUTOR OF INTELLECTUAL PROPERTY RIGHTS TO THE INTELLECTUAL PROPERTY BE LIABLE FOR ANY CLAIM, OR ANY DIRECT, SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM ANY ALLEGED INFRINGEMENT OR ANY LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR UNDER ANY OTHER LEGAL THEORY, ARISING OUT OF OR IN CONNECTION WITH THE IMPLEMENTATION, USE, COMMERCIALIZATION OR PERFORMANCE OF THIS INTELLECTUAL PROPERTY.</p>
+    <p>This license is effective until terminated. You may terminate it at any time by destroying the Intellectual Property together with all copies in any form. The license will also terminate if you fail to comply with any term or condition of this Agreement. Except as provided in the following sentence, no such termination of this license shall require the termination of any third party end-user sublicense to the Intellectual Property which is in force as of the date of notice of such termination. In addition, should the Intellectual Property, or the operation of the Intellectual Property, infringe, or in LICENSOR’s sole opinion be likely to infringe, any patent, copyright, trademark or other right of a third party, you agree that LICENSOR, in its sole discretion, may terminate this license without any compensation or liability to you, your licensees or any other party. You agree upon termination of any kind to destroy or cause to be destroyed the Intellectual Property together with all copies in any form, whether held by you or by any third party.</p>
+    <p>Except as contained in this notice, the name of LICENSOR or of any other holder of a copyright in all or part of the Intellectual Property shall not be used in advertising or otherwise to promote the sale, use or other dealings in this Intellectual Property without prior written authorization of LICENSOR or such copyright holder. LICENSOR is and shall at all times be the sole entity that may authorize you or any third party to use certification marks, trademarks or other special designations to indicate compliance with any LICENSOR standards or specifications. This Agreement is governed by the laws of the Commonwealth of Massachusetts. The application to this Agreement of the United Nations Convention on Contracts for the International Sale of Goods is hereby expressly excluded. In the event any provision of this Agreement shall be deemed unenforceable, void or invalid, such provision shall be modified so as to make it valid and enforceable, and as so modified the entire Agreement shall remain in full force and effect. No decision, action or inaction by LICENSOR shall be construed to be a waiver of any rights or remedies available to it.</p>
+    <p>None of the Intellectual Property or underlying information or technology may be downloaded or otherwise exported or reexported in violation of U.S. export laws and regulations. In addition, you are responsible for complying with any local laws in your jurisdiction which may impact your right to import, export or use the Intellectual Property, and you represent that you have complied with any regulations or registration procedures required by applicable law to make this license enforceable.</p>
+    </div>
+    </div>
+    <div class="boilerplate-feedback">
+    <div id="boilerplate-standard-feedback">
+    <p>Suggested additions, changes and comments on this standard are welcome and encouraged. Such suggestions may be submitted using the online change request form on OGC web site: <a href="http://portal.opengeospatial.org/public_ogc/change_request.php">http://portal.opengeospatial.org/public_ogc/change_request.php</a></p>
+    </div>
+    </div>
+    </div>
+
+    <div id="toc" class="toc">
+    <h1 id="content">Contents</h1>
+    <ul>
+    <li><a href="#_scope">1. Scope</a></li>
+    <li><a href="#sc_conformance">2. Conformance</a></li>
+    <li><a href="#_references">3. References</a></li>
+    <li><a href="#_terms_and_definitions">4. Terms and Definitions</a>
+    <ul>
+    <li><a href="#_process">4.1. Process</a></li>
+    <li><a href="#_job">4.2. Job</a></li>
+    <li><a href="#_json">4.3. JSON</a></li>
+    <li><a href="#_process_description">4.4. Process description</a></li>
+    <li><a href="#_process_execution">4.5. Process execution</a></li>
+    <li><a href="#_process_input">4.6. Process input</a></li>
+    <li><a href="#_process_offering">4.7. Process offering</a></li>
+    <li><a href="#_process_output">4.8. Process output</a></li>
+    <li><a href="#_rest_or_restful">4.9. REST or RESTful</a></li>
+    </ul></li>
+    <li><a href="#_conventions">5. Conventions</a>
+    <ul>
+    <li><a href="#_identifiers">5.1. Identifiers</a></li>
+    <li><a href="#_link_relations">5.2. Link relations</a></li>
+    <li><a href="#_abbreviated_terms">5.3. Abbreviated Terms</a></li>
+    <li><a href="#_use_of_https">5.4. Use of HTTPS</a></li>
+    <li><a href="#_http_uris">5.5. HTTP URIs</a></li>
+    </ul></li>
+    <li><a href="#overview">6. Overview</a>
+    <ul>
+    <li><a href="#_encodings">6.1. Encodings</a></li>
+    </ul></li>
+    <li><a href="#_requirements_class_core">7. Requirements Class "Core"</a>
+    <ul>
+    <li><a href="#_overview">7.1. Overview</a></li>
+    <li><a href="#sc_landing_page">7.2. Retrieve the API landing page</a>
+    <ul>
+    <li><a href="#_operation">7.2.1. Operation</a></li>
+    <li><a href="#_response">7.2.2. Response</a></li>
+    <li><a href="#_error_situations">7.2.3. Error situations</a></li>
+    </ul></li>
+    <li><a href="#sc_api_definition">7.3. Retrieve an API definition</a>
+    <ul>
+    <li><a href="#_operation_2">7.3.1. Operation</a></li>
+    <li><a href="#_response_2">7.3.2. Response</a></li>
+    <li><a href="#_error_situations_2">7.3.3. Error situations</a></li>
+    </ul></li>
+    <li><a href="#sc_conformance_classes">7.4. Declaration of conformance classes</a>
+    <ul>
+    <li><a href="#_operation_3">7.4.1. Operation</a></li>
+    <li><a href="#_response_3">7.4.2. Response</a></li>
+    <li><a href="#_error_situations_3">7.4.3. Error situations</a></li>
+    </ul></li>
+    <li><a href="#_use_of_http_1_1">7.5. Use of HTTP 1.1</a>
+    <ul>
+    <li><a href="#http_status_codes">7.5.1. HTTP status codes</a></li>
+    </ul></li>
+    <li><a href="#_support_for_cross_origin_requests">7.6. Support for cross-origin requests</a></li>
+    <li><a href="#sc_limit_parameter">7.7. Limit parameter</a></li>
+    <li><a href="#_link_headers">7.8. Link headers</a></li>
+    <li><a href="#sc_process_list">7.9. Retrieve a process list</a>
+    <ul>
+    <li><a href="#_operation_4">7.9.1. Operation</a></li>
+    <li><a href="#_response_4">7.9.2. Response</a></li>
+    <li><a href="#_error_situations_4">7.9.3. Error situations</a></li>
+    </ul></li>
+    <li><a href="#sc_process_description">7.10. Retrieve a process description</a>
+    <ul>
+    <li><a href="#_operation_5">7.10.1. Operation</a></li>
+    <li><a href="#_response_5">7.10.2. Response</a></li>
+    <li><a href="#_error_situations_5">7.10.3. Error situations</a></li>
+    </ul></li>
+    <li><a href="#sc_create_job">7.11. Execute a process</a>
+    <ul>
+    <li><a href="#_operation_6">7.11.1. Operation</a></li>
+    <li><a href="#_request_body">7.11.2. Request body</a></li>
+    <li><a href="#_example">7.11.3. Example</a></li>
+    <li><a href="#sc_execute_response">7.11.4. Response</a></li>
+    <li><a href="#_error_situations_6">7.11.5. Error situations</a></li>
+    </ul></li>
+    <li><a href="#sc_retrieve_status_info">7.12. Retrieve status information about a job</a>
+    <ul>
+    <li><a href="#_operation_7">7.12.1. Operation</a></li>
+    <li><a href="#_response_6">7.12.2. Response</a></li>
+    <li><a href="#_error_situations_7">7.12.3. Error situations</a></li>
+    </ul></li>
+    <li><a href="#sc_retrieve_job_results">7.13. Retrieve job results</a>
+    <ul>
+    <li><a href="#_operation_8">7.13.1. Operation</a></li>
+    <li><a href="#_response_7">7.13.2. Response</a></li>
+    <li><a href="#_error_situations_8">7.13.3. Error situations</a></li>
+    </ul></li>
+    </ul></li>
+    <li><a href="#ogc_process_description">8. Requirements Class "OGC Process Description"</a>
+    <ul>
+    <li><a href="#_overview_2">8.1. Overview</a></li>
+    <li><a href="#_ogc_process_description">8.2. OGC process description</a></li>
+    </ul></li>
+    <li><a href="#sc_security_considerations">9. Security Considerations</a>
+    <ul>
+    <li><a href="#_operations_using_http_get">9.1. Operations using HTTP GET</a></li>
+    <li><a href="#sec_cons_execute">9.2. Execute operation</a></li>
+    <li><a href="#sec_cons_dismiss">9.3. Dismiss operation</a></li>
+    </ul></li>
+    <li><a href="#_requirements_classes_for_encodings">10. Requirements classes for encodings</a>
+    <ul>
+    <li><a href="#_overview_3">10.1. Overview</a></li>
+    <li><a href="#_requirement_class_json">10.2. Requirement Class "JSON"</a></li>
+    <li><a href="#sc_requirements_class_html">10.3. Requirement Class "HTML"</a></li>
+    </ul></li>
+    <li><a href="#requirements-class-openapi_3_0-clause">11. Requirements Class "OpenAPI 3.0"</a>
+    <ul>
+    <li><a href="#_basic_requirements">11.1. Basic requirements</a></li>
+    <li><a href="#_complete_definition">11.2. Complete definition</a></li>
+    <li><a href="#exceptions">11.3. Exceptions</a></li>
+    <li><a href="#security">11.4. Security</a></li>
+    </ul></li>
+    <li><a href="#Job_list">12. Requirements Class "Job list"</a></li>
+    <li><a href="#_overview_4">13. Overview</a>
+    <ul>
+    <li><a href="#_operation_9">13.1. Operation</a>
+    <ul>
+    <li><a href="#_job_list">13.1.1. Job list</a></li>
+    <li><a href="#_parameter_type">13.1.2. Parameter <code>type</code></a></li>
+    <li><a href="#_parameter_processid">13.1.3. Parameter <code>processID</code></a></li>
+    <li><a href="#_parameter_status">13.1.4. Parameter <code>status</code></a></li>
+    <li><a href="#_parameter_datetime">13.1.5. Parameter <code>datetime</code></a></li>
+    <li><a href="#_parameter_minduration_maxduration">13.1.6. Parameter <code>minDuration</code>, <code>maxDuration</code></a></li>
+    <li><a href="#_parameter_limit_2">13.1.7. Parameter <code>limit</code></a></li>
+    </ul></li>
+    <li><a href="#_response_8">13.2. Response</a></li>
+    <li><a href="#_error_situations_9">13.3. Error situations</a></li>
+    </ul></li>
+    <li><a href="#Callbacks">14. Requirements Class "Callback"</a></li>
+    <li><a href="#Dismiss">15. Requirements Class "Dismiss"</a>
+    <ul>
+    <li><a href="#_operation_10">15.1. Operation</a></li>
+    <li><a href="#_response_9">15.2. Response</a></li>
+    <li><a href="#_error_situations_10">15.3. Error situations</a></li>
+    </ul></li>
+    <li><a href="#mediatypes">16. Media Types</a></li>
+    <li><a href="#additional-api-building-blocks">17. Additional API Building Blocks</a></li>
+    <li><a href="#_abstract_test_suite_normative">Annex A: Abstract Test Suite (Normative)</a>
+    <ul>
+    <li><a href="#_introduction">A.1. Introduction</a></li>
+    <li><a href="#_conformance_class_core">A.2. Conformance Class Core</a>
+    <ul>
+    <li><a href="#_landing_page">A.2.1. Landing Page /</a></li>
+    <li><a href="#_api_definition_api">A.2.2. API Definition /api</a></li>
+    <li><a href="#_conformance_path_conformance">A.2.3. Conformance Path /conformance</a></li>
+    <li><a href="#_http_1_1">A.2.4. HTTP 1.1</a></li>
+    <li><a href="#_processes_processes">A.2.5. Processes /processes</a></li>
+    <li><a href="#_jobs">A.2.6. Jobs</a></li>
+    </ul></li>
+    <li><a href="#_conformance_class_ogc_process_description">A.3. Conformance Class OGC Process Description</a></li>
+    <li><a href="#_conformance_class_json">A.4. Conformance Class JSON</a></li>
+    <li><a href="#_conformance_class_html">A.5. Conformance Class HTML</a></li>
+    <li><a href="#_conformance_class_openapi_3_0">A.6. Conformance Class OpenAPI 3.0</a></li>
+    <li><a href="#_conformance_class_job_list">A.7. Conformance Class Job list</a></li>
+    <li><a href="#_conformance_class_callback">A.8. Conformance Class Callback</a></li>
+    <li><a href="#_conformance_class_dismiss">A.9. Conformance Class Dismiss</a></li>
+    </ul></li>
+    <li><a href="#_revision_history">Annex B: Revision History</a></li>
+    </ul>
+    </div>
+    <div style="page-break-after: always;">
+
+    </div>
+
 
     <div class="paragraph">
     <p><strong>i. Abstract</strong></p>
@@ -11712,7 +11988,7 @@ info:
 
     <div id="footer">
     <div id="footer-text">
-    
+
     </div>
     </div>
 paths:
