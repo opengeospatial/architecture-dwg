@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: OGC API - Environmental Data Retrieval
+  title: Example ReDoc documentation of OGC API - Environmental Data Retrieval
   contact:
     name: "Open Geospatial Consortium (OGC)"
     email: standards-team@ogc.org
