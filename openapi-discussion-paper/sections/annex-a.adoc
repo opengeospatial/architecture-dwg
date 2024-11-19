@@ -1,0 +1,227 @@
+[appendix]
+== OGC API - Common example conforming to OpenAPI 3.1
+
+After resolving the issues identified by the linter, the resulting API Definition document conforming to OpenAPI 3.1 is presented below.
+
+[source,yaml]
+----
+openapi: 3.1.0
+info:
+  title: "Building Blocks specified in OGC API - Common - Part 1: Core"
+  description: |-
+    Common components used in the
+    [OGC standard "OGC API - Common - Part 1: Core"](https://docs.ogc.org/is/19-072/19-072.html).
+
+    OGC API - Common - Part 1: Core 1.0 is an OGC Standard.
+    Copyright (c) 2021 Open Geospatial Consortium.
+    To obtain additional rights of use, visit http://www.opengeospatial.org/legal/ .
+  version: 1.1.0-draft20241119
+  contact:
+    name: "Open Geospatial Consortium (OGC)"
+    email: standards-team@ogc.org
+    url: 'https://www.ogc.org/contacts'
+  license:
+    name: OGC License
+    url: http://www.opengeospatial.org/legal/
+  x-logo:
+    url: 'https://www.ogc.org/pub/www/files/OGC_Logo_2D_Blue_x_0_0.png'
+paths:
+  /:
+    get:
+      description: >-
+        The landing page provides links to the API definition and the
+        conformance statements for this API.
+      parameters:
+        - $ref: '#/components/parameters/f'
+      operationId: getLandingPage
+      responses:
+        '200':
+          $ref: '#/components/responses/LandingPage'
+        '400':
+          $ref: '#/components/responses/R400'
+        '500':
+          $ref: '#/components/responses/R500'
+      summary: Landing page
+      tags:
+        - server
+  /api:
+    get:
+      description: This document
+      parameters:
+        - $ref: '#/components/parameters/f'
+      responses:
+        '200':
+          $ref: '#/components/responses/R200'
+        '400':
+          $ref: '#/components/responses/R400'
+        default:
+          $ref: '#/components/responses/R500'
+      summary: This document
+      tags:
+        - server
+  /conformance:
+    get:
+      description: >-
+        A list of all conformance classes specified in a standard that the
+        server conforms to.
+      parameters:
+        - $ref: '#/components/parameters/f'
+      operationId: getConformanceDeclaration
+      responses:
+        '200':
+          $ref: '#/components/responses/ConformanceDeclaration'
+        '400':
+          $ref: '#/components/responses/R400'
+        '500':
+          $ref: '#/components/responses/R500'
+      summary: API conformance definition
+      tags:
+        - server
+components:
+  parameters:
+    f:
+      description: >-
+        The optional f parameter indicates the output format that the server
+        shall provide as part of the response document.  The default format is
+        JSON.
+      explode: false
+      in: query
+      name: f
+      required: false
+      schema:
+        default: json
+        enum:
+          - json
+          - html
+        type: string
+      style: form
+  schemas:
+    confClasses:
+      type: object
+      required:
+        - conformsTo
+      properties:
+        conformsTo:
+          type: array
+          items:
+            type: string
+    exception:
+     description: JSON schema for exceptions based on RFC 7807
+     type: object
+     required:
+      - type
+     properties:
+      type: 
+        type: string
+      title: 
+        type: string
+      status:
+        type: integer
+      detail: 
+        type: string
+      instance: 
+        type: string    
+    landingPage:
+      type: object
+      required:
+        - links
+      properties:
+        title:
+          type: string
+          examples: 
+            - Buildings in Bonn
+        description:
+          type: string
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/link"
+    link:
+      type: object
+      required:
+        - href
+        - rel
+      properties:
+        href:
+          type: string
+          examples: 
+            - http://data.example.com/buildings/123
+        rel:
+          type: string
+          examples: 
+            - alternate
+        type:
+          type: string
+          examples: 
+            - application/json
+        hreflang:
+          type: string
+          examples: 
+            - en
+        title:
+          type: string
+          examples: 
+            - Trierer Strasse 70, 53115 Bonn
+        length:
+          type: integer
+  responses:
+    LandingPage:
+      description: |-
+        The landing page provides links to the API definition
+        (link relations `service-desc` and `service-doc`),
+        and the Conformance declaration (path `/conformance`,
+        link relation `conformance`).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/landingPage'
+        text/html:
+          schema:
+            type: string
+    ConformanceDeclaration:
+      description: |-
+        The URIs of all conformance classes supported by the server.
+
+        To support "generic" clients that want to access multiple
+        OGC API Features implementations - and not "just" a specific
+        API / server, the server declares the conformance
+        classes it implements and conforms to.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/confClasses'
+          example:
+            conformsTo:
+              - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/core'
+              - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/landingPage'
+              - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/oas30'
+              - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/html'
+              - 'http://www.opengis.net/spec/ogcapi-common-1/1.0/conf/json'
+        text/html:
+          schema:
+            type: string
+    R200:
+      description: |-
+        General Success response.
+    R400:
+      description: |-
+        General HTTP error response.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/exception'
+        text/html:
+          schema:
+            type: string    
+    R500:
+      description: |-
+        A server error occurred.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/exception'
+        text/html:
+          schema:
+            type: string
+
+----

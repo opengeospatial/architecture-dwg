@@ -1,0 +1,40 @@
+[[scope_section]]
+== Scope
+
+=== Background
+
+Currently OGC API Standards include a conformance class that normatively references OpenAPI 3.0.
+
+Some examples are below:
+
+* OGC API - Features, https://docs.ogc.org/is/17-069r4/17-069r4.html#_requirements_class_openapi_3_0
+* OGC API - Common, https://docs.ogc.org/is/19-072/19-072.html#_d6ac6c51-1448-4e6c-ae13-1dd22a31a3e7
+* OGC API - EDR, https://docs.ogc.org/is/19-086r6/19-086r6.html#_fb8f756f-899b-40b2-a971-a519dfc6d710
+
+OpenAPI 3.1.0 was published on 15 February 2021. https://spec.openapis.org/oas/v3.1.0.html
+
+There are some major differences between OpenAPI 3.0 and OpenAPI 3.1. https://blog.stoplight.io/difference-between-open-v2-v3-v31
+
+=== Towards a decision for adopting OpenAPI 3.1
+
+At multiple Joint OGC API SWGs session in 2022/2023, the SWGs collectively agreed to wait until OpenAPI 3.1 was more readily supported in available tooling.
+
+A review of the list of tools at https://tools.openapis.org/categories/all.html shows that there are 171 listed tools that implement OpenAPI 3.1 and 1515 listed tools that implement OpenAPI 3.0. 
+
+Therefore, the number of implementing tools cannot be a sole factor in determining when OGC API Standards should adopt OpenAPI 3.1.
+
+Considering that at least four SWGs had expressed interest in OpenAPI 3.1 by the end of 2024, and that OpenAPI 3.1 offers support for JSON Schema whereas OpenAPI 3.0 does not, that provides sufficient grounds to begin a collaborative effort of designing a conformance class for OpenAPI 3.1. 
+
+Some early prototyping of support for OpenAPI 3.1 has been conducted by the following SWGs:
+
+* OGC API - Moving Features
+* OGC API - Connected Systems
+* OGC API - Environmental Data Retrieval
+
+The scope of this discussion paper is therefore limited to addressing the following questions:
+
+. What are the changes needed to OGC API definition documents based on OpenAPI 3.0 to make them conform to OpenAPI 3.1?
+. What would the requirements and abstract tests of OpenAPI 3.1 requirements classes and conformance classes in OGC API Standards include?
+. What are the changes needed in OGC API Standards documents?
+
+

@@ -1,0 +1,128 @@
+[obligation=informative]
+== Addressing the Questions
+
+=== Question 1
+
+Question 1 as stated in <<scope_section>> is "What are the changes needed to OGC API definition documents based on OpenAPI 3.0 to make them conform to OpenAPI 3.1?".
+
+To answer Question 1, a brief test was conducted on SwaggerHub beginning with the OGC API – Common – Part 1: Core version 1.0.0 example (that uses OpenAPI 3.0) at https://app.swaggerhub.com/apis/OGC/ogcapi-common-1-example-1/1.0.0
+
+A screenshot of the API definition document presented in SwaggerHub is shown in <<img_openapi30>>.
+
+[#img_openapi30]
+.The API definition document conforming to OpenAPI 3.0 and presented on SwaggerHub
+image::images/openapi30.png[width=800]
+
+First, the API definition document was copied to a new SwaggerHub project configured for OpenAPI 3.1. The only change at first was the openapi field which was set to 3.1.0. As shown in <<img_openapi31_before>>, the linter reported 8 errors and 6 warnings.
+
+[#img_openapi31_before]
+.The API definition document with only the openapi field changed to 3.1.0 and tested with the OpenAPI 3.1 linter
+image::images/openapi31_before.png[width=800]
+
+
+The messages can be summarised as follows:
+
+* M1.	Property “example” is deprecated, use “examples” instead
+* M2.	Reference Error - Ec: JSON Pointer evaluation failed while evaluating token “200” against an Object at “/components/responses/200”
+* M3.	Reference Error - Ec: JSON Pointer evaluation failed while evaluating token “400” against an Object at “/components/responses/400”
+* M4.	Reference Error - Ec: JSON Pointer evaluation failed while evaluating token “500” against an Object at “/components/responses/500”
+* M5.	“Responses” members must be Response Object
+
+The message M1 was resolved by changing the example field to an `examples` array as shown in <<table_resolve_examples_error>>.
+
+[#table_resolve_examples_error]
+.Resolution of the error related to the examples field
+[cols=",",options="header",align="center"]
+|===
+|OpenAPI 3.0 | OpenAPI 3.1
+
+a| 
+
+[source,yaml]
+----
+
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+
+----
+
+a| 
+
+[source,yaml]
+----
+
+      responses:
+        '200':
+          $ref: '#/components/responses/R200'
+
+----
+
+|===
+
+The message M2 was resolved by appending an alphabet to the identifier of the component ‘responses’ and then updating the reference of the to the component from the path. This is shown in <<table_resolve_responses_error>>.
+
+[#table_resolve_responses_error]
+.Resolution of the error related to the responses component
+[cols=",",options="header",align="center"]
+|===
+|OpenAPI 3.0 | OpenAPI 3.1
+
+a| 
+
+[source,yaml]
+----
+
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+
+----
+
+a| 
+
+[source,yaml]
+----
+
+      responses:
+        '200':
+          $ref: '#/components/responses/R200'
+
+----
+
+a| 
+
+[source,yaml]
+----
+    200:
+      description: \|-
+        General Success response.
+
+----
+
+a| 
+
+[source,yaml]
+----
+    R200:
+      description: \|-
+        General Success response.
+
+----
+
+|===
+
+The change described above was repeated to address the error messages M3 and M4. Resolving those error messages also resulted in resolution of the error message M5. A screenshot of SwaggerHub reporting the API definition document as VALID is shown in <<img_openapi31_after>>.
+
+[#img_openapi31_after]
+.The API definition document with all error messages resolved and tested with the OpenAPI 3.1 linter
+image::images/openapi31_after.png[width=800]
+
+=== Question 2
+
+Question 2 as stated in <<scope_section>> is "What would the requirements and abstract tests of OpenAPI 3.1 requirements classes and conformance classes in OGC API Standards include?".
+
+
+=== Question 3
+
+Question 3 as stated in <<scope_section>> is "What are the changes needed in OGC API Standards documents?".

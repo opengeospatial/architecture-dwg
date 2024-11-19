@@ -1,0 +1,57 @@
+
+////
+== Keywords
+
+Keywords inserted here automatically by Metanorma
+////
+
+
+.Preface
+
+////
+*OGC Declaration*
+////
+
+////
+[THIS TEXT IS ALREADY ADDED AUTOMATICALLY IN THE FRONTISPIECE OF ALL OGC DOUCMENTS]
+
+Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. The Open Geospatial Consortium shall not be held responsible for identifying any or all such patent rights.
+
+Recipients of this document are requested to submit, with their comments, notification of any relevant patent claims or other intellectual property rights of which they may be aware that might be infringed by any implementation of the standard set forth in this document, and to provide supporting documentation.
+////
+
+
+[abstract]
+== Abstract
+
+This paper discusses options for supporting OpenAPI 3.1 in OGC API Standards. The paper is intended to provide a record of issues that OGC API SWGs have collectively identified as needing to be considered in order for OpenAPI 3.1 to be supported across the OGC API suite of Standards.
+
+[.preface]
+== Submitters
+All questions regarding this submission should be directed to the editor or the submitters:
+
+
+|===
+|Name |Affiliation
+
+|Gobe Hobona | OGC
+|===
+
+
+[.preface]
+== Contributors
+
+//This clause is optional.
+
+Additional contributors to this Standard include the following:
+
+Individual name(s), Organization
+
+|===
+|Name |Affiliation
+
+|Chuck Heazel | Heazel Technologies
+|Clemens Portele | interative instruments
+|Sam Bolling | Riverside Research
+|Gobe Hobona | OGC
+|===
