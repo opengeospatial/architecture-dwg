@@ -3,6 +3,9 @@
 .DS_Store
 .swp
 .tmp.xml
-
+document.err.html
+document.html
+document.presentation.xml
+document.xml.abort
 # Deploy key
 deploy_key
