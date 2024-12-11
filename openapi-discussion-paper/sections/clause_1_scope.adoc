@@ -15,21 +15,36 @@ OpenAPI 3.1.0 was published on 15 February 2021. https://spec.openapis.org/oas/v
 
 There are some major differences between OpenAPI 3.0 and OpenAPI 3.1. https://blog.stoplight.io/difference-between-open-v2-v3-v31
 
-=== Towards a decision for adopting OpenAPI 3.1
+=== Towards a decision on adopting OpenAPI 3.1
 
 At multiple Joint OGC API SWGs session in 2022/2023, the SWGs collectively agreed to wait until OpenAPI 3.1 was more readily supported in available tooling.
 
-A review of the list of tools at https://tools.openapis.org/categories/all.html shows that there are 171 listed tools that implement OpenAPI 3.1 and 1515 listed tools that implement OpenAPI 3.0. 
+A review of the list of tools at https://tools.openapis.org/categories/all.html shows that there are 171 listed tools that implement OpenAPI 3.1 and 1515 listed tools that implement OpenAPI 3.0. Some of the tools are well supported the developer community as shown by <<img_most_starred>>, whereas others are not well supported at the time of writing this paper as shown by <<img_least_starred>>.
 
-Therefore, the number of implementing tools cannot be a sole factor in determining when OGC API Standards should adopt OpenAPI 3.1.
+[#img_most_starred]
+.A sample of tools tagged with the most number of stars as reported by openapis.org
+image::images/most_starred.png[width=800]
 
-Considering that at least four SWGs had expressed interest in OpenAPI 3.1 by the end of 2024, and that OpenAPI 3.1 offers support for JSON Schema whereas OpenAPI 3.0 does not, that provides sufficient grounds to begin a collaborative effort of designing a conformance class for OpenAPI 3.1. 
+The 'stars' collumn in the figures refers to the number of stars (i.e. endorsements) in the repositories of those tools. 
+
+[#img_least_starred]
+.A sample of tools tagged with the least number of stars as reported by openapis.org
+image::images/least_starred.png[width=800]
+
+Members of the Architecture DWG noted that there were some tools that were labelled as not implementing OpenAPI 3.1 on the openapis.org website but had been confirmed to implement OpenAPI 3.1. For example, SwaggerHub - an API directory listing more than 760,000 registered API definitions - is listed on openapis.org as not implementing OpenAPI 3.1 as shown in <<img_swaggerhub_on_openapis>>. However, the Architecture DWG was able to confirm that https://support.smartbear.com/swaggerhub/docs/en/openapi-3-1-support.html[SwaggerHub does indeed support OpenAPI 3.1]. Furthermore, it was also observed that there were some duplications in the table as shown in <<img_swaggerhub_on_openapis>>. Therefore, even though the number of implementing tools is a good indicator, it is clear that it cannot be a sole factor in determining when OGC API Standards should adopt OpenAPI 3.1.
+
+[#img_swaggerhub_on_openapis]
+.SwaggerHub listing on openapis.org
+image::images/swaggerhub_on_openapis.png[width=800]
+
+Considering that at least four SWGs had expressed interest in OpenAPI 3.1 by the end of 2024, and that OpenAPI 3.1 offers support for JSON Schema whereas OpenAPI 3.0 does not, that provided sufficient grounds to begin a collaborative effort of designing a conformance class for OpenAPI 3.1. 
 
 Some early prototyping of support for OpenAPI 3.1 has been conducted by the following SWGs:
 
 * OGC API - Moving Features
 * OGC API - Connected Systems
 * OGC API - Environmental Data Retrieval
+* OGC API - Features
 
 The scope of this discussion paper is therefore limited to addressing the following questions:
 

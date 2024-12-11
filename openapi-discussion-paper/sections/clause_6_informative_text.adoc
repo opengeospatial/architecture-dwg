@@ -41,9 +41,10 @@ a|
 [source,yaml]
 ----
 
-      responses:
-        '200':
-          $ref: '#/components/responses/200'
+      properties:
+        title:
+          type: string
+          example: Buildings in Bonn
 
 ----
 
@@ -52,9 +53,11 @@ a|
 [source,yaml]
 ----
 
-      responses:
-        '200':
-          $ref: '#/components/responses/R200'
+      properties:
+        title:
+          type: string
+          examples:
+            - Buildings in Bonn
 
 ----
 
