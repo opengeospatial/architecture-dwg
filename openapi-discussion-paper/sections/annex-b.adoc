@@ -1,0 +1,34 @@
+[appendix]
+== Notes from Teleconference Series
+
+=== November 19, 2024
+
+During the November 19th, 2024 discussion, the DWG members noted that looking at the list of implementations, there are some implementations that only support OpenAPI 3.1 and others that only support 3.0, as well as others that support both. They suggested that, ideally, OGC API Standards would give implementers the option of implementing either one or even both. That is, the standards would allow implementers to select one that best fits their needs. There was a suggestion to allow the market to decide. 
+
+It was noted that OpenAPI 3.1 is used in two ways in the emerging OGC API – Features – Part 1: Core  v1.1 candidate Standard. First, it is used for the specification of the building blocks. Second, it is used for the API description. The reason for using OpenAPI 3.1 in this way, in the v1.1 candidate Standard, is the close alignment between OpenAPI 3.1 and JSON Schema now that the ‘nullable’ property has been removed.  There was agreement that for building blocks and for content within the standard, it is acceptable to use OpenAPI 3.1, provided that it was not mandatory for implementers to support OpenAPI 3.1 in their implementations. 
+
+The meeting participants noted that there is a need to solicit larger participation, for example representation from each of the SWG that this applies to. There was a comment that, in some communities of interest, it is becoming difficult to get advocacy for OpenAPI 3.0. Hence there is an increasing urgency to offer support for OpenAPI 3.1. In discussing how such support could be specified, there was a suggestion to have the OGC API – Common SWG write a conformance class for OpenAPI 3.1 that all of the other OGC API SWGs could then use. The conformance class would be pretty much the same as that for OpenAPI 3.0. The examples might be different, but the requirements would most likely be very similar. 
+
+Representatives of the Features API SWG explained that they have already started working on requirements classes and conformance classes for OpenAPI 3.1 as mentioned above. This will benefit standards that are already extending OGC API – Features, for example OGC APIs for Moving Features, Records and Connected Systems, will benefit from the work that has already started in the Features API SWG. The meeting participants noted that there is still a need to build consensus on the approach. 
+
+The participants considered what could be done to speed up the process. It was noted that outlining the changes needed to adapt an OGC API Standard to support OpenAPI 3.1 would help the various SWGs to update their standards when the time came. Representatives of the Features API SWG shared a list of the changes taken by their SWG to update OGC API – Features. The changes were: 
+
+. Introduce an abstract requirements class "OpenAPI Specification" [1] that contains all normative statements that are not related to the specific version of OpenAPI.  
+. Reduce the "OpenAPI Specification 3.0" requirements class [2] to the requirement that the API definition conforms to that version of OpenAPI. This requirements class depends on requirements class "OpenAPI Specification". 
+. Add a"OpenAPI Specification 3.1" requirements class [3] that does the same, but for version 3.1. 
+. Update the OpenAPI fragments used to specify API building blocks in the standard to OpenAPI 3.1. The motivation for this upgrade is that OpenAPI 3.1 uses JSON Schema 2020-12, the version of JSON Schema that is also used in Part 5 (Schemas) or JSON-FG. 
+* All changes in the OpenAPI fragments were restricted to changes in Schema Objects. 
+* Changes:  
+** Use of type "null" instead of the "nullable" keyword (this is a necessary change) 
+** Use of "const" instead of a single "enum" value (this is an optional change) 
+* The current draft does not yet use "examples" in Schema Objects instead of the deprecated "example". The reason is that Swagger UI is only rendering "example", not "examples". I have not tested Redoc. 
+. Update all examples to OpenAPI 3.1. 
+. Provide OpenAPI fragments for the API building blocks in both OpenAPI 3.0 and 3.1 [4]. These fragments can be reused in API descriptions. 
+
+A representative of the OGC API – Connected Systems SWG mentioned that the SWG recently updated their public review comments that they are going to go ahead with OpenAPI 3.1. The SWG has a version of the API description that conforms to OpenAPI 3.0 and was created by down-compiling from OpenAPI 3.1. It was noted that the Connected Systems SWG could declare in their specification that they inherit from OGC API – Features, however as the OpenAPI 3.1 conformance class of OGC API – Features is still in development, there is a risk of misalignment between the Connected Systems and Features APIs even though the former is intended to be an extension of the latter. There was agreement that regular communication between the SWGs should help to derisk the adoption of OpenAPI by the Connected Systems and Features API SWGs. 
+
+=== December 3, 2024
+
+TBA
+
+The participants suggested that OGC API Standards should make it clear that: OpenAPI 3.0 schema fragments presented in an OGC API Standard in order to explain the characteristics of a component, do not imply that that OGC API Standard only supports OpenAPI 3.0. Subsequent discussions on the mailing list further clarified that “If an API uses a different API definition language that is not OpenAPI, then the building block description simply has to be mapped to that API definition language. Or if the API uses a different OpenAPI version, it has to be mapped to that version”. 
