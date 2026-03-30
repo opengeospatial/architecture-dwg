@@ -3,6 +3,8 @@
 ## Introduction
 This repository is used by the OGC Architecture Domain Working Group (DWG).
 
+The Architecture DWG considers overarching architectural issues that are germane to multiple OGC Standards, including mechanisms for describing and invoking services in a heterogeneous distributed network.
+
 ## Intellectual Property Rights
 
 The content of this repository is copyrighted by the Open Geospatial Consortium (OGC) and may be [licensed](https://github.com/opengeospatial/er_template/blob/master/LICENSE) for designated purposes.
